@@ -1,0 +1,20 @@
+version: '3.1'
+
+services:
+  postgres:
+    container_name: docker_postgres
+    image: postgres:9.6
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: zapzup_db_manager
+      POSTGRES_USER: zapzup_db_manager
+      POSTGRES_PASSWORD: zapzup_db_manager
+    volumes:
+      - ./postgres-create-schema.sql:/docker-entrypoint-initdb.d/setup.sql
+    networks:
+      - zapzup
+
+networks:
+  zapzup:
+    driver: bridge
