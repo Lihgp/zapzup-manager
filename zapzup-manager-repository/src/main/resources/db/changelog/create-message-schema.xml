@@ -1,0 +1,39 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Victor" id="create_message_entity">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="message_entity"/>
+            </not>
+        </preConditions>
+        <createTable tableName="message_entity" schemaName="zapzup">
+            <column name="id" type="varchar(39)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="text"/>
+            <column name="created_at" type="timestamp"/>
+            <column name="deleted_at" type="timestamp"/>
+            <column name="user_id" type="varchar(40)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Victor" id="set_message_entity_pk">
+        <addPrimaryKey schemaName="zapzup" columnNames="id" constraintName="message_entity_pkey" tableName="message_entity"/>
+    </changeSet>
+
+    <changeSet author="Victor" id="set_user_fk">
+        <addForeignKeyConstraint baseTableName="message_entity"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_user_id"
+                                 referencedTableName="user_entity"
+                                 referencedColumnNames="id"
+                                 baseTableSchemaName="zapzup"
+                                 referencedTableSchemaName="zapzup"
+        />
+    </changeSet>
+
+</databaseChangeLog>

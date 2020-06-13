@@ -1,0 +1,35 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Victor" id="create_user_entity">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="user_entity"/>
+            </not>
+        </preConditions>
+        <createTable tableName="user_entity" schemaName="zapzup">
+            <column name="id" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="varchar(60)"/>
+            <column name="status" type="varchar(60)"/>
+            <column name="email" type="varchar(255)"/>
+            <column name="password" type="varchar(60)"/>
+            <column name="created_at" type="timestamp"/>
+            <column name="updated_at" type="timestamp"/>
+            <column name="deleted_at" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Victor" id="set_user_entity_pk">
+        <addPrimaryKey schemaName="zapzup" columnNames="id" constraintName="user_entity_pkey" tableName="user_entity"/>
+    </changeSet>
+
+    <changeSet id="set_unique_key_email" author="Victor">
+        <addUniqueConstraint schemaName="zapzup" tableName="user_entity" columnNames="email"/>
+    </changeSet>
+
+</databaseChangeLog>
