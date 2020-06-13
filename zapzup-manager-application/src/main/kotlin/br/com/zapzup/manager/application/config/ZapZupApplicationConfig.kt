@@ -14,7 +14,7 @@ import java.util.Locale
 import javax.servlet.http.HttpServletRequest
 
 @SpringBootApplication
-@EnableJpaRepositories
+@EnableJpaRepositories(basePackages = ["br.com.zapzup.manager.repository"])
 @EntityScan(value = ["br.com.zapzup.manager.domain"])
 @ComponentScan(basePackages = ["br.com.zapzup.manager"])
 @Configuration
