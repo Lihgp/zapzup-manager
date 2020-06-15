@@ -11,5 +11,11 @@
 
     <artifactId>zapzup-manager-application</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>br.com.zapzup</groupId>
+            <artifactId>zapzup-manager-repository</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
