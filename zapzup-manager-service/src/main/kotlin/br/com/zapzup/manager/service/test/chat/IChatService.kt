@@ -1,4 +1,4 @@
-package br.com.zapzup.manager.service.chat
+package br.com.zapzup.manager.service.test.chat
 
 interface IChatService {
 }

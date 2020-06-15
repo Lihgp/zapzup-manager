@@ -1,4 +1,4 @@
-package br.com.zapzup.manager.service.chat.impl
+package br.com.zapzup.manager.service.test.chat.impl
 
 class ChatService {
 }

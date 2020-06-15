@@ -1,2 +1,2 @@
-package br.com.zapzup.manager.service.chat.mapper
+package br.com.zapzup.manager.service.test.chat.mapper
 

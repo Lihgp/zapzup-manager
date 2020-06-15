@@ -1,4 +1,4 @@
-package br.com.zapzup.manager.service.user.impl
+package br.com.zapzup.manager.service.test.user.impl
 
 class UserService {
 }

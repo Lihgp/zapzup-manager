@@ -1,2 +1,2 @@
-package br.com.zapzup.manager.service.message.mapper
+package br.com.zapzup.manager.service.test.message.mapper
 

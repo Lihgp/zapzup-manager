@@ -1,2 +1,2 @@
-package br.com.zapzup.manager.service.user.mapper
+package br.com.zapzup.manager.service.test.user.mapper
 
