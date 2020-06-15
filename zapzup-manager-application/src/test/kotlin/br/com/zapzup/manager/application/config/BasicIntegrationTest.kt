@@ -1,6 +1,6 @@
 package br.com.zapzup.manager.application.config
 
-import org.junit.jupiter.api.BeforeEach
+import org.junit.Before
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -18,8 +18,7 @@ open class BasicIntegrationTest() {
 
     protected lateinit var mockMvc: MockMvc
 
-    @BeforeEach
-    @Throws(Exception::class)
+    @Before
     fun setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build()
     }
