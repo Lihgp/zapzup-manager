@@ -14,9 +14,13 @@
             <column name="id" type="varchar(40)">
                 <constraints nullable="false"/>
             </column>
-            <column name="username" type="varchar(60)"/>
+            <column name="username" type="varchar(60)">
+                <constraints unique="true"/>
+            </column>
             <column name="status" type="varchar(60)"/>
-            <column name="email" type="varchar(255)"/>
+            <column name="email" type="varchar(255)">
+                <constraints unique="true"/>
+            </column>
             <column name="password" type="varchar(60)"/>
             <column name="created_at" type="timestamp"/>
             <column name="updated_at" type="timestamp"/>
@@ -26,10 +30,6 @@
 
     <changeSet author="Victor" id="set_user_entity_pk">
         <addPrimaryKey schemaName="zapzup" columnNames="id" constraintName="user_entity_pkey" tableName="user_entity"/>
-    </changeSet>
-
-    <changeSet id="set_unique_key_email" author="Victor">
-        <addUniqueConstraint schemaName="zapzup" tableName="user_entity" columnNames="email"/>
     </changeSet>
 
 </databaseChangeLog>
