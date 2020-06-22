@@ -18,10 +18,10 @@ import javax.servlet.http.HttpServletRequest
 @EntityScan(value = ["br.com.zapzup.manager.domain"])
 @ComponentScan(basePackages = ["br.com.zapzup.manager"])
 @Configuration
-class ZapZupApplicationConfig {
+open class ZapZupApplicationConfig {
 
     @Bean
-    fun localeResolver(): LocaleResolver {
+    open fun localeResolver(): LocaleResolver {
         return SmartLocalResolver()
     }
 
@@ -40,7 +40,7 @@ class ZapZupApplicationConfig {
     }
 
     @Bean
-    fun messageSource(): ResourceBundleMessageSource {
+    open fun messageSource(): ResourceBundleMessageSource {
         val source = ResourceBundleMessageSource()
         source.setBasenames("messages")
         source.setDefaultEncoding("UTF-8")
