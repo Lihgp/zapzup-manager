@@ -17,6 +17,10 @@
             <groupId>br.com.zapzup</groupId>
             <artifactId>zapzup-manager-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>br.com.zapzup</groupId>
+            <artifactId>zapzup-manager-repository</artifactId>
+        </dependency>
 
         <!--   Spring Dependencies     -->
         <dependency>

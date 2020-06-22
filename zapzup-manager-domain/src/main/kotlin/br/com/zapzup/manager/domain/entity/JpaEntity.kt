@@ -21,6 +21,7 @@ data class User(
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     val id: String = "USER-${UUID.randomUUID()}",
+    val name: String = "",
     @Column(unique = true)
     val username: String = "",
     val status: String = "",

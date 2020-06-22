@@ -1,8 +1,9 @@
 package br.com.zapzup.manager.service.user
 
-import br.com.zapzup.manager.domain.to.UserTO
+import br.com.zapzup.manager.domain.to.user.CreateUserTO
+import br.com.zapzup.manager.domain.to.user.UserTO
 
 interface IUserService {
 
-    fun create(userTO: UserTO): UserTO
+    fun create(createUserTO: CreateUserTO): UserTO
 }
