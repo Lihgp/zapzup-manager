@@ -1,13 +1,14 @@
 package br.com.zapzup.manager.application.exception
 
 import br.com.zapzup.manager.infrastructure.error.ErrorResponse
-import br.com.zapzup.manager.infrastructure.error.FieldsErrorCode
 import br.com.zapzup.manager.infrastructure.error.ZapZupErrorCode
+import br.com.zapzup.manager.infrastructure.exception.UserAlreadyExistsException
 import org.apache.logging.log4j.LogManager
 import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
+import org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -49,12 +50,12 @@ class ZapZupExceptionHandler(
             fields.computeIfAbsent(field.field) {
                 LinkedList<String>().also { f ->
                     when (field.code) {
-                        ("NotNull") -> f.add(FieldsErrorCode.MUST_NOT_BE_NULL.code)
-                        ("NotBlank") -> f.add(FieldsErrorCode.MUST_NOT_BE_BLANK.code)
-                        ("NotEmpty") -> f.add(FieldsErrorCode.MUST_NOT_BE_EMPTY.code)
-                        ("Size") -> f.add(FieldsErrorCode.INCORRECT_SIZE.code)
-                        ("Email") -> f.add(FieldsErrorCode.INVALID_EMAIL_FORMAT.code)
-                        else -> f.add(FieldsErrorCode.METHOD_ARGUMENT_INVALID.code)
+                        ("NotNull") -> f.add(ZapZupErrorCode.MUST_NOT_BE_NULL.code)
+                        ("NotBlank") -> f.add(ZapZupErrorCode.MUST_NOT_BE_BLANK.code)
+                        ("NotEmpty") -> f.add(ZapZupErrorCode.MUST_NOT_BE_EMPTY.code)
+                        ("Size") -> f.add(ZapZupErrorCode.INCORRECT_SIZE.code)
+                        ("Email") -> f.add(ZapZupErrorCode.INVALID_EMAIL_FORMAT.code)
+                        else -> f.add(ZapZupErrorCode.METHOD_ARGUMENT_INVALID.code)
                     }
                 }
             }
@@ -68,5 +69,19 @@ class ZapZupExceptionHandler(
         )
     }
 
-    private fun getMessage(key: String): String? = messageSource.getMessage(key, null, LocaleContextHolder.getLocale())
+    @ExceptionHandler(UserAlreadyExistsException::class)
+    @ResponseStatus(UNPROCESSABLE_ENTITY)
+    @ResponseBody
+    fun handleUserAlreadyExistsException(ex: UserAlreadyExistsException): ErrorResponse {
+        log.error("UserAlreadyExistsException ", ex)
+
+        return ErrorResponse(
+            message = getMessage(ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.key, arrayOf(ex.field))
+                ?: ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.code,
+            code = ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.code
+        )
+    }
+
+    private fun getMessage(key: String, args: Array<String> = arrayOf()): String?
+        = messageSource.getMessage(key, args, LocaleContextHolder.getLocale())
 }

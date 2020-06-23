@@ -2,6 +2,8 @@ package br.com.zapzup.manager.api.user
 
 import br.com.zapzup.manager.api.ResponseWrapper
 import br.com.zapzup.manager.api.user.request.CreateUserRequest
+import br.com.zapzup.manager.api.user.response.CreateUserResponse
+import br.com.zapzup.manager.api.user.response.UserAlreadyExistsResponse
 import br.com.zapzup.manager.api.user.response.UserResponse
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -29,9 +31,10 @@ interface UserApi {
     @ResponseBody
     @ApiOperation(value = "Creates a user")
     @ApiResponses(value = [
-        ApiResponse(code = 201, message = "Created")
+        ApiResponse(code = 201, message = "Created"),
+        ApiResponse(code = 422, message = "User Already Exists", response = UserAlreadyExistsResponse::class)
     ])
-    fun create(@RequestBody @Validated createUserRequest: CreateUserRequest): ResponseWrapper<UserResponse>
+    fun create(@RequestBody @Validated createUserRequest: CreateUserRequest): ResponseWrapper<CreateUserResponse>
 
     @GetMapping
     @ResponseBody

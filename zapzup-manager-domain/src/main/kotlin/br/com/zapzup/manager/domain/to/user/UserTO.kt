@@ -8,7 +8,7 @@ data class UserTO(
     val username: String = "",
     val status: String = "",
     val email: String = "",
-    val createdAt: OffsetDateTime? = null,
+    val createdAt: OffsetDateTime = OffsetDateTime.now(),
     val updatedAt: OffsetDateTime? = null,
     val deletedAt: OffsetDateTime? = null
 )

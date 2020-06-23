@@ -2,6 +2,7 @@ package br.com.zapzup.manager.service.user.impl
 
 import br.com.zapzup.manager.domain.to.user.CreateUserTO
 import br.com.zapzup.manager.domain.to.user.UserTO
+import br.com.zapzup.manager.infrastructure.exception.UserAlreadyExistsException
 import br.com.zapzup.manager.repository.UserRepository
 import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.mapper.toEntity
@@ -16,9 +17,13 @@ class UserService(
 ) : IUserService {
 
     override fun create(createUserTO: CreateUserTO): UserTO {
+        when {
+            userRepository.existsByUsername(createUserTO.username) -> throw UserAlreadyExistsException("username")
+            userRepository.existsByEmail(createUserTO.email) -> throw UserAlreadyExistsException("email")
+        }
+
         val encryptedPassword = passwordEncoder.encode(createUserTO.password)
         val user = createUserTO.toEntity().copy(password = encryptedPassword)
-//        TODO("TRATAR EXCEPTIONS")
 
         return userRepository.save(user).toTO()
     }
