@@ -18,8 +18,6 @@ import javax.persistence.Table
 @Table(name = "user_entity")
 data class User(
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     val id: String = "USER-${UUID.randomUUID()}",
     val name: String = "",
     @Column(unique = true)
@@ -37,8 +35,6 @@ data class User(
 @Table(name = "message_entity")
 data class Message(
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     val id: String = "MES-${UUID.randomUUID()}",
     val content: String = "",
     val createdAt: OffsetDateTime = OffsetDateTime.now(),
@@ -52,8 +48,6 @@ data class Message(
 @Table(name = "chat_entity")
 data class Chat(
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     val id: String = "CHAT-${UUID.randomUUID()}",
     val name: String = "",
     val description: String = "",
