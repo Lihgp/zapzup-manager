@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>br.com.zapzup</groupId>
-            <artifactId>zapzup-manager-infrastructure</artifactId>
+            <artifactId>zapzup-manager-commons</artifactId>
         </dependency>
 
         <!--   Spring Dependencies     -->

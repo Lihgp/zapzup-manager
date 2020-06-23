@@ -29,7 +29,7 @@
         <module>zapzup-manager-domain</module>
         <module>zapzup-manager-repository</module>
         <module>zapzup-manager-service</module>
-        <module>zapzup-manager-infrastructure</module>
+        <module>zapzup-manager-commons</module>
     </modules>
 
     <dependencyManagement>
@@ -61,7 +61,7 @@
             </dependency>
             <dependency>
                 <groupId>br.com.zapzup</groupId>
-                <artifactId>zapzup-manager-infrastructure</artifactId>
+                <artifactId>zapzup-manager-commons</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
         </dependencies>
