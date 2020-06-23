@@ -53,6 +53,7 @@ class ZapZupExceptionHandler(
                         ("NotBlank") -> f.add(FieldsErrorCode.MUST_NOT_BE_BLANK.code)
                         ("NotEmpty") -> f.add(FieldsErrorCode.MUST_NOT_BE_EMPTY.code)
                         ("Size") -> f.add(FieldsErrorCode.INCORRECT_SIZE.code)
+                        ("Email") -> f.add(FieldsErrorCode.INVALID_EMAIL_FORMAT.code)
                         else -> f.add(FieldsErrorCode.METHOD_ARGUMENT_INVALID.code)
                     }
                 }

@@ -9,6 +9,6 @@ object FieldsErrorCode{
     val MUST_NOT_BE_EMPTY: ErrorCode = FieldsError("MUST_NOT_BE_EMPTY", "must.not.be.empty")
     val INCORRECT_SIZE: ErrorCode = FieldsError("INCORRECT_SIZE", "incorrect.size")
     val METHOD_ARGUMENT_INVALID: ErrorCode = FieldsError("METHOD_ARGUMENT_INVALID", "method.argument.invalid")
-    val MUST_NOT_BE_ZERO_OR_LESS: ErrorCode = FieldsError("MUST_NOT_BE_ZERO_OR_LESS", "must.not.be.zero.or.less")
+    val INVALID_EMAIL_FORMAT: ErrorCode = FieldsError("INVALID_EMAIL_FORMAT", "invalid.email.format")
     val INVALID_VALUE: ErrorCode = FieldsError("INVALID_VALUE", "invalid.value")
 }
