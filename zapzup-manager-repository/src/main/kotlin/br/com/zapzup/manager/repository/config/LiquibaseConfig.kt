@@ -13,10 +13,10 @@ import javax.sql.DataSource
 @EnableAutoConfiguration(exclude = [LiquibaseAutoConfiguration::class])
 @ComponentScan(basePackages = ["br.com.zapzup.manager.repository"])
 @EnableJpaRepositories
-class LiquibaseConfig {
+open class LiquibaseConfig {
 
     @Bean
-    fun liquibase(dataSource: DataSource): SpringLiquibase {
+    open fun liquibase(dataSource: DataSource): SpringLiquibase {
         val springLiquibase = SpringLiquibase()
         springLiquibase.dataSource = dataSource
         springLiquibase.changeLog = "classpath*:db/changelog-master.xml"
