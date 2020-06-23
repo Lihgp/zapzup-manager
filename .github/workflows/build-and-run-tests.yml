@@ -37,6 +37,6 @@ jobs:
           java-version: 11
       - name: Build and test project
         run: |
-          docker-compose -f resource/docker-compose up -d
+          docker-compose -f resource/docker-compose.yml up -d
           mvn clean verify
-          docker-compose -f resource/docker-compose down
+          docker-compose -f resource/docker-compose.yml down
