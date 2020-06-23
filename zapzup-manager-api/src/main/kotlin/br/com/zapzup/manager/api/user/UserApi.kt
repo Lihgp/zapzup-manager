@@ -1,7 +1,7 @@
 package br.com.zapzup.manager.api.user
 
 import br.com.zapzup.manager.api.ResponseWrapper
-import br.com.zapzup.manager.api.user.request.UserRequest
+import br.com.zapzup.manager.api.user.request.CreateUserRequest
 import br.com.zapzup.manager.api.user.response.UserResponse
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.validation.annotation.Validated
@@ -17,5 +17,5 @@ interface UserApi {
     @PostMapping
     @ResponseStatus(CREATED)
     @ResponseBody
-    fun create(@RequestBody @Validated userRequest: UserRequest): ResponseWrapper<UserResponse>
+    fun create(@RequestBody @Validated createUserRequest: CreateUserRequest): ResponseWrapper<UserResponse>
 }

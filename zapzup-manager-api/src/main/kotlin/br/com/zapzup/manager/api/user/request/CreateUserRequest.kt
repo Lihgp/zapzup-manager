@@ -3,7 +3,7 @@ package br.com.zapzup.manager.api.user.request
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotEmpty
 
-data class UserRequest(
+data class CreateUserRequest(
     @field:[NotEmpty]
     val name: String,
     @field:[NotEmpty]

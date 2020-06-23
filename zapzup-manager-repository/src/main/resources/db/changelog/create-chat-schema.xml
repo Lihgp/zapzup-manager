@@ -11,7 +11,7 @@
             </not>
         </preConditions>
         <createTable tableName="chat_entity" schemaName="zapzup">
-            <column name="id" type="varchar(40)">
+            <column name="id" type="varchar(41)">
                 <constraints nullable="false"/>
             </column>
             <column name="name" type="varchar(25)"/>
