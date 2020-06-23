@@ -1,4 +1,4 @@
-package br.com.zapzup.manager.infrastructure
+package br.com.zapzup.manager.commons
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.type.TypeReference

@@ -1,8 +1,8 @@
-package br.com.zapzup.manager.application.exception
+package br.com.zapzup.manager.application.exceptions
 
-import br.com.zapzup.manager.infrastructure.error.ErrorResponse
-import br.com.zapzup.manager.infrastructure.error.ZapZupErrorCode
-import br.com.zapzup.manager.infrastructure.exception.UserAlreadyExistsException
+import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
+import br.com.zapzup.manager.commons.error.ErrorResponse
+import br.com.zapzup.manager.commons.error.ZapZupErrorCode
 import org.apache.logging.log4j.LogManager
 import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder

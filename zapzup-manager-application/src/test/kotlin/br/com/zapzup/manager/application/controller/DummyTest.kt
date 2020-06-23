@@ -1,9 +1,8 @@
 package br.com.zapzup.manager.application.controller
 
-import br.com.zapzup.manager.application.config.BasicIntegrationTest
 import org.junit.Test
 
-class DummyTest: BasicIntegrationTest()  {
+class DummyTest {
 
     @Test
     fun `dummy test`(){

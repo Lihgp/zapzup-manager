@@ -1,4 +1,4 @@
-package br.com.zapzup.manager.infrastructure.error
+package br.com.zapzup.manager.commons.error
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import io.swagger.annotations.ApiModel
