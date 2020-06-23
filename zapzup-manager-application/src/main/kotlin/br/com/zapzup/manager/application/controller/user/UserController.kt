@@ -16,4 +16,8 @@ class UserController(
 
     override fun create(@RequestBody @Validated userRequest: UserRequest): ResponseWrapper<UserResponse> =
         ResponseWrapper(userService.create(userRequest.toDomain()).toResponse())
+
+    override fun getUsers(email: String, username: String, name: String, page: Int, limit: Int): ResponseWrapper<List<UserResponse>> {
+        TODO("Not yet implemented")
+    }
 }
