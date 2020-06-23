@@ -1,4 +1,3 @@
 package br.com.zapzup.manager.infrastructure.exception
 
-class UserAlreadyExistsException {
-}
+class UserAlreadyExistsException(val field: String) : RuntimeException()

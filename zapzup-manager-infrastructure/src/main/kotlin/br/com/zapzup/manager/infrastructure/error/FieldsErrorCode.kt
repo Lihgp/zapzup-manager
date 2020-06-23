@@ -10,5 +10,6 @@ object FieldsErrorCode{
     val INCORRECT_SIZE: ErrorCode = FieldsError("INCORRECT_SIZE", "incorrect.size")
     val METHOD_ARGUMENT_INVALID: ErrorCode = FieldsError("METHOD_ARGUMENT_INVALID", "method.argument.invalid")
     val INVALID_EMAIL_FORMAT: ErrorCode = FieldsError("INVALID_EMAIL_FORMAT", "invalid.email.format")
+    val DUPLICATED_FIELD: ErrorCode = FieldsError("DUPLICATED_FIELD", "duplicated.field")
     val INVALID_VALUE: ErrorCode = FieldsError("INVALID_VALUE", "invalid.value")
 }
