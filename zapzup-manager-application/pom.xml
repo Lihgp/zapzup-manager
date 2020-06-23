@@ -20,6 +20,10 @@
             <groupId>br.com.zapzup</groupId>
             <artifactId>zapzup-manager-service</artifactId>
         </dependency>
+        <dependency>
+            <groupId>br.com.zapzup</groupId>
+            <artifactId>zapzup-manager-infrastructure</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
