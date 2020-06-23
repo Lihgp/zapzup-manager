@@ -18,7 +18,7 @@ class UserService(
     override fun create(createUserTO: CreateUserTO): UserTO {
         val encryptedPassword = passwordEncoder.encode(createUserTO.password)
         val user = createUserTO.toEntity().copy(password = encryptedPassword)
-        TODO("TRATAR EXCEPTIONS")
+//        TODO("TRATAR EXCEPTIONS")
 
         return userRepository.save(user).toTO()
     }
