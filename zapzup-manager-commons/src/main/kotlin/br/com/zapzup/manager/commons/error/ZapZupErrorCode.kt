@@ -1,4 +1,4 @@
-package br.com.zapzup.manager.application.exceptions.error
+package br.com.zapzup.manager.commons.error
 
 class ErrorCode(val code: String, val key: String)
 

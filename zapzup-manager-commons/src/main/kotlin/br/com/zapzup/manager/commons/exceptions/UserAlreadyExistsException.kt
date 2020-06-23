@@ -1,3 +1,3 @@
-package br.com.zapzup.manager.application.exceptions
+package br.com.zapzup.manager.commons.exceptions
 
 class UserAlreadyExistsException(val field: String) : RuntimeException()
