@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface UserRepository : JpaRepository<User, String> {
+    fun existsByUsername(username: String): Boolean
+    fun existsByEmail(email: String): Boolean
 
     @Query("SELECT u FROM User u WHERE (?1 = '' or ?1 = u.email)" +
         " AND (?2 = '' or ?2 = u.name)" +

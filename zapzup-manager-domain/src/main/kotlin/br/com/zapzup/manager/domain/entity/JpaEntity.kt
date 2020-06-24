@@ -1,10 +1,13 @@
 package br.com.zapzup.manager.domain.entity
 
+import br.com.zapzup.manager.domain.enums.StatusEnum
 import org.hibernate.annotations.GenericGenerator
 import java.time.OffsetDateTime
 import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
@@ -18,13 +21,13 @@ import javax.persistence.Table
 @Table(name = "user_entity")
 data class User(
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     val id: String = "USER-${UUID.randomUUID()}",
     val name: String = "",
     @Column(unique = true)
     val username: String = "",
-    val status: String = "",
+    val note: String = "Hello! I'm using ZapZup.",
+    @Enumerated(EnumType.STRING)
+    val status: StatusEnum = StatusEnum.ACTIVE,
     @Column(unique = true)
     val email: String = "",
     val password: String = "",
@@ -37,8 +40,6 @@ data class User(
 @Table(name = "message_entity")
 data class Message(
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     val id: String = "MES-${UUID.randomUUID()}",
     val content: String = "",
     val createdAt: OffsetDateTime = OffsetDateTime.now(),
@@ -52,8 +53,6 @@ data class Message(
 @Table(name = "chat_entity")
 data class Chat(
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     val id: String = "CHAT-${UUID.randomUUID()}",
     val name: String = "",
     val description: String = "",

@@ -7,7 +7,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.0.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>br.com.zapzup</groupId>
     <artifactId>manager</artifactId>
@@ -29,6 +29,7 @@
         <module>zapzup-manager-domain</module>
         <module>zapzup-manager-repository</module>
         <module>zapzup-manager-service</module>
+        <module>zapzup-manager-commons</module>
     </modules>
 
     <dependencyManagement>
@@ -56,6 +57,11 @@
             <dependency>
                 <groupId>br.com.zapzup</groupId>
                 <artifactId>zapzup-manager-repository</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>br.com.zapzup</groupId>
+                <artifactId>zapzup-manager-commons</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
         </dependencies>
