@@ -86,7 +86,7 @@ data class ResetPasswordToken(
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long? = null,
     @Column(unique = true)
-    val token: String = "",
+    val token: String = UUID.randomUUID().toString(),
     @OneToOne(targetEntity = User::class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id")
     val user: User = User(),
