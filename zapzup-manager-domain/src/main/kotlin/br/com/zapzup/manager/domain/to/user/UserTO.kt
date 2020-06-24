@@ -6,6 +6,7 @@ data class UserTO(
     val id: String = "",
     val name: String = "",
     val username: String = "",
+    val note: String = "",
     val status: String = "",
     val email: String = "",
     val createdAt: OffsetDateTime = OffsetDateTime.now(),

@@ -18,7 +18,8 @@
             <column name="username" type="varchar(60)">
                 <constraints unique="true"/>
             </column>
-            <column name="status" type="varchar(60)"/>
+            <column name="note" type="varchar(60)"/>
+            <column name="status" type="varchar(10)"/>
             <column name="email" type="varchar(255)">
                 <constraints unique="true"/>
             </column>

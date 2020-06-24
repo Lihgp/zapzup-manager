@@ -1,10 +1,13 @@
 package br.com.zapzup.manager.domain.entity
 
+import br.com.zapzup.manager.domain.enums.StatusEnum
 import org.hibernate.annotations.GenericGenerator
 import java.time.OffsetDateTime
 import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
@@ -22,7 +25,9 @@ data class User(
     val name: String = "",
     @Column(unique = true)
     val username: String = "",
-    val status: String = "",
+    val note: String = "Hello! I'm using ZapZup.",
+    @Enumerated(EnumType.STRING)
+    val status: StatusEnum = StatusEnum.ACTIVE,
     @Column(unique = true)
     val email: String = "",
     val password: String = "",
