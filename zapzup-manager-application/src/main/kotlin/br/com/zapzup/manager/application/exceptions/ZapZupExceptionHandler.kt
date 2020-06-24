@@ -1,5 +1,6 @@
 package br.com.zapzup.manager.application.exceptions
 
+import br.com.zapzup.manager.commons.ResourceBundle
 import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.commons.error.ErrorResponse
 import br.com.zapzup.manager.commons.error.ZapZupErrorCode
@@ -18,7 +19,7 @@ import java.util.LinkedList
 
 @ControllerAdvice
 class ZapZupExceptionHandler(
-    private val messageSource: MessageSource
+    private val resourceBundle: ResourceBundle
 ) {
 
     private val log = LogManager.getLogger(this.javaClass)
@@ -29,7 +30,7 @@ class ZapZupExceptionHandler(
     fun genericException(ex: Exception): ErrorResponse {
         val code = ZapZupErrorCode.GENERAL_ERROR.code
         val originalError = ex.javaClass.name + " - " + ex.message
-        val message = getMessage(ZapZupErrorCode.GENERAL_ERROR.key)
+        val message = resourceBundle.getMessage(ZapZupErrorCode.GENERAL_ERROR.key)
 
         log.error("Exception: {}", originalError, ex)
 
@@ -63,7 +64,7 @@ class ZapZupExceptionHandler(
 
         return ErrorResponse(
             fields = fields,
-            message = getMessage(ZapZupErrorCode.METHOD_ARGUMENT_INVALID.key)
+            message = resourceBundle.getMessage(ZapZupErrorCode.METHOD_ARGUMENT_INVALID.key)
                 ?: ZapZupErrorCode.METHOD_ARGUMENT_INVALID.code,
             code = ZapZupErrorCode.METHOD_ARGUMENT_INVALID.code
         )
@@ -76,12 +77,9 @@ class ZapZupExceptionHandler(
         log.error("UserAlreadyExistsException ", ex)
 
         return ErrorResponse(
-            message = getMessage(ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.key, arrayOf(ex.field))
+            message = resourceBundle.getMessage(ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.key, arrayOf(ex.field))
                 ?: ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.code,
             code = ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.code
         )
     }
-
-    private fun getMessage(key: String, args: Array<String> = arrayOf()): String?
-        = messageSource.getMessage(key, args, LocaleContextHolder.getLocale())
 }
