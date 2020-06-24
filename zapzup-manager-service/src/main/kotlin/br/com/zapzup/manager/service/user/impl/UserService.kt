@@ -8,6 +8,8 @@ import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.UserValidations
 import br.com.zapzup.manager.service.user.mapper.toEntity
 import br.com.zapzup.manager.service.user.mapper.toTO
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -27,17 +29,18 @@ class UserService(
     override fun getUsers(filter: GetUsersFilter): List<UserTO> {
         val validatedFilter = UserValidations.assertAndExtractParams(filter)
 
-        val offset = (validatedFilter.page - 1) * validatedFilter.limit
+        val pageagle: Pageable = PageRequest.of(validatedFilter.page, validatedFilter.limit)
+
+//        val offset = (validatedFilter.page - 1) * validatedFilter.limit
 
         val records = userRepository.findByQueryParams(
             validatedFilter.email,
             validatedFilter.name,
             validatedFilter.username,
-            offset,
-            validatedFilter.limit
+            pageagle
         )
 
-        return if (records.isNotEmpty()) {
+        return if (records.content.isNotEmpty()) {
             //TODO: Fazer o retorno caso tenha encotrado algum resultado. OBS: É necessário fazer a montagem
             // das páginas
             emptyList()

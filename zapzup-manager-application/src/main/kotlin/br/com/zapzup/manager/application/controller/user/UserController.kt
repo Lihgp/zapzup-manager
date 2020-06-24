@@ -35,7 +35,6 @@ class UserController(
             limit = limit
         )
 
-        //TODO: Fazer o mapper
-        return ResponseWrapper(userService.getUsers(filter))
+        return ResponseWrapper(toResponseList(userService.getUsers(filter)))
     }
 }
