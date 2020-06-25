@@ -1,5 +1,6 @@
 package br.com.zapzup.manager.service.reset.impl
 
+import br.com.zapzup.manager.commons.exceptions.InvalidTokenException
 import br.com.zapzup.manager.domain.entity.ResetPasswordToken
 import br.com.zapzup.manager.domain.to.reset.GenerateTokenTO
 import br.com.zapzup.manager.domain.to.reset.ResetPasswordTokenTO
@@ -7,6 +8,7 @@ import br.com.zapzup.manager.repository.ResetPasswordTokenRepository
 import br.com.zapzup.manager.service.email.IEmailService
 import br.com.zapzup.manager.service.reset.IResetPasswordService
 import br.com.zapzup.manager.service.reset.mapper.toResetPasswordTokenTOList
+import br.com.zapzup.manager.service.reset.mapper.toTO
 import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.mapper.toEntity
 import org.springframework.stereotype.Service
@@ -21,12 +23,21 @@ class ResetPasswordService(
 
     override fun generateResetToken(generateTokenTO: GenerateTokenTO) {
         val userTO = userService.findByEmail(generateTokenTO.email)
-        val resetToken = resetPasswordTokenRepository.save(ResetPasswordToken(
+        val resetPasswordToken = resetPasswordTokenRepository.save(ResetPasswordToken(
             user = userTO.toEntity(),
             expirationDate = OffsetDateTime.now().plusHours(6))
         )
 
-        emailService.sendEmail(generateTokenTO.email, resetToken.token)
+        emailService.sendEmail(generateTokenTO.email, resetPasswordToken.token)
+    }
+
+    override fun validateToken(token: String) {
+        val resetPasswordToken = resetPasswordTokenRepository.findByToken(token) ?: throw InvalidTokenException()
+        val resetPasswordTokenTO = resetPasswordToken.toTO()
+
+        if (resetPasswordTokenTO.expirationDate.isBefore(OffsetDateTime.now())){
+            throw InvalidTokenException()
+        }
     }
 
     override fun getAll(): List<ResetPasswordTokenTO> {

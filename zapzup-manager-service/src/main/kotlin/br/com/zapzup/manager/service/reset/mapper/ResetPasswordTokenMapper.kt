@@ -8,6 +8,7 @@ fun ResetPasswordToken.toTO() = toResetPasswordTokenTO(resetPasswordToken = this
 fun toResetPasswordTokenTO(resetPasswordToken: ResetPasswordToken): ResetPasswordTokenTO =
     ResetPasswordTokenTO(
         id = resetPasswordToken.id,
+        token = resetPasswordToken.token,
         expirationDate = resetPasswordToken.expirationDate!!
     )
 
