@@ -14,4 +14,6 @@ object ZapZupErrorCode {
     val METHOD_ARGUMENT_INVALID: ErrorCode = ErrorCode("METHOD_ARGUMENT_INVALID", "method.argument.invalid")
     val CUSTOMER_ALREADY_EXISTS: ErrorCode = ErrorCode("CUSTOMER_ALREADY_EXISTS", "customer.already.exists")
     val INVALID_TOKEN: ErrorCode = ErrorCode("INVALID_TOKEN", "invalid.token")
+    val INVALID_OLD_PASSWORD: ErrorCode = ErrorCode("INVALID_OLD_PASSWORD", "invalid.old.password")
+    val EQUAL_PASSWORD: ErrorCode = ErrorCode("EQUAL_PASSWORD", "equal.password")
 }
