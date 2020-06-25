@@ -4,6 +4,8 @@ import br.com.zapzup.manager.commons.ResourceBundle
 import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.commons.error.ErrorResponse
 import br.com.zapzup.manager.commons.error.ZapZupErrorCode
+import br.com.zapzup.manager.commons.exceptions.EqualPasswordException
+import br.com.zapzup.manager.commons.exceptions.InvalidOldPasswordException
 import br.com.zapzup.manager.commons.exceptions.InvalidTokenException
 import org.apache.logging.log4j.LogManager
 import org.springframework.context.MessageSource
@@ -94,6 +96,32 @@ class ZapZupExceptionHandler(
             message = resourceBundle.getMessage(ZapZupErrorCode.INVALID_TOKEN.key)
                 ?: ZapZupErrorCode.INVALID_TOKEN.code,
             code = ZapZupErrorCode.INVALID_TOKEN.code
+        )
+    }
+
+    @ExceptionHandler(InvalidOldPasswordException::class)
+    @ResponseStatus(UNPROCESSABLE_ENTITY)
+    @ResponseBody
+    fun handleInvalidOldPasswordException(ex: InvalidOldPasswordException): ErrorResponse {
+        log.error("InvalidOldPasswordException ", ex)
+
+        return ErrorResponse(
+            message = resourceBundle.getMessage(ZapZupErrorCode.INVALID_OLD_PASSWORD.key)
+                ?: ZapZupErrorCode.INVALID_OLD_PASSWORD.code,
+            code = ZapZupErrorCode.INVALID_OLD_PASSWORD.code
+        )
+    }
+
+    @ExceptionHandler(EqualPasswordException::class)
+    @ResponseStatus(UNPROCESSABLE_ENTITY)
+    @ResponseBody
+    fun handleEqualPasswordException(ex: EqualPasswordException): ErrorResponse {
+        log.error("EqualPasswordException ", ex)
+
+        return ErrorResponse(
+            message = resourceBundle.getMessage(ZapZupErrorCode.EQUAL_PASSWORD.key)
+                ?: ZapZupErrorCode.EQUAL_PASSWORD.code,
+            code = ZapZupErrorCode.EQUAL_PASSWORD.code
         )
     }
 }
