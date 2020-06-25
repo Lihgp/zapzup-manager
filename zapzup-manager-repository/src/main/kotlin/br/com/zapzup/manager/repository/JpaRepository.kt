@@ -13,4 +13,6 @@ interface UserRepository : JpaRepository<User, String> {
 }
 
 @Repository
-interface ResetPasswordTokenRepository : JpaRepository<ResetPasswordToken, String>
+interface ResetPasswordTokenRepository : JpaRepository<ResetPasswordToken, String> {
+    fun findByToken(token: String): ResetPasswordToken?
+}
