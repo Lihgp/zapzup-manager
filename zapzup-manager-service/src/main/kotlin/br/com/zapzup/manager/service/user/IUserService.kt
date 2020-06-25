@@ -1,6 +1,7 @@
 package br.com.zapzup.manager.service.user
 
 import br.com.zapzup.manager.domain.to.user.CreateUserTO
+import br.com.zapzup.manager.domain.to.user.UpdatePasswordTO
 import br.com.zapzup.manager.domain.to.user.UserTO
 
 interface IUserService {
@@ -8,4 +9,6 @@ interface IUserService {
     fun create(createUserTO: CreateUserTO): UserTO
 
     fun findByEmail(email: String): UserTO
+
+    fun updatePassword(id: String, updatePasswordTO: UpdatePasswordTO)
 }
