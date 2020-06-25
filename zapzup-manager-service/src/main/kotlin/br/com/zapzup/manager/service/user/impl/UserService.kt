@@ -34,7 +34,9 @@ class UserService(
     }
 
     override fun findByEmail(email: String): UserTO {
-        return userRepository.findByEmail(email).toTO()
+        val user = userRepository.findByEmail(email) ?: throw UserNotFoundException()
+
+        return user.toTO()
     }
 
     override fun updatePassword(id: String, updatePasswordTO: UpdatePasswordTO) {

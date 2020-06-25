@@ -4,6 +4,7 @@ import br.com.zapzup.manager.api.ResponseWrapper
 import br.com.zapzup.manager.api.user.request.CreateUserRequest
 import br.com.zapzup.manager.api.user.request.UpdatePasswordRequest
 import br.com.zapzup.manager.api.user.response.CreateUserResponse
+import br.com.zapzup.manager.api.user.response.InvalidPasswordResponse
 import br.com.zapzup.manager.api.user.response.UserAlreadyExistsResponse
 import br.com.zapzup.manager.api.user.response.UserResponse
 import io.swagger.annotations.Api
@@ -58,7 +59,8 @@ interface UserApi {
     @ResponseStatus(NO_CONTENT)
     @ApiOperation(value = "Updates the user's password")
     @ApiResponses(value = [
-        ApiResponse(code = 204, message = "Updated")
+        ApiResponse(code = 204, message = "Updated"),
+        ApiResponse(code = 422, message = "Invalid Password", response = InvalidPasswordResponse::class)
     ])
     fun updatePassword(@RequestBody updatePasswordRequest: UpdatePasswordRequest, @PathVariable id: String)
 }
