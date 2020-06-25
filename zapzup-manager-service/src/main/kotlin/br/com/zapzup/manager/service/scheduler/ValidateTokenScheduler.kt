@@ -1,6 +1,6 @@
 package br.com.zapzup.manager.service.scheduler
 
-import br.com.zapzup.manager.service.reset.ITokenService
+import br.com.zapzup.manager.service.token.ITokenService
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component

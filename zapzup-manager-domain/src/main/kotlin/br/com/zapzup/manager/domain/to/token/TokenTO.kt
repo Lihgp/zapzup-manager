@@ -1,4 +1,4 @@
-package br.com.zapzup.manager.domain.to.reset
+package br.com.zapzup.manager.domain.to.token
 
 import java.time.OffsetDateTime
 

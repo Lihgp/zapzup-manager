@@ -1,4 +1,4 @@
-package br.com.zapzup.manager.api.reset.request
+package br.com.zapzup.manager.api.token.request
 
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotEmpty

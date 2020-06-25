@@ -1,7 +1,7 @@
-package br.com.zapzup.manager.service.reset
+package br.com.zapzup.manager.service.token
 
-import br.com.zapzup.manager.domain.to.reset.GenerateTokenTO
-import br.com.zapzup.manager.domain.to.reset.TokenTO
+import br.com.zapzup.manager.domain.to.token.GenerateTokenTO
+import br.com.zapzup.manager.domain.to.token.TokenTO
 
 interface ITokenService {
     fun generateToken(generateTokenTO: GenerateTokenTO, tokenType: String)

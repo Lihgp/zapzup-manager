@@ -1,15 +1,15 @@
-package br.com.zapzup.manager.service.reset.impl
+package br.com.zapzup.manager.service.token.impl
 
 import br.com.zapzup.manager.commons.exceptions.InvalidTokenException
 import br.com.zapzup.manager.domain.entity.Token
 import br.com.zapzup.manager.domain.enums.TokenTypeEnum
-import br.com.zapzup.manager.domain.to.reset.GenerateTokenTO
-import br.com.zapzup.manager.domain.to.reset.TokenTO
+import br.com.zapzup.manager.domain.to.token.GenerateTokenTO
+import br.com.zapzup.manager.domain.to.token.TokenTO
 import br.com.zapzup.manager.repository.TokenRepository
 import br.com.zapzup.manager.service.email.IEmailService
-import br.com.zapzup.manager.service.reset.ITokenService
-import br.com.zapzup.manager.service.reset.mapper.toResetPasswordTokenTOList
-import br.com.zapzup.manager.service.reset.mapper.toTO
+import br.com.zapzup.manager.service.token.ITokenService
+import br.com.zapzup.manager.service.token.mapper.toResetPasswordTokenTOList
+import br.com.zapzup.manager.service.token.mapper.toTO
 import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.mapper.toEntity
 import org.springframework.stereotype.Service
