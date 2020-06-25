@@ -38,6 +38,8 @@ class ResetPasswordService(
         if (resetPasswordTokenTO.expirationDate.isBefore(OffsetDateTime.now())){
             throw InvalidTokenException()
         }
+
+        this.delete(resetPasswordTokenTO.id)
     }
 
     override fun getAll(): List<ResetPasswordTokenTO> {

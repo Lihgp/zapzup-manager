@@ -4,6 +4,7 @@ import br.com.zapzup.manager.commons.ResourceBundle
 import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.commons.error.ErrorResponse
 import br.com.zapzup.manager.commons.error.ZapZupErrorCode
+import br.com.zapzup.manager.commons.exceptions.InvalidTokenException
 import org.apache.logging.log4j.LogManager
 import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
@@ -80,6 +81,19 @@ class ZapZupExceptionHandler(
             message = resourceBundle.getMessage(ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.key, arrayOf(ex.field))
                 ?: ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.code,
             code = ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.code
+        )
+    }
+
+    @ExceptionHandler(InvalidTokenException::class)
+    @ResponseStatus(UNPROCESSABLE_ENTITY)
+    @ResponseBody
+    fun handleInvalidTokenException(ex: InvalidTokenException): ErrorResponse {
+        log.error("InvalidTokenException ", ex)
+
+        return ErrorResponse(
+            message = resourceBundle.getMessage(ZapZupErrorCode.INVALID_TOKEN.key)
+                ?: ZapZupErrorCode.INVALID_TOKEN.code,
+            code = ZapZupErrorCode.INVALID_TOKEN.code
         )
     }
 }

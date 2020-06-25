@@ -10,8 +10,8 @@ object ZapZupErrorCode {
     val INVALID_EMAIL_FORMAT: ErrorCode = ErrorCode("INVALID_EMAIL_FORMAT", "invalid.email.format")
     val DUPLICATED_FIELD: ErrorCode = ErrorCode("DUPLICATED_FIELD", "duplicated.field")
     val INVALID_VALUE: ErrorCode = ErrorCode("INVALID_VALUE", "invalid.value")
-
     val GENERAL_ERROR: ErrorCode = ErrorCode("GENERAL_ERROR", "general.error")
     val METHOD_ARGUMENT_INVALID: ErrorCode = ErrorCode("METHOD_ARGUMENT_INVALID", "method.argument.invalid")
     val CUSTOMER_ALREADY_EXISTS: ErrorCode = ErrorCode("CUSTOMER_ALREADY_EXISTS", "customer.already.exists")
+    val INVALID_TOKEN: ErrorCode = ErrorCode("INVALID_TOKEN", "invalid.token")
 }
