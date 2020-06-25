@@ -5,7 +5,7 @@ import org.junit.Test
 class DummyTest {
 
     @Test
-    fun `dummy test`(){
+    fun `dummy test`() {
         print("Dummy Test")
     }
 }

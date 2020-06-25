@@ -1,15 +1,13 @@
 package br.com.zapzup.manager.application.exceptions
 
 import br.com.zapzup.manager.commons.ResourceBundle
-import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.commons.error.ErrorResponse
 import br.com.zapzup.manager.commons.error.ZapZupErrorCode
 import br.com.zapzup.manager.commons.exceptions.EqualPasswordException
 import br.com.zapzup.manager.commons.exceptions.InvalidOldPasswordException
 import br.com.zapzup.manager.commons.exceptions.InvalidTokenException
+import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import org.apache.logging.log4j.LogManager
-import org.springframework.context.MessageSource
-import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY

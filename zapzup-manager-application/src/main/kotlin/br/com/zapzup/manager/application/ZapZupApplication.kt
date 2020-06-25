@@ -1,8 +1,8 @@
 package br.com.zapzup.manager.application
 
+import br.com.zapzup.manager.application.config.ZapZupApplicationConfig
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringApplication
-import br.com.zapzup.manager.application.config.ZapZupApplicationConfig
 import java.net.InetAddress
 import java.time.LocalDateTime
 

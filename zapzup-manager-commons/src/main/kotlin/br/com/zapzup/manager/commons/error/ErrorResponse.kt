@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import io.swagger.annotations.ApiModel
 
 @ApiModel(value = "Error Response")
-data class ErrorResponse (
+data class ErrorResponse(
     val code: String,
     val message: String,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)

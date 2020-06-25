@@ -1,6 +1,6 @@
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
@@ -22,7 +22,8 @@
     </changeSet>
 
     <changeSet author="Victor" id="set_message_entity_pk">
-        <addPrimaryKey schemaName="zapzup" columnNames="id" constraintName="message_entity_pkey" tableName="message_entity"/>
+        <addPrimaryKey schemaName="zapzup" columnNames="id" constraintName="message_entity_pkey"
+                       tableName="message_entity"/>
     </changeSet>
 
     <changeSet author="Victor" id="set_user_fk">

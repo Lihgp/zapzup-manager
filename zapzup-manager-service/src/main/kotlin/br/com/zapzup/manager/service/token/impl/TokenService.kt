@@ -36,7 +36,7 @@ class TokenService(
         val token = tokenRepository.findByCode(code) ?: throw InvalidTokenException()
         val tokenTO = token.toTO()
 
-        if (tokenTO.expirationDate.isBefore(OffsetDateTime.now())){
+        if (tokenTO.expirationDate.isBefore(OffsetDateTime.now())) {
             throw InvalidTokenException()
         }
 
