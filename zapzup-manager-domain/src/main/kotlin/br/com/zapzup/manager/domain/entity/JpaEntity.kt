@@ -80,12 +80,12 @@ data class Chat(
 )
 
 @Entity
-@Table(name = "reset_password_token")
-data class ResetPasswordToken(
+@Table(name = "token_entity")
+data class Token(
     @Id
     val id: String = "TOKEN-${UUID.randomUUID()}",
     @Column(unique = true)
-    val token: String = UUID.randomUUID().toString(),
+    val code: String = UUID.randomUUID().toString(),
     @OneToOne(targetEntity = User::class, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     val user: User = User(),

@@ -7,5 +7,5 @@
     <include file="db/changelog/create-chat-schema.xml"/>
     <include file="db/changelog/create-user-chat-schema.xml"/>
     <include file="db/changelog/create-message-chat-schema.xml"/>
-    <include file="db/changelog/create-reset-password-token-schema.xml"/>
+    <include file="db/changelog/create-token-schema.xml"/>
 </databaseChangeLog>

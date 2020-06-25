@@ -1,6 +1,6 @@
 package br.com.zapzup.manager.service.scheduler
 
-import br.com.zapzup.manager.service.reset.IResetPasswordService
+import br.com.zapzup.manager.service.reset.ITokenService
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
@@ -9,14 +9,14 @@ import java.time.OffsetDateTime
 @Component
 @EnableScheduling
 class ValidateTokenScheduler(
-    private val resetPasswordService: IResetPasswordService
+    private val tokenService: ITokenService
 ) {
 
     @Scheduled(fixedRateString = "\${reset.password.token.validation.millis}")
-    fun validateTokens() {
-        resetPasswordService.getAll().forEach {
+    fun validateTokenExpirationDate() {
+        tokenService.getAll().forEach {
             if (it.expirationDate.isBefore(OffsetDateTime.now())) {
-                resetPasswordService.delete(it.id)
+                tokenService.delete(it.id)
             }
         }
     }

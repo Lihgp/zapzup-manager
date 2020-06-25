@@ -1,6 +1,6 @@
 package br.com.zapzup.manager.repository
 
-import br.com.zapzup.manager.domain.entity.ResetPasswordToken
+import br.com.zapzup.manager.domain.entity.Token
 import br.com.zapzup.manager.domain.entity.User
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
@@ -13,6 +13,6 @@ interface UserRepository : JpaRepository<User, String> {
 }
 
 @Repository
-interface ResetPasswordTokenRepository : JpaRepository<ResetPasswordToken, String> {
-    fun findByToken(token: String): ResetPasswordToken?
+interface TokenRepository : JpaRepository<Token, String> {
+    fun findByCode(code: String): Token?
 }

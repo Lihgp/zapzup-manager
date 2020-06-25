@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
 
 @Api(value = "Password Token", tags = ["Password Token"], description = "Password Token Resources")
-@RequestMapping(value = ["/reset-password"])
-interface ResetPasswordApi {
+@RequestMapping(value = ["/tokens"])
+interface TokenApi {
 
-    @PostMapping
+    @PostMapping(value = ["/reset-password"])
     @ResponseStatus(ACCEPTED)
     @ResponseBody
     fun generateResetToken(@RequestBody @Validated generateTokenRequest: GenerateTokenRequest)
