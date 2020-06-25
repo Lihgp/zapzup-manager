@@ -1,8 +1,8 @@
 package br.com.zapzup.manager.service.user.impl
 
+import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.domain.to.user.CreateUserTO
 import br.com.zapzup.manager.domain.to.user.UserTO
-import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.repository.UserRepository
 import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.mapper.toEntity
@@ -26,5 +26,9 @@ class UserService(
         val user = createUserTO.toEntity().copy(password = encryptedPassword)
 
         return userRepository.save(user).toTO()
+    }
+
+    override fun findByEmail(email: String): UserTO {
+        return userRepository.findByEmail(email).toTO()
     }
 }

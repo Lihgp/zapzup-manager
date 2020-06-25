@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository
 interface UserRepository : JpaRepository<User, String> {
     fun existsByUsername(username: String): Boolean
     fun existsByEmail(email: String): Boolean
+    fun findByEmail(email: String): User
 }
 
 @Repository
-interface ResetPasswordTokenRepository : JpaRepository<ResetPasswordToken, Long>
+interface ResetPasswordTokenRepository : JpaRepository<ResetPasswordToken, String>

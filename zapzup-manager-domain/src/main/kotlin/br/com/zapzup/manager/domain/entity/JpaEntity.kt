@@ -83,12 +83,11 @@ data class Chat(
 @Table(name = "reset_password_token")
 data class ResetPasswordToken(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Long? = null,
+    val id: String = "TOKEN-${UUID.randomUUID()}",
     @Column(unique = true)
     val token: String = UUID.randomUUID().toString(),
     @OneToOne(targetEntity = User::class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user_id")
+    @JoinColumn(name = "user_id")
     val user: User = User(),
     val expirationDate: OffsetDateTime? = null
 )
