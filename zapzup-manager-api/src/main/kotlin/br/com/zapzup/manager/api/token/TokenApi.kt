@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
 
-@Api(value = "Password Token", tags = ["Password Token"], description = "Password Token Resources")
+@Api(value = "Token", tags = ["Token"], description = "Token Resources")
 @RequestMapping(value = ["/tokens"])
 interface TokenApi {
 

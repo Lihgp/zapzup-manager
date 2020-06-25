@@ -1,4 +1,4 @@
-package br.com.zapzup.manager.application.config
+package br.com.zapzup.manager.commons.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
-open class SecurityConfig {
+open class SecurityConfig : WebMvcConfigurer {
 
     @Bean
     open fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
