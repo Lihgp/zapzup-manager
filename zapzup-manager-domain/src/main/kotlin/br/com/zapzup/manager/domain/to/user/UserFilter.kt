@@ -6,4 +6,8 @@ data class GetUsersFilter(
     val name: String,
     val page: Int,
     val limit: Int
-)
+){
+    fun hasFilter(): Boolean {
+        return !(email.isNullOrBlank() && username.isNullOrBlank() && name.isNullOrBlank())
+    }
+}

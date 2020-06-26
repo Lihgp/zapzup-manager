@@ -9,8 +9,10 @@ import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.UserValidations
 import br.com.zapzup.manager.service.user.mapper.toEntity
 import br.com.zapzup.manager.service.user.mapper.toTO
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -32,26 +34,26 @@ class UserService(
         return userRepository.save(user).toTO()
     }
 
-    override fun getUsers(filter: GetUsersFilter): List<UserTO> {
+    override fun getUsers(filter: GetUsersFilter): Page<UserTO> {
         val validatedFilter = UserValidations.assertAndExtractParams(filter)
 
-        val pageagle: Pageable = PageRequest.of(validatedFilter.page, validatedFilter.limit)
+        val pageagle: Pageable = PageRequest.of(validatedFilter.page, validatedFilter.limit, Sort.by("name"))
 
-//        val offset = (validatedFilter.page - 1) * validatedFilter.limit
-
-        val records = userRepository.findByQueryParams(
+        return if (validatedFilter.hasFilter()) userRepository.findByQueryParams(
             validatedFilter.email,
             validatedFilter.name,
             validatedFilter.username,
             pageagle
-        )
+        ).map { user -> user.toTO() }
+        else userRepository.findAll(pageagle).map { user -> user.toTO() }
+    }
 
-        return if (records.content.isNotEmpty()) {
-            //TODO: Fazer o retorno caso tenha encotrado algum resultado. OBS: É necessário fazer a montagem
-            // das páginas
-            emptyList()
-        } else {
-            emptyList()
-        }
+    override fun getUserById(userId: String): UserTO? {
+        val user = userRepository.findById(userId)
+        return if (!user.isPresent)
+            //TODO: Dar exceção
+            null
+        else
+            user.get().toTO()
     }
 }

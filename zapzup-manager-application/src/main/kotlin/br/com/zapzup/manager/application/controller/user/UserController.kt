@@ -7,6 +7,7 @@ import br.com.zapzup.manager.api.user.response.CreateUserResponse
 import br.com.zapzup.manager.api.user.response.UserResponse
 import br.com.zapzup.manager.domain.to.user.GetUsersFilter
 import br.com.zapzup.manager.service.user.IUserService
+import org.springframework.data.domain.Page
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
@@ -23,12 +24,12 @@ class UserController(
         ResponseWrapper(userService.create(createUserTO = createUserRequest.toDomain()).toCreateUserResponse())
 
     override fun getUsers(
-        @RequestParam(name = "email", required = false) email: String,
-        @RequestParam(name = "username", required = false) username: String,
-        @RequestParam(name = "name", required = false) name: String,
-        @RequestParam(name = "page", defaultValue = "1", required = false) page: Int,
+        @RequestParam(name = "email", defaultValue = "", required = false) email: String,
+        @RequestParam(name = "username", defaultValue = "", required = false) username: String,
+        @RequestParam(name = "name", defaultValue = "", required = false) name: String,
+        @RequestParam(name = "page", defaultValue = "0", required = false) page: Int,
         @RequestParam(name = "limit", defaultValue = "10", required = false) limit: Int
-    ): ResponseWrapper<List<UserResponse>> {
+    ): ResponseWrapper<Page<UserResponse>> {
 
         val filter = GetUsersFilter(
             email = email,
@@ -38,6 +39,12 @@ class UserController(
             limit = limit
         )
 
-        return ResponseWrapper(toResponseList(userService.getUsers(filter)))
+        return ResponseWrapper(userService.getUsers(filter).map { user -> user.toResponse() })
+    }
+
+    override fun getUserById(
+        @RequestParam(name = "userId", required = true) userId: String
+    ): ResponseWrapper<UserResponse?> {
+        return ResponseWrapper(userService.getUserById(userId)?.toResponse())
     }
 }

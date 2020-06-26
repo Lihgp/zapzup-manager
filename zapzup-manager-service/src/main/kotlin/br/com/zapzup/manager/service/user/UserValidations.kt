@@ -5,7 +5,7 @@ import br.com.zapzup.manager.domain.to.user.GetUsersFilter
 object UserValidations {
 
     fun assertAndExtractParams(filter: GetUsersFilter): GetUsersFilter {
-        if (filter.page <= 0 || filter.limit <= 0) {
+        if (filter.page < 0 || filter.limit <= 0) {
             //TODO: Lançar exceção de limite de página invalida
         }
 

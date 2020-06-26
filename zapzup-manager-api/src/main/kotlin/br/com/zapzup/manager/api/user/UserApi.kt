@@ -9,6 +9,7 @@ import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
+import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.HttpStatus.OK
 import org.springframework.validation.annotation.Validated
@@ -47,5 +48,14 @@ interface UserApi {
         @RequestParam(name = "name", required = false) name: String,
         @RequestParam(name = "page", defaultValue = "1", required = false) page: Int,
         @RequestParam(name = "limit", defaultValue = "10", required = false) limit: Int
-    ): ResponseWrapper<List<UserResponse>>
+    ): ResponseWrapper<Page<UserResponse>>
+
+    @GetMapping
+    @ResponseBody
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Gets a user by id")
+    @ApiResponses()
+    fun getUserById(
+        @RequestParam(name = "userId", required = true) userId: String
+    ): ResponseWrapper<UserResponse?>
 }

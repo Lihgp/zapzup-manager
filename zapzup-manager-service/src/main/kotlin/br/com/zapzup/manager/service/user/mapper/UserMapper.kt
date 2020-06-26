@@ -28,3 +28,6 @@ fun userTO(user: User): UserTO =
         updatedAt = user.updatedAt,
         deletedAt = user.deletedAt
     )
+
+fun List<User>.listToTO(list: List<User>): List<UserTO> =
+    list.map { it.toTO() }
