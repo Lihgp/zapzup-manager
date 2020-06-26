@@ -9,5 +9,6 @@ class ResourceBundle(
     private val messageSource: MessageSource
 ) {
 
-    fun getMessage(message: String, args: Array<String> = arrayOf()): String? = messageSource.getMessage(message, args, LocaleContextHolder.getLocale())
+    fun getMessage(message: String, args: Array<String> = arrayOf()): String? =
+        messageSource.getMessage(message, args, LocaleContextHolder.getLocale())
 }
