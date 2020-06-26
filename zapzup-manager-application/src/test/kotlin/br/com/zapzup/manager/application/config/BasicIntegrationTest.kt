@@ -20,7 +20,7 @@ import org.springframework.web.context.WebApplicationContext
 @ContextConfiguration(classes = [ControllerTestConfiguration::class, ZapZupApplicationConfig::class])
 @RunWith(SpringRunner::class)
 @ActiveProfiles(value = ["test"])
-open class BasicIntegrationTest {
+abstract class BasicIntegrationTest {
 
     @Autowired
     protected lateinit var context: WebApplicationContext
