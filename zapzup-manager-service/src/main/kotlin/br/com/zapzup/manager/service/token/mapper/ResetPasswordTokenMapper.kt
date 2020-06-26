@@ -8,9 +8,9 @@ fun Token.toTO() = toTokenTO(token = this)
 fun toTokenTO(token: Token): TokenTO =
     TokenTO(
         id = token.id,
-        token = token.code,
+        code = token.code,
         expirationDate = token.expirationDate!!
     )
 
-fun toResetPasswordTokenTOList(resetPasswordToken: List<Token>): List<TokenTO> =
+fun toTokenTOList(resetPasswordToken: List<Token>): List<TokenTO> =
     resetPasswordToken.map { it.toTO() }

@@ -8,8 +8,8 @@ import br.com.zapzup.manager.domain.to.token.TokenTO
 import br.com.zapzup.manager.repository.TokenRepository
 import br.com.zapzup.manager.service.email.IEmailService
 import br.com.zapzup.manager.service.token.ITokenService
-import br.com.zapzup.manager.service.token.mapper.toResetPasswordTokenTOList
 import br.com.zapzup.manager.service.token.mapper.toTO
+import br.com.zapzup.manager.service.token.mapper.toTokenTOList
 import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.mapper.toEntity
 import org.springframework.stereotype.Service
@@ -44,9 +44,9 @@ class TokenService(
     }
 
     override fun getAll(): List<TokenTO> {
-        val resetPasswordTokens = tokenRepository.findAll()
+        val tokens = tokenRepository.findAll()
 
-        return toResetPasswordTokenTOList(resetPasswordTokens)
+        return toTokenTOList(tokens)
     }
 
     override fun delete(id: String) {
