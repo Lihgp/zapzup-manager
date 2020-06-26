@@ -7,7 +7,6 @@ import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.commons.exceptions.UserNotFoundException
 import br.com.zapzup.manager.repository.UserRepository
 import br.com.zapzup.manager.service.user.IUserService
-import br.com.zapzup.manager.service.user.UserValidations
 import br.com.zapzup.manager.service.user.mapper.toEntity
 import br.com.zapzup.manager.service.user.mapper.toTO
 import org.springframework.data.domain.Page
@@ -36,20 +35,20 @@ class UserService(
     }
 
     override fun getUsers(filter: GetUsersFilter): Page<UserTO> {
-        val validatedFilter = UserValidations.assertAndExtractParams(filter)
 
-        val pageagle: Pageable = PageRequest.of(validatedFilter.page, validatedFilter.limit, Sort.by("name"))
+        filter.validateFilter()
+        val pageagle: Pageable = PageRequest.of(filter.page, filter.limit, Sort.by("name"))
 
-        return if (validatedFilter.hasFilter()) userRepository.findByQueryParams(
-            validatedFilter.email,
-            validatedFilter.name,
-            validatedFilter.username,
+        return if (filter.hasFilter()) userRepository.findByQueryParams(
+            filter.email,
+            filter.name,
+            filter.username,
             pageagle
         ).map { user -> user.toTO() }
         else userRepository.findAll(pageagle).map { user -> user.toTO() }
     }
 
-    override fun getUserById(userId: String): UserTO {
-        return userRepository.findById(userId).orElseThrow{ UserNotFoundException(id = userId) }.toTO()
-    }
+    override fun getUserById(userId: String): UserTO =
+        userRepository.findById(userId).orElseThrow{ UserNotFoundException(id = userId) }.toTO()
+
 }

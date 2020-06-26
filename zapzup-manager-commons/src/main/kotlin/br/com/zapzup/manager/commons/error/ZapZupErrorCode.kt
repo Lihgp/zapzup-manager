@@ -13,7 +13,7 @@ object ZapZupErrorCode {
 
     val GENERAL_ERROR: ErrorCode = ErrorCode("GENERAL_ERROR", "general.error")
     val METHOD_ARGUMENT_INVALID: ErrorCode = ErrorCode("METHOD_ARGUMENT_INVALID", "method.argument.invalid")
-    val CUSTOMER_ALREADY_EXISTS: ErrorCode = ErrorCode("CUSTOMER_ALREADY_EXISTS", "customer.already.exists")
+    val USER_ALREADY_EXISTS: ErrorCode = ErrorCode("USER_ALREADY_EXISTS", "user.already.exists")
     val INVALID_PAGINATION_LIMIT_OFFSET: ErrorCode =
         ErrorCode("INVALID_PAGINATION_LIMIT_OFFSET", "invalid.pagination.limit.offset")
     val USER_NOT_FOUND: ErrorCode = ErrorCode("USER_NOT_FOUND", "user.not.found")

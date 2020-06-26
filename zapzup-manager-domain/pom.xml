@@ -11,5 +11,11 @@
 
     <artifactId>zapzup-manager-domain</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>br.com.zapzup</groupId>
+            <artifactId>zapzup-manager-commons</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

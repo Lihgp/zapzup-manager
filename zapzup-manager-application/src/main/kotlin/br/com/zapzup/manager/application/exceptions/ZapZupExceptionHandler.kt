@@ -79,9 +79,9 @@ class ZapZupExceptionHandler(
         log.error("UserAlreadyExistsException ", ex)
 
         return ErrorResponse(
-            message = getMessage(ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.key, arrayOf(ex.field))
-                ?: ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.code,
-            code = ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.code
+            message = getMessage(ZapZupErrorCode.USER_ALREADY_EXISTS.key, arrayOf(ex.field))
+                ?: ZapZupErrorCode.USER_ALREADY_EXISTS.code,
+            code = ZapZupErrorCode.USER_ALREADY_EXISTS.code
         )
     }
 
