@@ -9,6 +9,8 @@ import br.com.zapzup.manager.domain.to.user.GetUsersFilter
 import br.com.zapzup.manager.service.user.IUserService
 import org.springframework.data.domain.Page
 import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -42,9 +44,10 @@ class UserController(
         return ResponseWrapper(userService.getUsers(filter).map { user -> user.toResponse() })
     }
 
+    @GetMapping(value = ["/{id}"])
     override fun getUserById(
-        @RequestParam(name = "userId", required = true) userId: String
-    ): ResponseWrapper<UserResponse?> {
-        return ResponseWrapper(userService.getUserById(userId)?.toResponse())
+        @PathVariable(name = "id", required = true) userId: String
+    ): ResponseWrapper<UserResponse> {
+        return ResponseWrapper(userService.getUserById(userId).toResponse())
     }
 }

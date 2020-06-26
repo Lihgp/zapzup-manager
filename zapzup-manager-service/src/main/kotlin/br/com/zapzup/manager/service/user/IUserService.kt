@@ -9,7 +9,7 @@ interface IUserService {
 
     fun getUsers(filter: GetUsersFilter): Page<UserTO>
 
-    fun getUserById(userId: String): UserTO?
+    fun getUserById(userId: String): UserTO
 
     fun create(createUserTO: CreateUserTO): UserTO
 }

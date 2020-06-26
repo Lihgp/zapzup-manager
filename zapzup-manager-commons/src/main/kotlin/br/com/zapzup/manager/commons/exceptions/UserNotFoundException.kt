@@ -1,3 +1,3 @@
 package br.com.zapzup.manager.commons.exceptions
 
-class UserNotFoundException() : RuntimeException()
+class UserNotFoundException(val id : String) : RuntimeException()

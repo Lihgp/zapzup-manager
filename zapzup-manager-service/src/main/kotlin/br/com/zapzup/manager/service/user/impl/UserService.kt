@@ -4,6 +4,7 @@ import br.com.zapzup.manager.domain.to.user.CreateUserTO
 import br.com.zapzup.manager.domain.to.user.GetUsersFilter
 import br.com.zapzup.manager.domain.to.user.UserTO
 import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
+import br.com.zapzup.manager.commons.exceptions.UserNotFoundException
 import br.com.zapzup.manager.repository.UserRepository
 import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.UserValidations
@@ -48,12 +49,7 @@ class UserService(
         else userRepository.findAll(pageagle).map { user -> user.toTO() }
     }
 
-    override fun getUserById(userId: String): UserTO? {
-        val user = userRepository.findById(userId)
-        return if (!user.isPresent)
-            //TODO: Dar exceção
-            null
-        else
-            user.get().toTO()
+    override fun getUserById(userId: String): UserTO {
+        return userRepository.findById(userId).orElseThrow{ UserNotFoundException(id = userId) }.toTO()
     }
 }

@@ -3,11 +3,14 @@ package br.com.zapzup.manager.application.exceptions
 import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.commons.error.ErrorResponse
 import br.com.zapzup.manager.commons.error.ZapZupErrorCode
+import br.com.zapzup.manager.commons.exceptions.UserNotFoundException
+import br.com.zapzup.manager.commons.exceptions.ValidationException
 import org.apache.logging.log4j.LogManager
 import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
+import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -79,6 +82,32 @@ class ZapZupExceptionHandler(
             message = getMessage(ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.key, arrayOf(ex.field))
                 ?: ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.code,
             code = ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.code
+        )
+    }
+
+    @ExceptionHandler(UserNotFoundException::class)
+    @ResponseStatus(NOT_FOUND)
+    @ResponseBody
+    fun handleUserNotFoundException(ex: UserNotFoundException): ErrorResponse {
+        log.error("UserNotFoundException ", ex)
+
+        return ErrorResponse(
+            message = getMessage(ZapZupErrorCode.USER_NOT_FOUND.key, arrayOf(ex.id))
+                ?: ZapZupErrorCode.USER_NOT_FOUND.code,
+            code = ZapZupErrorCode.USER_NOT_FOUND.code
+        )
+    }
+
+    @ExceptionHandler(ValidationException::class)
+    @ResponseStatus(BAD_REQUEST)
+    @ResponseBody
+    fun handleValidationException(ex: ValidationException): ErrorResponse {
+        log.error("ValidationException ", ex)
+
+        return ErrorResponse(
+            message = getMessage(ZapZupErrorCode.INVALID_PAGINATION_LIMIT_OFFSET.key)
+                ?: ZapZupErrorCode.INVALID_PAGINATION_LIMIT_OFFSET.code,
+            code = ZapZupErrorCode.INVALID_PAGINATION_LIMIT_OFFSET.code
         )
     }
 
