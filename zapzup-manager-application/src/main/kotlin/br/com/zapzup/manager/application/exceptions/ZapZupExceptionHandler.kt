@@ -7,9 +7,11 @@ import br.com.zapzup.manager.commons.exceptions.EqualPasswordException
 import br.com.zapzup.manager.commons.exceptions.InvalidOldPasswordException
 import br.com.zapzup.manager.commons.exceptions.InvalidTokenException
 import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
+import br.com.zapzup.manager.commons.exceptions.UserNotFoundException
 import org.apache.logging.log4j.LogManager
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
+import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -78,9 +80,9 @@ class ZapZupExceptionHandler(
         log.error("UserAlreadyExistsException ", ex)
 
         return ErrorResponse(
-            message = resourceBundle.getMessage(ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.key, arrayOf(ex.field))
-                ?: ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.code,
-            code = ZapZupErrorCode.CUSTOMER_ALREADY_EXISTS.code
+            message = resourceBundle.getMessage(ZapZupErrorCode.USER_ALREADY_EXISTS.key, arrayOf(ex.field))
+                ?: ZapZupErrorCode.USER_ALREADY_EXISTS.code,
+            code = ZapZupErrorCode.USER_ALREADY_EXISTS.code
         )
     }
 
@@ -94,6 +96,19 @@ class ZapZupExceptionHandler(
             message = resourceBundle.getMessage(ZapZupErrorCode.INVALID_TOKEN.key)
                 ?: ZapZupErrorCode.INVALID_TOKEN.code,
             code = ZapZupErrorCode.INVALID_TOKEN.code
+        )
+    }
+
+    @ExceptionHandler(UserNotFoundException::class)
+    @ResponseStatus(NOT_FOUND)
+    @ResponseBody
+    fun handleUserNotFoundException(ex: UserNotFoundException): ErrorResponse {
+        log.error("UserNotFoundException ", ex)
+
+        return ErrorResponse(
+            message = resourceBundle.getMessage(ZapZupErrorCode.USER_NOT_FOUND.key)
+                ?: ZapZupErrorCode.USER_NOT_FOUND.code,
+            code = ZapZupErrorCode.USER_NOT_FOUND.code
         )
     }
 
