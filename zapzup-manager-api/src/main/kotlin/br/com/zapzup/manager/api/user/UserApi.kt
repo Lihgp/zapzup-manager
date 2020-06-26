@@ -29,8 +29,6 @@ import org.springframework.web.bind.annotation.ResponseStatus
 @RequestMapping(value = ["/users"])
 interface UserApi {
 
-    //TODO("Mapear os erros de cada serviço e acrescentar no @ApiResponses")
-
     @PostMapping
     @ResponseBody
     @ResponseStatus(CREATED)

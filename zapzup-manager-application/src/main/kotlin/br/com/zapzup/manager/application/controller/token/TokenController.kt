@@ -1,4 +1,4 @@
-package br.com.zapzup.manager.application.controller.reset
+package br.com.zapzup.manager.application.controller.token
 
 import br.com.zapzup.manager.api.token.TokenApi
 import br.com.zapzup.manager.api.token.request.GenerateTokenRequest
