@@ -21,6 +21,7 @@ Tecnologias utilizadas:
 * Docker
 * Docker Compose
 * PostgreSql
+* Github Actions
  
 Antes de rodar o projeto no ambiente de desenvolvimento, é necessário executar o seguinte comando
 para instalar as dependencias necessárias:
