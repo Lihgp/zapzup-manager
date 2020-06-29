@@ -17,7 +17,7 @@ class TokenController(
         tokenService.generateToken(generateTokenRequest.toDomain(), "PASSWORD")
     }
 
-    override fun validateToken(@RequestHeader token: String) {
-        tokenService.validateToken(token)
+    override fun validateToken(@RequestHeader(value = "x-code") code: String) {
+        tokenService.validateToken(code)
     }
 }

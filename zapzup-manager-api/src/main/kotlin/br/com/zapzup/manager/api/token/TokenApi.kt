@@ -37,5 +37,5 @@ interface TokenApi {
         ApiResponse(code = 204, message = "Token valid"),
         ApiResponse(code = 422, message = "Token expired")
     ])
-    fun validateToken(@RequestHeader token: String)
+    fun validateToken(@RequestHeader(value = "x-code") code: String)
 }

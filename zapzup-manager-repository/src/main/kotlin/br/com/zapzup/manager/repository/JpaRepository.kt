@@ -15,4 +15,5 @@ interface UserRepository : JpaRepository<User, String> {
 @Repository
 interface TokenRepository : JpaRepository<Token, String> {
     fun findByCode(code: String): Token?
+    fun findByUserEmail(email: String): Token?
 }
