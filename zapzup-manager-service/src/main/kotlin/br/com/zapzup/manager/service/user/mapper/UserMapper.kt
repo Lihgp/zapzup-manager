@@ -1,7 +1,9 @@
 package br.com.zapzup.manager.service.user.mapper
 
 import br.com.zapzup.manager.domain.entity.User
+import br.com.zapzup.manager.domain.enums.StatusEnum
 import br.com.zapzup.manager.domain.to.user.CreateUserTO
+import br.com.zapzup.manager.domain.to.user.UpdateUserTO
 import br.com.zapzup.manager.domain.to.user.UserTO
 
 fun User.toTO() = userTO(user = this)

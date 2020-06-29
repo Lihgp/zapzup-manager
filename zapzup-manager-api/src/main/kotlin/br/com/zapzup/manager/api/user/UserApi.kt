@@ -2,7 +2,9 @@ package br.com.zapzup.manager.api.user
 
 import br.com.zapzup.manager.api.ResponseWrapper
 import br.com.zapzup.manager.api.user.request.CreateUserRequest
+import br.com.zapzup.manager.api.user.request.UpdateUserRequest
 import br.com.zapzup.manager.api.user.response.CreateUserResponse
+import br.com.zapzup.manager.api.user.response.UpdateUserResponse
 import br.com.zapzup.manager.api.user.response.UserAlreadyExistsResponse
 import br.com.zapzup.manager.api.user.response.UserResponse
 import io.swagger.annotations.Api
@@ -13,7 +15,9 @@ import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.HttpStatus.OK
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -48,4 +52,14 @@ interface UserApi {
         @RequestParam(name = "page", defaultValue = "1", required = false) page: Int,
         @RequestParam(name = "limit", defaultValue = "10", required = false) limit: Int
     ): ResponseWrapper<List<UserResponse>>
+
+    @PutMapping("/{id}")
+    @ResponseBody
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Updates a user")
+    @ApiResponses(value = [
+        ApiResponse(code = 200, message = "Updated")
+    ])
+    fun update(@RequestBody @Validated updateUserRequest: UpdateUserRequest,
+               @PathVariable(name = "id") id: String): ResponseWrapper<UpdateUserResponse>
 }
