@@ -4,6 +4,7 @@ import br.com.zapzup.manager.api.ResponseWrapper
 import br.com.zapzup.manager.api.user.UserApi
 import br.com.zapzup.manager.api.user.request.CreateUserRequest
 import br.com.zapzup.manager.api.user.request.UpdateUserRequest
+import br.com.zapzup.manager.api.user.request.UpdatePasswordRequest
 import br.com.zapzup.manager.api.user.response.CreateUserResponse
 import br.com.zapzup.manager.api.user.response.UpdateUserResponse
 import br.com.zapzup.manager.api.user.response.UserResponse
@@ -32,4 +33,9 @@ class UserController(
         @PathVariable(name = "id") id: String
     ): ResponseWrapper<UpdateUserResponse> =
         ResponseWrapper(userService.update(updateUserTO = updateUserRequest.toDomain(id = id)).toUpdateUserResponse())
+
+    override fun updatePassword(
+        @RequestBody updatePasswordRequest: UpdatePasswordRequest, @PathVariable id: String) {
+        userService.updatePassword(id, updatePasswordRequest.toDomain())
+    }
 }

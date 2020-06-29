@@ -1,23 +1,26 @@
 package br.com.zapzup.manager.service.user.impl
 
-import br.com.zapzup.manager.domain.to.user.CreateUserTO
-import br.com.zapzup.manager.domain.to.user.UserTO
+import br.com.zapzup.manager.commons.exceptions.EqualPasswordException
+import br.com.zapzup.manager.commons.exceptions.InvalidOldPasswordException
 import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.commons.exceptions.UserNotFoundException
 import br.com.zapzup.manager.domain.entity.User
+import br.com.zapzup.manager.domain.to.user.CreateUserTO
+import br.com.zapzup.manager.domain.to.user.UpdatePasswordTO
 import br.com.zapzup.manager.domain.to.user.UpdateUserTO
+import br.com.zapzup.manager.domain.to.user.UserTO
 import br.com.zapzup.manager.repository.UserRepository
 import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.mapper.toEntity
 import br.com.zapzup.manager.service.user.mapper.toTO
-import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 
 @Service
 class UserService(
     private val userRepository: UserRepository,
-    private val passwordEncoder: PasswordEncoder
+    private val passwordEncoder: BCryptPasswordEncoder
 ) : IUserService {
 
     override fun create(createUserTO: CreateUserTO): UserTO {
@@ -30,6 +33,26 @@ class UserService(
         val user = createUserTO.toEntity().copy(password = encryptedPassword)
 
         return userRepository.save(user).toTO()
+    }
+
+    override fun findByEmail(email: String): UserTO {
+        val user = userRepository.findByEmail(email) ?: throw UserNotFoundException()
+
+        return user.toTO()
+    }
+
+    override fun updatePassword(id: String, updatePasswordTO: UpdatePasswordTO) {
+        val user = userRepository.findById(id).orElseThrow { UserNotFoundException() }
+
+        when {
+            !passwordEncoder.matches(updatePasswordTO.oldPassword, user.password) -> throw InvalidOldPasswordException()
+            updatePasswordTO.oldPassword == updatePasswordTO.newPassword -> throw EqualPasswordException()
+        }
+
+        userRepository.save(user.copy(
+            password = passwordEncoder.encode(updatePasswordTO.newPassword),
+            updatedAt = OffsetDateTime.now()
+        ))
     }
 
     override fun update(updateUserTO: UpdateUserTO): UserTO {

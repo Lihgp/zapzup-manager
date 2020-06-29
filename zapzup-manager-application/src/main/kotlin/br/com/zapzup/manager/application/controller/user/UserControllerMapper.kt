@@ -2,11 +2,13 @@ package br.com.zapzup.manager.application.controller.user
 
 import br.com.zapzup.manager.api.user.request.CreateUserRequest
 import br.com.zapzup.manager.api.user.request.UpdateUserRequest
+import br.com.zapzup.manager.api.user.request.UpdatePasswordRequest
 import br.com.zapzup.manager.api.user.response.CreateUserResponse
 import br.com.zapzup.manager.api.user.response.UpdateUserResponse
 import br.com.zapzup.manager.api.user.response.UserResponse
 import br.com.zapzup.manager.domain.to.user.CreateUserTO
 import br.com.zapzup.manager.domain.to.user.UpdateUserTO
+import br.com.zapzup.manager.domain.to.user.UpdatePasswordTO
 import br.com.zapzup.manager.domain.to.user.UserTO
 
 fun CreateUserRequest.toDomain() = CreateUserTO(
@@ -21,6 +23,11 @@ fun UpdateUserRequest.toDomain(id: String) = UpdateUserTO(
     username = this.username,
     email = this.email,
     note = this.note
+)
+
+fun UpdatePasswordRequest.toDomain() = UpdatePasswordTO(
+    oldPassword = this.oldPassword,
+    newPassword = this.newPassword
 )
 
 fun UserTO.toCreateUserResponse() =
