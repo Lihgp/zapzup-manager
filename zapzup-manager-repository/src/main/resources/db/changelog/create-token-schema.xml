@@ -1,0 +1,41 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Victor" id="create_token_entity">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="token_entity"/>
+            </not>
+        </preConditions>
+        <createTable tableName="token_entity" schemaName="zapzup">
+            <column name="id" type="varchar(42)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="code" type="varchar(36)">
+                <constraints unique="true"/>
+            </column>
+            <column name="user_id" type="varchar(41)"/>
+            <column name="expiration_date" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Victor" id="set_token_entity_pk">
+        <addPrimaryKey schemaName="zapzup" columnNames="id" constraintName="token_entity_pkey"
+                       tableName="token_entity"/>
+    </changeSet>
+
+    <changeSet author="Victor" id="set_user_fk_token">
+        <addForeignKeyConstraint baseTableName="token_entity"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_user_id"
+                                 referencedTableName="user_entity"
+                                 referencedColumnNames="id"
+                                 baseTableSchemaName="zapzup"
+                                 referencedTableSchemaName="zapzup"
+        />
+    </changeSet>
+
+</databaseChangeLog>
