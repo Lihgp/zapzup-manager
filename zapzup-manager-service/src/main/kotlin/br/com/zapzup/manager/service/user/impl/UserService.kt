@@ -5,6 +5,7 @@ import br.com.zapzup.manager.commons.exceptions.InvalidOldPasswordException
 import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.commons.exceptions.UserNotFoundException
 import br.com.zapzup.manager.domain.entity.User
+import br.com.zapzup.manager.domain.enums.StatusEnum
 import br.com.zapzup.manager.domain.to.user.CreateUserTO
 import br.com.zapzup.manager.domain.to.user.UpdatePasswordTO
 import br.com.zapzup.manager.domain.to.user.UpdateUserTO
@@ -56,7 +57,7 @@ class UserService(
     }
 
     override fun update(updateUserTO: UpdateUserTO): UserTO {
-        val userFound: User = userRepository.findById(updateUserTO.id).orElseThrow { UserNotFoundException() }
+        val userFound: User = this.findUserActive(updateUserTO.id)
 
         val newUpdateUserTO = UpdateUserTO(
             id = updateUserTO.id,
@@ -72,4 +73,10 @@ class UserService(
             updatedAt = OffsetDateTime.now()
         )).toTO()
     }
+
+    private fun findUserActive(id: String): User {
+        return userRepository.findByIdAndStatus(id, StatusEnum.ACTIVE)
+            .orElseThrow { UserNotFoundException() }
+    }
+
 }

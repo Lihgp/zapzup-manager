@@ -43,7 +43,7 @@ class UserServiceTest {
     fun `should throw an exception when not find user - update`() {
         val updateUserTO = buildUpdateUserTO()
 
-        `when`(userRepository.findById(id)).thenReturn(Optional.empty())
+        `when`(userRepository.findByIdAndStatus(id, StatusEnum.ACTIVE)).thenReturn(Optional.empty())
 
         val exception = assertThrows<UserNotFoundException> { userService.update(updateUserTO = updateUserTO) }
 
@@ -56,7 +56,7 @@ class UserServiceTest {
         val user = buildUser()
         val argumentCaptor = ArgumentCaptor.forClass(User::class.java)
 
-        `when`(userRepository.findById(id)).thenReturn(Optional.of(user))
+        `when`(userRepository.findByIdAndStatus(id, StatusEnum.ACTIVE)).thenReturn(Optional.of(user))
         `when`(userRepository.save(any(User::class.java))).thenAnswer { user }
 
         userService.update(updateUserTO = updateUserTO)
