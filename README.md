@@ -41,7 +41,11 @@ Para a execução dos testes, utilize:
 mvn test
 ```
 
-Para execução da aplicação, utilize:
+Para execução da aplicação, utilize os seguintes comandos respectivamente:
+```
+docker-compose -f resource/docker-compose.yml up
+```
+
 ```
 mvn spring-boot:run
 ```
