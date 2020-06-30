@@ -2,10 +2,13 @@ package br.com.zapzup.manager.api.user
 
 import br.com.zapzup.manager.api.ResponseWrapper
 import br.com.zapzup.manager.api.user.request.CreateUserRequest
+import br.com.zapzup.manager.api.user.request.UpdateUserRequest
 import br.com.zapzup.manager.api.user.request.UpdatePasswordRequest
 import br.com.zapzup.manager.api.user.response.CreateUserResponse
+import br.com.zapzup.manager.api.user.response.UpdateUserResponse
 import br.com.zapzup.manager.api.user.response.InvalidPasswordResponse
 import br.com.zapzup.manager.api.user.response.UserAlreadyExistsResponse
+import br.com.zapzup.manager.api.user.response.UserNotFoundResponse
 import br.com.zapzup.manager.api.user.response.UserResponse
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -52,13 +55,25 @@ interface UserApi {
         @RequestParam(name = "limit", defaultValue = "10", required = false) limit: Int
     ): ResponseWrapper<List<UserResponse>>
 
+    @PutMapping("/{id}")
+    @ResponseBody
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Updates a user")
+    @ApiResponses(value = [
+        ApiResponse(code = 200, message = "Updated"),
+        ApiResponse(code = 404, message = "User not found", response = UserNotFoundResponse::class)
+    ])
+    fun update(@RequestBody @Validated updateUserRequest: UpdateUserRequest,
+               @PathVariable(name = "id") id: String): ResponseWrapper<UpdateUserResponse>
+
     @PutMapping(value = ["/{id}/update-password"])
     @ResponseBody
     @ResponseStatus(NO_CONTENT)
     @ApiOperation(value = "Updates the user's password")
     @ApiResponses(value = [
         ApiResponse(code = 204, message = "Updated"),
-        ApiResponse(code = 422, message = "Invalid Password", response = InvalidPasswordResponse::class)
+        ApiResponse(code = 422, message = "Invalid Password", response = InvalidPasswordResponse::class),
+        ApiResponse(code = 404, message = "User not found", response = UserNotFoundResponse::class)
     ])
     fun updatePassword(@RequestBody updatePasswordRequest: UpdatePasswordRequest, @PathVariable id: String)
 }

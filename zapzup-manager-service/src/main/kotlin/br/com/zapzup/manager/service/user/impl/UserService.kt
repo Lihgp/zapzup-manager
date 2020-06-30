@@ -4,8 +4,10 @@ import br.com.zapzup.manager.commons.exceptions.EqualPasswordException
 import br.com.zapzup.manager.commons.exceptions.InvalidOldPasswordException
 import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.commons.exceptions.UserNotFoundException
+import br.com.zapzup.manager.domain.entity.User
 import br.com.zapzup.manager.domain.to.user.CreateUserTO
 import br.com.zapzup.manager.domain.to.user.UpdatePasswordTO
+import br.com.zapzup.manager.domain.to.user.UpdateUserTO
 import br.com.zapzup.manager.domain.to.user.UserTO
 import br.com.zapzup.manager.repository.UserRepository
 import br.com.zapzup.manager.service.user.IUserService
@@ -51,5 +53,23 @@ class UserService(
             password = passwordEncoder.encode(updatePasswordTO.newPassword),
             updatedAt = OffsetDateTime.now()
         ))
+    }
+
+    override fun update(updateUserTO: UpdateUserTO): UserTO {
+        val userFound: User = userRepository.findById(updateUserTO.id).orElseThrow { UserNotFoundException() }
+
+        val newUpdateUserTO = UpdateUserTO(
+            id = updateUserTO.id,
+            username = if (updateUserTO.username.isNotEmpty()) updateUserTO.username else userFound.username,
+            email = if (updateUserTO.email.isNotEmpty()) updateUserTO.email else userFound.email,
+            note = if (updateUserTO.note.isNotEmpty()) updateUserTO.note else userFound.note
+        )
+
+        return userRepository.save(userFound.copy(
+            username = newUpdateUserTO.username,
+            email = newUpdateUserTO.email,
+            note = newUpdateUserTO.note,
+            updatedAt = OffsetDateTime.now()
+        )).toTO()
     }
 }
