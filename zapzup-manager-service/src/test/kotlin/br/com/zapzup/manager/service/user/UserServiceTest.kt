@@ -8,6 +8,7 @@ import br.com.zapzup.manager.domain.entity.User
 import br.com.zapzup.manager.domain.enums.StatusEnum
 import br.com.zapzup.manager.domain.to.user.CreateUserTO
 import br.com.zapzup.manager.domain.to.user.UpdatePasswordTO
+import br.com.zapzup.manager.domain.to.user.UpdateUserTO
 import br.com.zapzup.manager.repository.UserRepository
 import br.com.zapzup.manager.service.user.impl.UserService
 import org.assertj.core.api.Assertions.assertThat
@@ -28,6 +29,47 @@ class UserServiceTest {
     private val passwordEncoder: BCryptPasswordEncoder = mock(BCryptPasswordEncoder::class.java)
     private val userService: IUserService = UserService(userRepository, passwordEncoder)
 
+    private val id: String = "USER-ID"
+    private val username: String = "fulaninho"
+    private val newUsername: String = "fulaninho2"
+    private val email: String = "fulano@gmail.com"
+    private val note: String = "Suave"
+    private val newNote: String = "Suavao"
+    private val name: String = "Fulano"
+    private val password: String = "F6DS54AGDSA8"
+    private val passwordEncoded: String = "FUDSHAFU7284"
+
+    @Test
+    fun `should throw an exception when not find user - update`() {
+        val updateUserTO = buildUpdateUserTO()
+
+        `when`(userRepository.findById(id)).thenReturn(Optional.empty())
+
+        val exception = assertThrows<UserNotFoundException> { userService.update(updateUserTO = updateUserTO) }
+
+        assertThat(exception).isNotNull()
+    }
+
+    @Test
+    fun `should update user with success`() {
+        val updateUserTO = buildUpdateUserTO()
+        val user = buildUser()
+        val argumentCaptor = ArgumentCaptor.forClass(User::class.java)
+
+        `when`(userRepository.findById(id)).thenReturn(Optional.of(user))
+        `when`(userRepository.save(any(User::class.java))).thenAnswer { user }
+
+        userService.update(updateUserTO = updateUserTO)
+
+        verify(userRepository, times(1)).save(argumentCaptor.capture())
+
+        assertThat(argumentCaptor.value.id).isEqualTo(user.id)
+        assertThat(argumentCaptor.value.email).isEqualTo(email)
+        assertThat(argumentCaptor.value.note).isEqualTo(newNote)
+        assertThat(argumentCaptor.value.username).isEqualTo(newUsername)
+        assertThat(argumentCaptor.value.updatedAt).isNotNull()
+    }
+
     @Test
     fun `should create user with success`() {
         val createUserTO = buildCreateUserTO()
@@ -35,7 +77,7 @@ class UserServiceTest {
 
         `when`(userRepository.existsByEmail(createUserTO.email)).thenReturn(false)
         `when`(userRepository.existsByUsername(createUserTO.username)).thenReturn(false)
-        `when`(passwordEncoder.encode(createUserTO.password)).thenReturn("F6DS54AGDSA8")
+        `when`(passwordEncoder.encode(createUserTO.password)).thenReturn(password)
         `when`(userRepository.save(any(User::class.java))).thenAnswer { user }
 
         val response = userService.create(createUserTO)
@@ -70,7 +112,6 @@ class UserServiceTest {
 
     @Test
     fun `should find user by email`() {
-        val email = "fulano@gmail.com"
         val user = buildUser()
 
         `when`(userRepository.findByEmail(email)).thenReturn(user)
@@ -83,8 +124,6 @@ class UserServiceTest {
 
     @Test
     fun `should throw an exception when not find user by email`() {
-        val email = "fulano@gmail.com"
-
         `when`(userRepository.findByEmail(email)).thenReturn(null)
 
         val exception = assertThrows<UserNotFoundException> { userService.findByEmail(email) }
@@ -94,8 +133,6 @@ class UserServiceTest {
 
     @Test
     fun `should update password with success`() {
-        val id = "USER-ID"
-        val passwordEncoded = "FUDSHAFU7284"
         val updatePasswordTO = buildUpdatePasswordTO()
         val user = buildUser()
         val argumentCaptor = ArgumentCaptor.forClass(User::class.java)
@@ -114,8 +151,7 @@ class UserServiceTest {
     }
 
     @Test
-    fun `should throw an exception when not find user`() {
-        val id = "USER-ID"
+    fun `should throw an exception when not find user - update password`() {
         val updatePasswordTO = buildUpdatePasswordTO()
 
         `when`(userRepository.findById(id)).thenReturn(Optional.empty())
@@ -161,22 +197,30 @@ class UserServiceTest {
             newPassword = "789456123"
         )
 
+    private fun buildUpdateUserTO(): UpdateUserTO =
+        UpdateUserTO(
+            id = id,
+            username = newUsername,
+            note = newNote,
+            email = ""
+        )
+
     private fun buildCreateUserTO(): CreateUserTO =
         CreateUserTO(
-            name = "Fulano",
-            username = "fulaninho",
-            email = "fulano@gmail.com",
+            name = name,
+            username = username,
+            email = email,
             password = "123456789"
         )
 
     private fun buildUser(): User =
         User(
-            id = "USER-ID",
-            name = "Fulano",
-            username = "fulaninho",
-            note = "Suave",
+            id = id,
+            name = name,
+            username = username,
+            note = note,
             status = StatusEnum.ACTIVE,
-            email = "fulano@gmail.com",
-            password = "F6DS54AGDSA8"
+            email = email,
+            password = password
         )
 }

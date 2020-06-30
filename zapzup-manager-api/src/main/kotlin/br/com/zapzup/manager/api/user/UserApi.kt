@@ -8,6 +8,7 @@ import br.com.zapzup.manager.api.user.response.CreateUserResponse
 import br.com.zapzup.manager.api.user.response.UpdateUserResponse
 import br.com.zapzup.manager.api.user.response.InvalidPasswordResponse
 import br.com.zapzup.manager.api.user.response.UserAlreadyExistsResponse
+import br.com.zapzup.manager.api.user.response.UserNotFoundResponse
 import br.com.zapzup.manager.api.user.response.UserResponse
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -56,10 +57,11 @@ interface UserApi {
 
     @PutMapping("/{id}")
     @ResponseBody
-    @ResponseStatus(OK)
+    @ResponseStatus(NO_CONTENT)
     @ApiOperation(value = "Updates a user")
     @ApiResponses(value = [
-        ApiResponse(code = 200, message = "Updated")
+        ApiResponse(code = 204, message = "Updated"),
+        ApiResponse(code = 404, message = "User not found", response = UserNotFoundResponse::class)
     ])
     fun update(@RequestBody @Validated updateUserRequest: UpdateUserRequest,
                @PathVariable(name = "id") id: String): ResponseWrapper<UpdateUserResponse>

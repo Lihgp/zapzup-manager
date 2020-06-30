@@ -2,6 +2,7 @@ package br.com.zapzup.manager.application.controller
 
 import br.com.zapzup.manager.api.user.request.CreateUserRequest
 import br.com.zapzup.manager.api.user.request.UpdatePasswordRequest
+import br.com.zapzup.manager.api.user.request.UpdateUserRequest
 import br.com.zapzup.manager.application.config.BasicIntegrationTest
 import br.com.zapzup.manager.commons.objectToJson
 import org.assertj.core.api.Assertions.assertThat
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 open class UserControllerTest : BasicIntegrationTest() {
 
+    private val id: String = "USER-ID"
     @Test
     fun `should create user with success`() {
         val createUserRequest = CreateUserRequest(
@@ -42,12 +44,36 @@ open class UserControllerTest : BasicIntegrationTest() {
 
     @Test
     @Sql(value = ["/scripts/load-user.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    fun `should update user with success`() {
+        val updateUserRequest = UpdateUserRequest(
+            username = "Fulano2",
+            note = "Olá!",
+            email = ""
+        )
+
+        this.mockMvc.perform(put("/users/$id")
+            .content(updateUserRequest.objectToJson())
+            .contentType(MediaType.APPLICATION_JSON)
+            .characterEncoding("utf-8")
+            .accept(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isNoContent)
+
+        val user = userRepository.findById(id)
+        assertThat(user.isPresent).isTrue()
+        assertThat(user.get().updatedAt).isNotNull()
+        assertThat(user.get().email).isEqualTo("fulano@gmail.com")
+        assertThat(user.get().username).isEqualTo("Fulano2")
+        assertThat(user.get().note).isEqualTo("Olá!")
+    }
+
+    @Test
+    @Sql(value = ["/scripts/load-user.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     fun `should update password with success`() {
         val updatePasswordRequest = UpdatePasswordRequest(
             oldPassword = "123456789",
             newPassword = "987654321"
         )
-        val id: String = "USER-ID"
 
         this.mockMvc.perform(put("/users/$id/update-password")
             .content(updatePasswordRequest.objectToJson())
