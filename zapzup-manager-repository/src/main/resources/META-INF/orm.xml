@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" version="2.2">
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+                 version="2.0">
 
     <named-native-query name="UserEntity.existsByUsername">
         <query>
@@ -21,6 +24,16 @@
                     WHERE email = :email AND status = 'ACTIVE'
                 )
                 THEN true ELSE false END
+            ]]>
+        </query>
+    </named-native-query>
+
+    <named-native-query name="UserEntity.findById" result-class="br.com.zapzup.manager.domain.entity.User">
+        <query>
+            <![CDATA[
+                SELECT *
+                FROM zapzup.user_entity
+                WHERE id = :id AND status = 'ACTIVE'
             ]]>
         </query>
     </named-native-query>
