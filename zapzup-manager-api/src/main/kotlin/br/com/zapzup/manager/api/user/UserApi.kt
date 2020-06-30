@@ -57,10 +57,10 @@ interface UserApi {
 
     @PutMapping("/{id}")
     @ResponseBody
-    @ResponseStatus(NO_CONTENT)
+    @ResponseStatus(OK)
     @ApiOperation(value = "Updates a user")
     @ApiResponses(value = [
-        ApiResponse(code = 204, message = "Updated"),
+        ApiResponse(code = 200, message = "Updated"),
         ApiResponse(code = 404, message = "User not found", response = UserNotFoundResponse::class)
     ])
     fun update(@RequestBody @Validated updateUserRequest: UpdateUserRequest,
@@ -68,10 +68,10 @@ interface UserApi {
 
     @PutMapping(value = ["/{id}/update-password"])
     @ResponseBody
-    @ResponseStatus(OK)
+    @ResponseStatus(NO_CONTENT)
     @ApiOperation(value = "Updates the user's password")
     @ApiResponses(value = [
-        ApiResponse(code = 200, message = "Updated"),
+        ApiResponse(code = 204, message = "Updated"),
         ApiResponse(code = 422, message = "Invalid Password", response = InvalidPasswordResponse::class),
         ApiResponse(code = 404, message = "User not found", response = UserNotFoundResponse::class)
     ])
