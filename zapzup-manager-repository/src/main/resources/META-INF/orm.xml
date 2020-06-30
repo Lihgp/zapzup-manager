@@ -9,7 +9,6 @@
                     WHERE username = :username AND status = 'ACTIVE'
                 )
                 THEN true ELSE false END
-                FROM zapzup.user_entity;
             ]]>
         </query>
     </named-native-query>
@@ -22,7 +21,6 @@
                     WHERE email = :email AND status = 'ACTIVE'
                 )
                 THEN true ELSE false END
-                FROM zapzup.user_entity;
             ]]>
         </query>
     </named-native-query>
