@@ -57,7 +57,7 @@ open class UserControllerTest : BasicIntegrationTest() {
             .characterEncoding("utf-8")
             .accept(MediaType.APPLICATION_JSON))
             .andDo(print())
-            .andExpect(status().isNoContent)
+            .andExpect(status().isOk)
 
         val user = userRepository.findById(id)
         assertThat(user.isPresent).isTrue()
