@@ -4,7 +4,7 @@ import br.com.zapzup.manager.api.token.request.GenerateTokenRequest
 import br.com.zapzup.manager.application.config.BasicIntegrationTest
 import br.com.zapzup.manager.commons.objectToJson
 import br.com.zapzup.manager.service.email.IEmailService
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
@@ -39,8 +39,8 @@ open class TokenControllerTest : BasicIntegrationTest() {
 
         val token = this.tokenRepository.findByUserEmail(generatePasswordRequest.email)
 
-        Assertions.assertThat(token).isNotNull
-        Assertions.assertThat(token?.user?.id).isEqualTo("USER-ID")
+        assertThat(token).isNotNull
+        assertThat(token?.user?.id).isEqualTo("USER-ID")
     }
 
     @Test
@@ -61,6 +61,6 @@ open class TokenControllerTest : BasicIntegrationTest() {
 
         val token = this.tokenRepository.findByCode(code)
 
-        Assertions.assertThat(token).isNull()
+        assertThat(token).isNull()
     }
 }
