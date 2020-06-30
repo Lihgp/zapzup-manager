@@ -87,5 +87,9 @@ interface UserApi {
     @ResponseBody
     @ResponseStatus(NO_CONTENT)
     @ApiOperation(value = "Deletes a user")
+    @ApiResponses(value = [
+        ApiResponse(code = 204, message = "Deleted"),
+        ApiResponse(code = 404, message = "User not found", response = UserNotFoundResponse::class)
+    ])
     fun delete(@PathVariable(name = "id") id: String)
 }
