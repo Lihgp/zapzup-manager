@@ -72,7 +72,8 @@ interface UserApi {
     @ApiOperation(value = "Updates the user's password")
     @ApiResponses(value = [
         ApiResponse(code = 204, message = "Updated"),
-        ApiResponse(code = 422, message = "Invalid Password", response = InvalidPasswordResponse::class)
+        ApiResponse(code = 422, message = "Invalid Password", response = InvalidPasswordResponse::class),
+        ApiResponse(code = 404, message = "User not found", response = UserNotFoundResponse::class)
     ])
     fun updatePassword(@RequestBody updatePasswordRequest: UpdatePasswordRequest, @PathVariable id: String)
 }
