@@ -40,6 +40,6 @@ class UserController(
     }
 
     override fun delete(@PathVariable(value = "id") id: String) {
-        TODO("Not yet implemented")
+        userService.delete(id)
     }
 }
