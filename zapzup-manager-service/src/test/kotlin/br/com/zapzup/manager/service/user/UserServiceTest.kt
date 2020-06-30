@@ -191,6 +191,30 @@ class UserServiceTest {
         assertThat(exception).isNotNull()
     }
 
+    @Test
+    fun `should delete user with success`() {
+        val user = buildUser()
+        val argumentCaptor = ArgumentCaptor.forClass(User::class.java)
+
+        `when`(userRepository.findById(user.id)).thenReturn(Optional.of(user))
+
+        userService.delete(id = user.id)
+
+        verify(userRepository, times(1)).save(argumentCaptor.capture())
+
+        assertThat(argumentCaptor.value.status).isEqualTo(StatusEnum.INACTIVE)
+        assertThat(argumentCaptor.value.deletedAt).isNotNull()
+    }
+
+    @Test
+    fun `should throw an exception when not find user - delete`() {
+        `when`(userRepository.findById(id)).thenReturn(Optional.empty())
+
+        val exception = assertThrows<UserNotFoundException> { userService.delete(id = id) }
+
+        assertThat(exception).isNotNull()
+    }
+
     private fun buildUpdatePasswordTO(): UpdatePasswordTO =
         UpdatePasswordTO(
             oldPassword = "123456789",
