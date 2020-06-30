@@ -69,7 +69,7 @@ class UserService(
     }
 
     override fun update(updateUserTO: UpdateUserTO): UserTO {
-        val userFound: User = userRepository.findById(updateUserTO.id).orElseThrow { UserNotFoundException() }
+        val userFound: User = this.findUserActive(updateUserTO.id)
 
         val newUpdateUserTO = UpdateUserTO(
             id = updateUserTO.id,
@@ -93,4 +93,10 @@ class UserService(
             userFound.copy(status = StatusEnum.INACTIVE, deletedAt = OffsetDateTime.now())
         )
     }
+
+    private fun findUserActive(id: String): User {
+        return userRepository.findByIdAndStatus(id, StatusEnum.ACTIVE)
+            .orElseThrow { UserNotFoundException() }
+    }
+
 }
