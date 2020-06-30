@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" version="2.2">
+
+    <named-native-query name="UserEntity.existsByUsername">
+        <query>
+            <![CDATA[
+                SELECT CASE WHEN EXISTS(
+                    SELECT * FROM zapzup.user_entity
+                    WHERE username = :username AND status = 'ACTIVE'
+                )
+                THEN true ELSE false END
+                FROM zapzup.user_entity;
+            ]]>
+        </query>
+    </named-native-query>
+
+    <named-native-query name="UserEntity.existsByEmail">
+        <query>
+            <![CDATA[
+                SELECT CASE WHEN EXISTS(
+                    SELECT * FROM zapzup.user_entity
+                    WHERE email = :email AND status = 'ACTIVE'
+                )
+                THEN true ELSE false END
+                FROM zapzup.user_entity;
+            ]]>
+        </query>
+    </named-native-query>
+</entity-mappings>
