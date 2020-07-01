@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.HttpStatus.NO_CONTENT
 import org.springframework.http.HttpStatus.OK
 import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -63,8 +64,10 @@ interface UserApi {
         ApiResponse(code = 200, message = "Updated"),
         ApiResponse(code = 404, message = "User not found", response = UserNotFoundResponse::class)
     ])
-    fun update(@RequestBody @Validated updateUserRequest: UpdateUserRequest,
-               @PathVariable(name = "id") id: String): ResponseWrapper<UpdateUserResponse>
+    fun update(
+        @RequestBody @Validated updateUserRequest: UpdateUserRequest,
+        @PathVariable(name = "id") id: String
+    ): ResponseWrapper<UpdateUserResponse>
 
     @PutMapping(value = ["/{id}/update-password"])
     @ResponseBody
@@ -75,5 +78,18 @@ interface UserApi {
         ApiResponse(code = 422, message = "Invalid Password", response = InvalidPasswordResponse::class),
         ApiResponse(code = 404, message = "User not found", response = UserNotFoundResponse::class)
     ])
-    fun updatePassword(@RequestBody updatePasswordRequest: UpdatePasswordRequest, @PathVariable id: String)
+    fun updatePassword(
+        @RequestBody updatePasswordRequest: UpdatePasswordRequest,
+        @PathVariable(value = "id") id: String
+    )
+
+    @DeleteMapping(value = ["/{id}"])
+    @ResponseBody
+    @ResponseStatus(NO_CONTENT)
+    @ApiOperation(value = "Deletes a user")
+    @ApiResponses(value = [
+        ApiResponse(code = 204, message = "Deleted"),
+        ApiResponse(code = 404, message = "User not found", response = UserNotFoundResponse::class)
+    ])
+    fun delete(@PathVariable(name = "id") id: String)
 }

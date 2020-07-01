@@ -30,20 +30,33 @@ class UserService(
             userRepository.existsByEmail(createUserTO.email) -> throw UserAlreadyExistsException("email")
         }
 
+        val userInactive = userRepository.findByEmail(createUserTO.email)
         val encryptedPassword = passwordEncoder.encode(createUserTO.password)
+
+        if (userInactive != null) {
+            return userRepository.save(
+                createUserTO.toEntity().copy(
+                    id = userInactive.id,
+                    password = encryptedPassword
+                )
+            ).toTO()
+        }
+
         val user = createUserTO.toEntity().copy(password = encryptedPassword)
 
         return userRepository.save(user).toTO()
     }
 
-    override fun findByEmail(email: String): UserTO {
+    override fun getByEmail(email: String): UserTO {
         val user = userRepository.findByEmail(email) ?: throw UserNotFoundException()
+
+        if (user.status == StatusEnum.INACTIVE) throw UserNotFoundException()
 
         return user.toTO()
     }
 
     override fun updatePassword(id: String, updatePasswordTO: UpdatePasswordTO) {
-        val user = userRepository.findById(id).orElseThrow { UserNotFoundException() }
+        val user = this.getUserActive(id)
 
         when {
             !passwordEncoder.matches(updatePasswordTO.oldPassword, user.password) -> throw InvalidOldPasswordException()
@@ -57,7 +70,7 @@ class UserService(
     }
 
     override fun update(updateUserTO: UpdateUserTO): UserTO {
-        val userFound: User = this.findUserActive(updateUserTO.id)
+        val userFound: User = this.getUserActive(updateUserTO.id)
 
         val newUpdateUserTO = UpdateUserTO(
             id = updateUserTO.id,
@@ -74,9 +87,16 @@ class UserService(
         )).toTO()
     }
 
-    private fun findUserActive(id: String): User {
-        return userRepository.findByIdAndStatus(id, StatusEnum.ACTIVE)
-            .orElseThrow { UserNotFoundException() }
+    override fun delete(id: String) {
+        val userFound = getUserActive(id)
+
+        userRepository.save(
+            userFound.copy(status = StatusEnum.INACTIVE, deletedAt = OffsetDateTime.now())
+        )
+    }
+
+    private fun getUserActive(id: String): User {
+        return userRepository.findByIdAndStatus(id) ?: throw UserNotFoundException()
     }
 
 }

@@ -2,17 +2,23 @@ package br.com.zapzup.manager.repository
 
 import br.com.zapzup.manager.domain.entity.Token
 import br.com.zapzup.manager.domain.entity.User
-import br.com.zapzup.manager.domain.enums.StatusEnum
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
-import java.util.Optional
 
 @Repository
 interface UserRepository : JpaRepository<User, String> {
-    fun existsByUsername(username: String): Boolean
-    fun existsByEmail(email: String): Boolean
-    fun findByEmail(email: String): User?
-    fun findByIdAndStatus(id: String, status: StatusEnum) : Optional<User>
+    @Query(name = "UserEntity.existsByUsername")
+    fun existsByUsername(@Param(value = "username") username: String): Boolean
+
+    @Query(name = "UserEntity.existsByEmail")
+    fun existsByEmail(@Param(value = "email") email: String): Boolean
+
+    fun findByEmail(@Param(value = "email") email: String): User?
+
+    @Query(name = "UserEntity.findById")
+    fun findByIdAndStatus(@Param(value = "id") id: String): User?
 }
 
 @Repository

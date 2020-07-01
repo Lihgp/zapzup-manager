@@ -9,6 +9,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.springframework.http.MediaType
 import org.springframework.test.context.jdbc.Sql
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
@@ -87,5 +88,24 @@ open class UserControllerTest : BasicIntegrationTest() {
 
         assertThat(user.isPresent).isTrue()
         assertThat(this.passwordEncoder.matches(updatePasswordRequest.newPassword, user.get().password)).isTrue()
+    }
+
+    @Test
+    @Sql(value = ["/scripts/load-user.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    fun `should delete user with success`() {
+        val id = "USER-ID"
+
+        this.mockMvc.perform(delete("/users/$id")
+            .contentType(MediaType.APPLICATION_JSON)
+            .characterEncoding("utf-8")
+            .accept(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isNoContent)
+
+        val user = userRepository.findById(id)
+
+        assertThat(user.isPresent).isTrue()
+        assertThat(user.get().status.name).isEqualTo("INACTIVE")
+        assertThat(user.get().deletedAt).isNotNull()
     }
 }

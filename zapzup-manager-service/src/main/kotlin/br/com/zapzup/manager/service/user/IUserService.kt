@@ -9,9 +9,11 @@ interface IUserService {
 
     fun create(createUserTO: CreateUserTO): UserTO
 
-    fun findByEmail(email: String): UserTO
+    fun getByEmail(email: String): UserTO
 
     fun updatePassword(id: String, updatePasswordTO: UpdatePasswordTO)
 
     fun update(updateUserTO: UpdateUserTO) : UserTO
+
+    fun delete(id: String)
 }

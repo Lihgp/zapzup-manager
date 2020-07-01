@@ -35,7 +35,11 @@ class UserController(
         ResponseWrapper(userService.update(updateUserTO = updateUserRequest.toDomain(id = id)).toUpdateUserResponse())
 
     override fun updatePassword(
-        @RequestBody updatePasswordRequest: UpdatePasswordRequest, @PathVariable id: String) {
+        @RequestBody updatePasswordRequest: UpdatePasswordRequest, @PathVariable(name = "id") id: String) {
         userService.updatePassword(id, updatePasswordRequest.toDomain())
+    }
+
+    override fun delete(@PathVariable(value = "id") id: String) {
+        userService.delete(id)
     }
 }
