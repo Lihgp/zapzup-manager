@@ -8,7 +8,7 @@ import br.com.zapzup.manager.commons.exceptions.InvalidOldPasswordException
 import br.com.zapzup.manager.commons.exceptions.InvalidTokenException
 import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.commons.exceptions.UserNotFoundException
-import org.apache.logging.log4j.LogManager
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.http.HttpStatus.NOT_FOUND
@@ -25,7 +25,7 @@ class ZapZupExceptionHandler(
     private val resourceBundle: ResourceBundle
 ) {
 
-    private val log = LogManager.getLogger(this.javaClass)
+    private val log = LoggerFactory.getLogger(this.javaClass)
 
     @ExceptionHandler(Exception::class)
     @ResponseStatus(INTERNAL_SERVER_ERROR)

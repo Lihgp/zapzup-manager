@@ -9,6 +9,7 @@ import br.com.zapzup.manager.api.user.response.CreateUserResponse
 import br.com.zapzup.manager.api.user.response.UpdateUserResponse
 import br.com.zapzup.manager.api.user.response.UserResponse
 import br.com.zapzup.manager.service.user.IUserService
+import org.slf4j.LoggerFactory
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
@@ -19,10 +20,19 @@ class UserController(
     private val userService: IUserService
 ) : UserApi {
 
+    private val log = LoggerFactory.getLogger(this.javaClass)
+
     override fun create(
         @RequestBody @Validated createUserRequest: CreateUserRequest
-    ): ResponseWrapper<CreateUserResponse> =
-        ResponseWrapper(userService.create(createUserTO = createUserRequest.toDomain()).toCreateUserResponse())
+    ): ResponseWrapper<CreateUserResponse> {
+        log.info("CreateUserRequest: $createUserRequest")
+
+        val userCreated = userService.create(createUserTO = createUserRequest.toDomain())
+
+        log.info("UserCreated: $userCreated")
+
+        return ResponseWrapper(userCreated.toCreateUserResponse())
+    }
 
     override fun getUsers(email: String, username: String, name: String, page: Int, limit: Int): ResponseWrapper<List<UserResponse>> {
         TODO("Not yet implemented")
@@ -31,8 +41,15 @@ class UserController(
     override fun update(
         @RequestBody @Validated updateUserRequest: UpdateUserRequest,
         @PathVariable(name = "id") id: String
-    ): ResponseWrapper<UpdateUserResponse> =
-        ResponseWrapper(userService.update(updateUserTO = updateUserRequest.toDomain(id = id)).toUpdateUserResponse())
+    ): ResponseWrapper<UpdateUserResponse> {
+        log.info("UpdateUserRequest: $updateUserRequest")
+
+        val userUpdated = userService.update(updateUserTO = updateUserRequest.toDomain(id = id))
+
+        log.info("UserUpdated: $userUpdated")
+
+        return ResponseWrapper(userUpdated.toUpdateUserResponse())
+    }
 
     override fun updatePassword(
         @RequestBody updatePasswordRequest: UpdatePasswordRequest, @PathVariable(name = "id") id: String) {
@@ -40,6 +57,8 @@ class UserController(
     }
 
     override fun delete(@PathVariable(value = "id") id: String) {
+        log.info("userId for delete: $id")
+
         userService.delete(id)
     }
 }
