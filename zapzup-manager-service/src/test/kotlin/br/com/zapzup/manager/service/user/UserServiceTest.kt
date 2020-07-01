@@ -115,7 +115,7 @@ class UserServiceTest {
 
         `when`(userRepository.findByEmail(email)).thenReturn(user)
 
-        val response = userService.findByEmail(email)
+        val response = userService.getByEmail(email)
 
         assertThat(response.id).isEqualTo(user.id)
         assertThat(response.email).isEqualTo(user.email)
@@ -125,7 +125,7 @@ class UserServiceTest {
     fun `should throw an exception when not find user by email`() {
         `when`(userRepository.findByEmail(email)).thenReturn(null)
 
-        val exception = assertThrows<UserNotFoundException> { userService.findByEmail(email) }
+        val exception = assertThrows<UserNotFoundException> { userService.getByEmail(email) }
 
         assertThat(exception).isNotNull()
     }

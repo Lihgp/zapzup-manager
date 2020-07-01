@@ -36,7 +36,7 @@ class TokenServiceTest {
         val generateTokenTO = GenerateTokenTO(email = userTO.email)
         val argumentCaptor = ArgumentCaptor.forClass(Token::class.java)
 
-        `when`(userService.findByEmail(userTO.email)).thenReturn(userTO)
+        `when`(userService.getByEmail(userTO.email)).thenReturn(userTO)
         `when`(tokenRepository.save(any(Token::class.java))).thenAnswer { token }
 
         tokenService.generateToken(generateTokenTO, "PASSWORD")

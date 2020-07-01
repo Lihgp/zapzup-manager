@@ -47,7 +47,7 @@ class UserService(
         return userRepository.save(user).toTO()
     }
 
-    override fun findByEmail(email: String): UserTO {
+    override fun getByEmail(email: String): UserTO {
         val user = userRepository.findByEmail(email) ?: throw UserNotFoundException()
 
         if (user.status == StatusEnum.INACTIVE) throw UserNotFoundException()
@@ -56,7 +56,7 @@ class UserService(
     }
 
     override fun updatePassword(id: String, updatePasswordTO: UpdatePasswordTO) {
-        val user = this.findUserActive(id)
+        val user = this.getUserActive(id)
 
         when {
             !passwordEncoder.matches(updatePasswordTO.oldPassword, user.password) -> throw InvalidOldPasswordException()
@@ -70,7 +70,7 @@ class UserService(
     }
 
     override fun update(updateUserTO: UpdateUserTO): UserTO {
-        val userFound: User = this.findUserActive(updateUserTO.id)
+        val userFound: User = this.getUserActive(updateUserTO.id)
 
         val newUpdateUserTO = UpdateUserTO(
             id = updateUserTO.id,
@@ -88,14 +88,14 @@ class UserService(
     }
 
     override fun delete(id: String) {
-        val userFound = findUserActive(id)
+        val userFound = getUserActive(id)
 
         userRepository.save(
             userFound.copy(status = StatusEnum.INACTIVE, deletedAt = OffsetDateTime.now())
         )
     }
 
-    private fun findUserActive(id: String): User {
+    private fun getUserActive(id: String): User {
         return userRepository.findByIdAndStatus(id) ?: throw UserNotFoundException()
     }
 

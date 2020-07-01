@@ -23,7 +23,7 @@ class TokenService(
 ) : ITokenService {
 
     override fun generateToken(generateTokenTO: GenerateTokenTO, tokenType: String) {
-        val userTO = userService.findByEmail(generateTokenTO.email)
+        val userTO = userService.getByEmail(generateTokenTO.email)
         val token = tokenRepository.save(Token(
             user = userTO.toEntity(),
             expirationDate = OffsetDateTime.now().plusHours(6))
