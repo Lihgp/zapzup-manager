@@ -12,6 +12,7 @@ import br.com.zapzup.manager.service.token.mapper.toTO
 import br.com.zapzup.manager.service.token.mapper.toTokenTOList
 import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.mapper.toEntity
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 
@@ -22,23 +23,33 @@ class TokenService(
     private val emailService: IEmailService
 ) : ITokenService {
 
+    private val log = LoggerFactory.getLogger(this.javaClass)
+
     override fun generateToken(generateTokenTO: GenerateTokenTO, tokenType: String) {
+        log.info("GenerateTokenTO: $generateTokenTO and tokenType: $tokenType")
+
         val userTO = userService.getByEmail(generateTokenTO.email)
         val token = tokenRepository.save(Token(
             user = userTO.toEntity(),
             expirationDate = OffsetDateTime.now().plusHours(6))
         )
 
+        log.info("Token created: $token")
+
         emailService.sendEmail(generateTokenTO.email, token.code, TokenTypeEnum.valueOf(tokenType))
     }
 
     override fun validateToken(code: String) {
+        log.info("Token code: $code")
+
         val token = tokenRepository.findByCode(code) ?: throw InvalidTokenException()
         val tokenTO = token.toTO()
 
         if (tokenTO.expirationDate.isBefore(OffsetDateTime.now())) {
             throw InvalidTokenException()
         }
+
+        log.info("Token validated: $token")
 
         this.delete(tokenTO.id)
     }
@@ -50,6 +61,8 @@ class TokenService(
     }
 
     override fun delete(id: String) {
+        log.info("TokenId for delete: $id")
+
         tokenRepository.deleteById(id)
     }
 }

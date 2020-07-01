@@ -14,6 +14,7 @@ import br.com.zapzup.manager.repository.UserRepository
 import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.mapper.toEntity
 import br.com.zapzup.manager.service.user.mapper.toTO
+import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
@@ -24,7 +25,11 @@ class UserService(
     private val passwordEncoder: BCryptPasswordEncoder
 ) : IUserService {
 
+    private val log = LoggerFactory.getLogger(this.javaClass)
+
     override fun create(createUserTO: CreateUserTO): UserTO {
+        log.info("CreateUserTO: ${createUserTO.copy(password = "")}")
+
         when {
             userRepository.existsByUsername(createUserTO.username) -> throw UserAlreadyExistsException("username")
             userRepository.existsByEmail(createUserTO.email) -> throw UserAlreadyExistsException("email")
@@ -34,6 +39,8 @@ class UserService(
         val encryptedPassword = passwordEncoder.encode(createUserTO.password)
 
         if (userInactive != null) {
+            log.info("UserInactive: ${userInactive.copy(password = "")}")
+
             return userRepository.save(
                 createUserTO.toEntity().copy(
                     id = userInactive.id,
@@ -48,7 +55,11 @@ class UserService(
     }
 
     override fun getByEmail(email: String): UserTO {
+        log.info("UserEmail: $email")
+
         val user = userRepository.findByEmail(email) ?: throw UserNotFoundException()
+
+        log.info("User found by email: ${user.copy(password = "")}")
 
         if (user.status == StatusEnum.INACTIVE) throw UserNotFoundException()
 
@@ -56,21 +67,30 @@ class UserService(
     }
 
     override fun updatePassword(id: String, updatePasswordTO: UpdatePasswordTO) {
-        val user = this.getUserActive(id)
+        val userFound: User = this.getUserActive(id)
+
+        log.info("UserActive found: ${userFound.copy(password = "")} for id: $id")
 
         when {
-            !passwordEncoder.matches(updatePasswordTO.oldPassword, user.password) -> throw InvalidOldPasswordException()
+            !passwordEncoder.matches(
+                updatePasswordTO.oldPassword,
+                userFound.password
+            ) -> throw InvalidOldPasswordException()
             updatePasswordTO.oldPassword == updatePasswordTO.newPassword -> throw EqualPasswordException()
         }
 
-        userRepository.save(user.copy(
+        userRepository.save(userFound.copy(
             password = passwordEncoder.encode(updatePasswordTO.newPassword),
             updatedAt = OffsetDateTime.now()
         ))
     }
 
     override fun update(updateUserTO: UpdateUserTO): UserTO {
+        log.info("UpdateUserTO: $updateUserTO")
+
         val userFound: User = this.getUserActive(updateUserTO.id)
+
+        log.info("UserActive found: ${userFound.copy(password = "")} for id: ${userFound.id}")
 
         val newUpdateUserTO = UpdateUserTO(
             id = updateUserTO.id,
@@ -78,6 +98,8 @@ class UserService(
             email = if (updateUserTO.email.isNotEmpty()) updateUserTO.email else userFound.email,
             note = if (updateUserTO.note.isNotEmpty()) updateUserTO.note else userFound.note
         )
+
+        log.info("NewUpdateUserTO: $newUpdateUserTO")
 
         return userRepository.save(userFound.copy(
             username = newUpdateUserTO.username,
@@ -88,7 +110,9 @@ class UserService(
     }
 
     override fun delete(id: String) {
-        val userFound = getUserActive(id)
+        val userFound: User = getUserActive(id)
+
+        log.info("User deleted: ${userFound.copy(password = "")} for id: $id")
 
         userRepository.save(
             userFound.copy(status = StatusEnum.INACTIVE, deletedAt = OffsetDateTime.now())
