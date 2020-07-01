@@ -33,12 +33,13 @@ class UserService(
         val userInactive = userRepository.findByEmail(createUserTO.email)
         val encryptedPassword = passwordEncoder.encode(createUserTO.password)
 
-        if (userInactive !== null) {
+        if (userInactive != null) {
             return userRepository.save(
                 createUserTO.toEntity().copy(
                     id = userInactive.id,
                     password = encryptedPassword
-                )).toTO()
+                )
+            ).toTO()
         }
 
         val user = createUserTO.toEntity().copy(password = encryptedPassword)
@@ -49,7 +50,7 @@ class UserService(
     override fun findByEmail(email: String): UserTO {
         val user = userRepository.findByEmail(email) ?: throw UserNotFoundException()
 
-        if (user.status.name == "INACTIVE") throw UserNotFoundException()
+        if (user.status == StatusEnum.INACTIVE) throw UserNotFoundException()
 
         return user.toTO()
     }
@@ -95,7 +96,7 @@ class UserService(
     }
 
     private fun findUserActive(id: String): User {
-        return userRepository.findByIdAndStatusActive(id) ?: throw UserNotFoundException()
+        return userRepository.findByIdAndStatus(id) ?: throw UserNotFoundException()
     }
 
 }

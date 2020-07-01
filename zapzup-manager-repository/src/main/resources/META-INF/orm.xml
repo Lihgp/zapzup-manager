@@ -4,37 +4,32 @@
                  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
                  version="2.0">
 
-    <named-native-query name="UserEntity.existsByUsername">
+    <named-query name="UserEntity.existsByUsername">
         <query>
-            <![CDATA[
-                SELECT CASE WHEN EXISTS(
-                    SELECT * FROM zapzup.user_entity
-                    WHERE username = :username AND status = 'ACTIVE'
-                )
-                THEN true ELSE false END
-            ]]>
+            SELECT CASE WHEN COUNT(user) > 0
+            THEN TRUE ELSE FALSE END
+            FROM User user
+            WHERE LOWER(user.username) LIKE LOWER(:username)
+            AND user.status = 'ACTIVE'
         </query>
-    </named-native-query>
+    </named-query>
 
-    <named-native-query name="UserEntity.existsByEmail">
+    <named-query name="UserEntity.existsByEmail">
         <query>
-            <![CDATA[
-                SELECT CASE WHEN EXISTS(
-                    SELECT * FROM zapzup.user_entity
-                    WHERE email = :email AND status = 'ACTIVE'
-                )
-                THEN true ELSE false END
-            ]]>
+            SELECT CASE WHEN COUNT(user) > 0
+            THEN TRUE ELSE FALSE END
+            FROM User user
+            WHERE LOWER(user.email) LIKE LOWER(:email)
+            AND user.status = 'ACTIVE'
         </query>
-    </named-native-query>
+    </named-query>
 
-    <named-native-query name="UserEntity.findById" result-class="br.com.zapzup.manager.domain.entity.User">
+    <named-query name="UserEntity.findById">
         <query>
-            <![CDATA[
-                SELECT *
-                FROM zapzup.user_entity
-                WHERE id = :id AND status = 'ACTIVE'
-            ]]>
+            SELECT user
+            FROM User user
+            WHERE user.id = :id
+            AND user.status = 'ACTIVE'
         </query>
-    </named-native-query>
+    </named-query>
 </entity-mappings>

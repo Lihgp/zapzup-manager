@@ -42,7 +42,7 @@ class UserServiceTest {
     fun `should throw an exception when not find user - update`() {
         val updateUserTO = buildUpdateUserTO()
 
-        `when`(userRepository.findByIdAndStatusActive(id)).thenReturn(null)
+        `when`(userRepository.findByIdAndStatus(id)).thenReturn(null)
 
         val exception = assertThrows<UserNotFoundException> { userService.update(updateUserTO = updateUserTO) }
 
@@ -55,7 +55,7 @@ class UserServiceTest {
         val user = buildUser()
         val argumentCaptor = ArgumentCaptor.forClass(User::class.java)
 
-        `when`(userRepository.findByIdAndStatusActive(id)).thenReturn(user)
+        `when`(userRepository.findByIdAndStatus(id)).thenReturn(user)
         `when`(userRepository.save(any(User::class.java))).thenAnswer { user }
 
         userService.update(updateUserTO = updateUserTO)
@@ -136,7 +136,7 @@ class UserServiceTest {
         val user = buildUser()
         val argumentCaptor = ArgumentCaptor.forClass(User::class.java)
 
-        `when`(userRepository.findByIdAndStatusActive(id)).thenReturn(user)
+        `when`(userRepository.findByIdAndStatus(id)).thenReturn(user)
         `when`(passwordEncoder.matches(updatePasswordTO.oldPassword, user.password)).thenReturn(true)
         `when`(passwordEncoder.encode(updatePasswordTO.newPassword)).thenReturn(passwordEncoded)
         `when`(userRepository.save(any(User::class.java))).thenAnswer { user.copy(password = passwordEncoded) }
@@ -153,7 +153,7 @@ class UserServiceTest {
     fun `should throw an exception when not find user - update password`() {
         val updatePasswordTO = buildUpdatePasswordTO()
 
-        `when`(userRepository.findByIdAndStatusActive(id)).thenReturn(null)
+        `when`(userRepository.findByIdAndStatus(id)).thenReturn(null)
 
         val exception = assertThrows<UserNotFoundException> { userService.updatePassword(id, updatePasswordTO) }
 
@@ -165,7 +165,7 @@ class UserServiceTest {
         val user = buildUser()
         val updatePasswordTO = buildUpdatePasswordTO()
 
-        `when`(userRepository.findByIdAndStatusActive(user.id)).thenReturn(user)
+        `when`(userRepository.findByIdAndStatus(user.id)).thenReturn(user)
         `when`(passwordEncoder.matches(updatePasswordTO.oldPassword, user.password)).thenReturn(false)
 
         val exception = assertThrows<InvalidOldPasswordException> {
@@ -180,7 +180,7 @@ class UserServiceTest {
         val user = buildUser()
         val updatePasswordTO = buildUpdatePasswordTO().copy(newPassword = "123456789")
 
-        `when`(userRepository.findByIdAndStatusActive(user.id)).thenReturn(user)
+        `when`(userRepository.findByIdAndStatus(user.id)).thenReturn(user)
         `when`(passwordEncoder.matches(updatePasswordTO.oldPassword, user.password)).thenReturn(true)
 
         val exception = assertThrows<EqualPasswordException> {
@@ -195,7 +195,7 @@ class UserServiceTest {
         val user = buildUser()
         val argumentCaptor = ArgumentCaptor.forClass(User::class.java)
 
-        `when`(userRepository.findByIdAndStatusActive(user.id)).thenReturn(user)
+        `when`(userRepository.findByIdAndStatus(user.id)).thenReturn(user)
 
         userService.delete(id = user.id)
 
@@ -207,7 +207,7 @@ class UserServiceTest {
 
     @Test
     fun `should throw an exception when not find user - delete`() {
-        `when`(userRepository.findByIdAndStatusActive(id)).thenReturn(null)
+        `when`(userRepository.findByIdAndStatus(id)).thenReturn(null)
 
         val exception = assertThrows<UserNotFoundException> { userService.delete(id = id) }
 

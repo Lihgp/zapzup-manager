@@ -9,16 +9,16 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface UserRepository : JpaRepository<User, String> {
-    @Query(name = "UserEntity.existsByUsername", nativeQuery = true)
+    @Query(name = "UserEntity.existsByUsername")
     fun existsByUsername(@Param(value = "username") username: String): Boolean
 
-    @Query(name = "UserEntity.existsByEmail", nativeQuery = true)
+    @Query(name = "UserEntity.existsByEmail")
     fun existsByEmail(@Param(value = "email") email: String): Boolean
 
     fun findByEmail(@Param(value = "email") email: String): User?
 
-    @Query(name = "UserEntity.findById", nativeQuery = true)
-    fun findByIdAndStatusActive(@Param(value = "id") id: String): User?
+    @Query(name = "UserEntity.findById")
+    fun findByIdAndStatus(@Param(value = "id") id: String): User?
 }
 
 @Repository
