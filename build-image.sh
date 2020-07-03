@@ -8,4 +8,4 @@ docker-compose -f resource/docker-compose.yml down
 cd zapzup-manager-application
 docker build -t "$DOCKER_USERNAME"/zapzup_manager:1.0 .
 cd ../
-docker push victorsantoss/zapzup_manager:1.0
+docker push "$DOCKER_USERNAME"/zapzup_manager:1.0
