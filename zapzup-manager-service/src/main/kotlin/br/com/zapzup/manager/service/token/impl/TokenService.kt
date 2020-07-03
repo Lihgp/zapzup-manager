@@ -31,7 +31,7 @@ class TokenService(
         val userTO = userService.getByEmail(generateTokenTO.email)
         val token = tokenRepository.save(Token(
             user = userTO.toEntity(),
-            expirationDate = OffsetDateTime.now().plusHours(6))
+            expirationDate = OffsetDateTime.now().plusHours(1))
         )
 
         log.info("Token created: $token")
