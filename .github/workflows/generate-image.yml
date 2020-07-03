@@ -29,7 +29,6 @@ jobs:
       - name: Build with 1.0 tag
         run: |
           cd zapzup-manager-application
-          ls
           docker build -t ${{ secrets.DOCKER_USERNAME }}/zapzup_manager:1.0 .
           cd ../
 
