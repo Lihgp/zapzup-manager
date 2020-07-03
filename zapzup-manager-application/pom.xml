@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>zapzup-manager-application</artifactId>
+    <name>zapzup-manager</name>
 
     <dependencies>
         <dependency>
@@ -27,7 +28,7 @@
     </dependencies>
 
     <build>
-        <!--        <finalName>${project.name}</finalName>-->
+        <finalName>${project.name}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

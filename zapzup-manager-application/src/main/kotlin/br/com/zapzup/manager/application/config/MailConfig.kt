@@ -1,5 +1,6 @@
 package br.com.zapzup.manager.application.config
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.mail.javamail.JavaMailSender
@@ -8,7 +9,12 @@ import java.util.Properties
 
 
 @Configuration
-open class MailConfig {
+open class MailConfig(
+    @Value(value = "\${spring.mail.username}")
+    private val email: String,
+    @Value(value = "\${spring.mail.password}")
+    private val password: String
+) {
 
     @Bean
     open fun mailSender(): JavaMailSender {
@@ -16,8 +22,8 @@ open class MailConfig {
         mailSender.host = "smtp.gmail.com"
         mailSender.port = 587
 
-        mailSender.username = "zapzup.contato@gmail.com"
-        mailSender.password = "zapzup123"
+        mailSender.username = email
+        mailSender.password = password
 
         val props: Properties = mailSender.javaMailProperties
         props["mail.transport.protocol"] = "smtp"
