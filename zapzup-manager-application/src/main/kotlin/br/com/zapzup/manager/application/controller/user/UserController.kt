@@ -25,7 +25,7 @@ class UserController(
     override fun create(
         @RequestBody @Validated createUserRequest: CreateUserRequest
     ): ResponseWrapper<CreateUserResponse> {
-        log.info("CreateUserRequest: $createUserRequest")
+        log.info("CreateUserRequest: ${createUserRequest.copy(password = "")}")
 
         val userCreated = userService.create(createUserTO = createUserRequest.toDomain())
 
