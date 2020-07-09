@@ -11,10 +11,10 @@
             </not>
         </preConditions>
         <createTable tableName="user_chat" schemaName="zapzup">
-            <column name="user_id" type="varchar(40)">
+            <column name="user_id" type="varchar(41)">
                 <constraints nullable="false"/>
             </column>
-            <column name="chat_id" type="varchar(40)">
+            <column name="chat_id" type="varchar(41)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
