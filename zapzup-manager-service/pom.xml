@@ -32,6 +32,16 @@
             <artifactId>mockito-core</artifactId>
             <version>2.21.0</version>
         </dependency>
+
+        <!--   ZapZup Dependencies     -->
+        <dependency>
+            <groupId>br.com.zapzup</groupId>
+            <artifactId>zapzup-manager-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>br.com.zapzup</groupId>
+            <artifactId>zapzup-manager-repository</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

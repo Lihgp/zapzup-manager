@@ -14,6 +14,7 @@ import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
+import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.HttpStatus.NO_CONTENT
 import org.springframework.http.HttpStatus.OK
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
+import javax.websocket.server.PathParam
 
 @Api(value = "User", tags = ["User"], description = "User Resources")
 @RequestMapping(value = ["/users"])
@@ -43,6 +45,15 @@ interface UserApi {
     ])
     fun create(@RequestBody @Validated createUserRequest: CreateUserRequest): ResponseWrapper<CreateUserResponse>
 
+    @GetMapping(value = ["/{id}"])
+    @ResponseBody
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Gets a user by id")
+    @ApiResponses()
+    fun getUserById(
+        @PathVariable(name = "id", required = true) userId: String
+    ): ResponseWrapper<UserResponse>
+
     @GetMapping
     @ResponseBody
     @ResponseStatus(OK)
@@ -54,7 +65,7 @@ interface UserApi {
         @RequestParam(name = "name", required = false) name: String,
         @RequestParam(name = "page", defaultValue = "1", required = false) page: Int,
         @RequestParam(name = "limit", defaultValue = "10", required = false) limit: Int
-    ): ResponseWrapper<List<UserResponse>>
+    ): ResponseWrapper<Page<UserResponse>>
 
     @PutMapping("/{id}")
     @ResponseBody

@@ -60,3 +60,6 @@ fun UserTO.toResponse() =
         updatedAt = this.updatedAt,
         deletedAt = this.deletedAt
     )
+
+fun toResponseList(list: List<UserTO>) =
+    list.map { it.toResponse() }

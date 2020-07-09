@@ -8,6 +8,7 @@ import br.com.zapzup.manager.commons.exceptions.InvalidOldPasswordException
 import br.com.zapzup.manager.commons.exceptions.InvalidTokenException
 import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.commons.exceptions.UserNotFoundException
+import br.com.zapzup.manager.commons.exceptions.ValidationException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
@@ -109,6 +110,19 @@ class ZapZupExceptionHandler(
             message = resourceBundle.getMessage(ZapZupErrorCode.USER_NOT_FOUND.key)
                 ?: ZapZupErrorCode.USER_NOT_FOUND.code,
             code = ZapZupErrorCode.USER_NOT_FOUND.code
+        )
+    }
+
+    @ExceptionHandler(ValidationException::class)
+    @ResponseStatus(BAD_REQUEST)
+    @ResponseBody
+    fun handleValidationException(ex: ValidationException): ErrorResponse {
+        log.error("ValidationException ", ex)
+
+        return ErrorResponse(
+            message = resourceBundle.getMessage(ZapZupErrorCode.INVALID_PAGINATION_LIMIT_OFFSET.key)
+                ?: ZapZupErrorCode.INVALID_PAGINATION_LIMIT_OFFSET.code,
+            code = ZapZupErrorCode.INVALID_PAGINATION_LIMIT_OFFSET.code
         )
     }
 
