@@ -1,5 +1,6 @@
 package br.com.zapzup.manager.domain.entity
 
+import br.com.zapzup.manager.domain.enums.ChatStatusEnum
 import br.com.zapzup.manager.domain.enums.StatusEnum
 import java.time.OffsetDateTime
 import java.util.UUID
@@ -55,6 +56,8 @@ data class Chat(
     val id: String = "CHAT-${UUID.randomUUID()}",
     val name: String = "",
     val description: String = "",
+    @Enumerated(value = EnumType.STRING)
+    val status: ChatStatusEnum = ChatStatusEnum.CREATED,
     val createdBy: String = "",
     val updatedBy: String = "",
     val deletedBy: String = "",
@@ -64,17 +67,17 @@ data class Chat(
     @ManyToMany
     @JoinTable(
         name = "user_chat",
-        joinColumns = [JoinColumn(name = "user_id")],
-        inverseJoinColumns = [JoinColumn(name = "chat_id")]
+        joinColumns = [JoinColumn(name = "chat_id")],
+        inverseJoinColumns = [JoinColumn(name = "user_id")]
     )
-    val users: List<User> = listOf(),
+    val users: MutableList<User> = mutableListOf(),
     @ManyToMany
     @JoinTable(
         name = "message_chat",
         joinColumns = [JoinColumn(name = "message_id")],
         inverseJoinColumns = [JoinColumn(name = "chat_id")]
     )
-    val messages: List<Message> = listOf()
+    val messages: MutableList<Message> = mutableListOf()
 )
 
 @Entity

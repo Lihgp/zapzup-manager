@@ -1,5 +1,6 @@
 package br.com.zapzup.manager.repository
 
+import br.com.zapzup.manager.domain.entity.Chat
 import br.com.zapzup.manager.domain.entity.Token
 import br.com.zapzup.manager.domain.entity.User
 import org.springframework.data.domain.Page
@@ -37,3 +38,6 @@ interface TokenRepository : JpaRepository<Token, String> {
     fun findByCode(code: String): Token?
     fun findByUserEmail(email: String): Token?
 }
+
+@Repository
+interface ChatRepository : JpaRepository<Chat, String> {}
