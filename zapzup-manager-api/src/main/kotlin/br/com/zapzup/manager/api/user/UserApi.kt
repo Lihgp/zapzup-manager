@@ -65,7 +65,7 @@ interface UserApi {
         @RequestParam(name = "name", required = false) name: String,
         @RequestParam(name = "page", defaultValue = "1", required = false) page: Int,
         @RequestParam(name = "limit", defaultValue = "10", required = false) limit: Int
-    ): ResponseWrapper<List<UserResponse>>
+    ): ResponseWrapper<Page<UserResponse>>
 
     @PutMapping("/{id}")
     @ResponseBody

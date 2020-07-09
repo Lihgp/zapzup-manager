@@ -74,8 +74,7 @@ class UserService(
         else userRepository.findAll(pageagle).map { user -> user.toTO() }
     }
 
-    override fun getUserById(userId: String): UserTO =
-        userRepository.findById(userId).orElseThrow{ UserNotFoundException(id = userId) }.toTO()
+    override fun getUserById(userId: String): UserTO = getUserActive(userId).toTO()
 
     override fun getByEmail(email: String): UserTO {
         log.info("UserEmail: $email")

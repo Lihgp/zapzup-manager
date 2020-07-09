@@ -3,8 +3,8 @@ package br.com.zapzup.manager.application.controller.user
 import br.com.zapzup.manager.api.ResponseWrapper
 import br.com.zapzup.manager.api.user.UserApi
 import br.com.zapzup.manager.api.user.request.CreateUserRequest
-import br.com.zapzup.manager.api.user.request.UpdateUserRequest
 import br.com.zapzup.manager.api.user.request.UpdatePasswordRequest
+import br.com.zapzup.manager.api.user.request.UpdateUserRequest
 import br.com.zapzup.manager.api.user.response.CreateUserResponse
 import br.com.zapzup.manager.api.user.response.UpdateUserResponse
 import br.com.zapzup.manager.api.user.response.UserResponse
@@ -13,8 +13,8 @@ import br.com.zapzup.manager.service.user.IUserService
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
