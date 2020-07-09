@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.ResourceBundleMessageSource
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
@@ -13,10 +12,9 @@ import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver
 import java.util.Locale
 import javax.servlet.http.HttpServletRequest
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = ["br.com.zapzup.manager"])
 @EnableJpaRepositories(basePackages = ["br.com.zapzup.manager.repository"])
 @EntityScan(value = ["br.com.zapzup.manager.domain"])
-@ComponentScan(basePackages = ["br.com.zapzup.manager"])
 @Configuration
 open class ZapZupApplicationConfig {
 
