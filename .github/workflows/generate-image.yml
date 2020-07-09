@@ -1,0 +1,38 @@
+name: Build image
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  generate-image:
+    runs-on: ubuntu-latest
+    name: Generate and Push to Docker Hub
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions-hub/docker/login@master
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Setup java version
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Run maven
+        run: |
+          docker-compose -f resource/docker-compose.yml up -d
+          mvn clean install
+          docker-compose -f resource/docker-compose.yml down
+
+      - name: Build with 1.0 tag
+        run: |
+          cd zapzup-manager-application
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/zapzup_manager:1.0 .
+          cd ../
+
+      - name: Push to docker hub :1.0
+        uses: actions-hub/docker@master
+        with:
+          args: push ${{ secrets.DOCKER_USERNAME }}/zapzup_manager:1.0

@@ -7,6 +7,7 @@ import java.time.OffsetDateTime
 data class CreateUserResponse(
     val id: String,
     val name: String,
+    val note: String,
     val username: String,
     val email: String,
     val createdAt: OffsetDateTime

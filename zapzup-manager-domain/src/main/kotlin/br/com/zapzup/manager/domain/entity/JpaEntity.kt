@@ -1,7 +1,6 @@
 package br.com.zapzup.manager.domain.entity
 
 import br.com.zapzup.manager.domain.enums.StatusEnum
-import org.hibernate.annotations.GenericGenerator
 import java.time.OffsetDateTime
 import java.util.UUID
 import javax.persistence.Column
@@ -9,12 +8,12 @@ import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
 import javax.persistence.FetchType
-import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.JoinTable
 import javax.persistence.ManyToMany
 import javax.persistence.ManyToOne
+import javax.persistence.OneToOne
 import javax.persistence.Table
 
 @Entity
@@ -76,4 +75,17 @@ data class Chat(
         inverseJoinColumns = [JoinColumn(name = "chat_id")]
     )
     val messages: List<Message> = listOf()
+)
+
+@Entity
+@Table(name = "token_entity")
+data class Token(
+    @Id
+    val id: String = "TOKEN-${UUID.randomUUID()}",
+    @Column(unique = true)
+    val code: String = UUID.randomUUID().toString(),
+    @OneToOne(targetEntity = User::class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    val user: User = User(),
+    val expirationDate: OffsetDateTime? = null
 )

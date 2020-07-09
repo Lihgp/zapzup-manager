@@ -1,5 +1,6 @@
 package br.com.zapzup.manager.repository
 
+import br.com.zapzup.manager.domain.entity.Token
 import br.com.zapzup.manager.domain.entity.User
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -10,8 +11,16 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface UserRepository : JpaRepository<User, String> {
-    fun existsByUsername(username: String): Boolean
-    fun existsByEmail(email: String): Boolean
+    @Query(name = "UserEntity.existsByUsername")
+    fun existsByUsername(@Param(value = "username") username: String): Boolean
+
+    @Query(name = "UserEntity.existsByEmail")
+    fun existsByEmail(@Param(value = "email") email: String): Boolean
+
+    fun findByEmail(@Param(value = "email") email: String): User?
+
+    @Query(name = "UserEntity.findById")
+    fun findByIdAndStatus(@Param(value = "id") id: String): User?
 
     @Query(" FROM User u WHERE ('' = :email or u.email = :email)" +
         " AND ('' = :name or u.name = :name) AND ('' = :username or u.username = :username)")
@@ -21,4 +30,10 @@ interface UserRepository : JpaRepository<User, String> {
         @Param("username") username: String,
         pageable: Pageable
     ): Page<User>
+}
+
+@Repository
+interface TokenRepository : JpaRepository<Token, String> {
+    fun findByCode(code: String): Token?
+    fun findByUserEmail(email: String): Token?
 }
