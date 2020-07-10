@@ -1,4 +1,4 @@
-package br.com.zapzup.manager.application.exceptions
+package br.com.zapzup.manager.application.interceptors
 
 import br.com.zapzup.manager.commons.ResourceBundle
 import br.com.zapzup.manager.commons.error.ErrorResponse
