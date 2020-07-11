@@ -2,6 +2,7 @@ package br.com.zapzup.manager.api.chat
 
 import br.com.zapzup.manager.api.ResponseWrapper
 import br.com.zapzup.manager.api.chat.request.CreateChatRequest
+import br.com.zapzup.manager.api.chat.request.CreateGroupChatRequest
 import br.com.zapzup.manager.api.chat.response.ChatResponse
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -19,12 +20,12 @@ import org.springframework.web.bind.annotation.ResponseStatus
 @RequestMapping(value = ["/chats"])
 interface ChatApi {
 
-    @PostMapping
+    @PostMapping(value = ["/group"])
     @ResponseBody
     @ResponseStatus(CREATED)
-    @ApiOperation(value = "Creates a user")
+    @ApiOperation(value = "Creates a group chat")
     @ApiResponses(value = [
         ApiResponse(code = 201, message = "Created")
     ])
-    fun create(@RequestBody @Validated createChatRequest: CreateChatRequest): ResponseWrapper<ChatResponse>
+    fun create(@RequestBody @Validated createGroupChatRequest: CreateGroupChatRequest): ResponseWrapper<ChatResponse>
 }

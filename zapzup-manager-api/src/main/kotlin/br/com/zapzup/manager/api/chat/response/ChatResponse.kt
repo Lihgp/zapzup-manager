@@ -7,7 +7,6 @@ data class ChatResponse(
     val id: String,
     val name: String,
     val description: String,
-    val status: String,
     val createdBy: String,
     val updatedBy: String,
     val deletedBy: String,
