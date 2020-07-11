@@ -26,10 +26,17 @@ open class ChatService(
 ) : IChatService {
 
     override fun createPrivateChat(createPrivateChatTO: CreatePrivateChatTO): ChatTO {
-        val userTO = userService.getUserById(createPrivateChatTO.userId)
+        if (createPrivateChatTO.creatorUserId == createPrivateChatTO.memberId) {
+            throw DuplicatedIdException(createPrivateChatTO.memberId)
+        }
+
+        val userTO = userService.getUserById(createPrivateChatTO.creatorUserId)
+        val memberTO = userService.getUserById(createPrivateChatTO.memberId)
 
         val chat = chatRepository.save(
-            Chat(createdBy = userTO.name, users = mutableListOf(userTO.toEntity()))
+            Chat(
+                createdBy = userTO.name,
+                users = mutableListOf(userTO.toEntity(), memberTO.toEntity()))
         )
 
         return chat.toTO()
