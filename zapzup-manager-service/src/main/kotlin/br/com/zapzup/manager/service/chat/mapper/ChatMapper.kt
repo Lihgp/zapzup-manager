@@ -11,13 +11,11 @@ fun chatTO(chat: Chat): ChatTO =
         id = chat.id,
         name = chat.name,
         description = chat.description,
-        status = chat.status.name,
         createdBy = chat.createdBy,
         updatedBy = chat.updatedBy,
         deletedBy = chat.deletedBy,
         createdAt = chat.createdAt,
         updatedAt = chat.updatedAt,
         deletedAt = chat.deletedAt,
-        users = chat.users.listToTO(),
-        messages = chat.messages
+        users = chat.users.listToTO()
 )
