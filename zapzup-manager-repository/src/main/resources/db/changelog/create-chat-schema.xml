@@ -14,10 +14,10 @@
             <column name="id" type="varchar(41)">
                 <constraints nullable="false"/>
             </column>
-            <column name="name" type="varchar(25)"/>
+            <column name="name" type="varchar(40)"/>
             <column name="description" type="varchar(255)"/>
             <column name="status" type="varchar(10)"/>
-            <column name="image_id" type="varchar(40)"/>
+            <column name="file_id" type="varchar(40)"/>
             <column name="created_by" type="varchar(60)"/>
             <column name="updated_by" type="varchar(60)"/>
             <column name="deleted_by" type="varchar(60)"/>
@@ -31,11 +31,11 @@
         <addPrimaryKey schemaName="zapzup" columnNames="id" constraintName="chat_entity_pkey" tableName="chat_entity"/>
     </changeSet>
 
-    <changeSet author="Victor" id="set_image_fk">
+    <changeSet author="Victor" id="set_file_fk">
         <addForeignKeyConstraint baseTableName="chat_entity"
-                                 baseColumnNames="image_id"
-                                 constraintName="fk_image_id"
-                                 referencedTableName="image_entity"
+                                 baseColumnNames="file_id"
+                                 constraintName="fk_file_id"
+                                 referencedTableName="file_entity"
                                  referencedColumnNames="id"
                                  baseTableSchemaName="zapzup"
                                  referencedTableSchemaName="zapzup"
