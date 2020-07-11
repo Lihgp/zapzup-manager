@@ -3,6 +3,7 @@ package br.com.zapzup.manager.application.interceptors
 import br.com.zapzup.manager.commons.ResourceBundle
 import br.com.zapzup.manager.commons.error.ErrorResponse
 import br.com.zapzup.manager.commons.error.ZapZupErrorCode
+import br.com.zapzup.manager.commons.exceptions.DuplicatedIdException
 import br.com.zapzup.manager.commons.exceptions.EqualPasswordException
 import br.com.zapzup.manager.commons.exceptions.InvalidOldPasswordException
 import br.com.zapzup.manager.commons.exceptions.InvalidTokenException
@@ -149,6 +150,19 @@ class ZapZupExceptionHandler(
             message = resourceBundle.getMessage(ZapZupErrorCode.EQUAL_PASSWORD.key)
                 ?: ZapZupErrorCode.EQUAL_PASSWORD.code,
             code = ZapZupErrorCode.EQUAL_PASSWORD.code
+        )
+    }
+
+    @ExceptionHandler(DuplicatedIdException::class)
+    @ResponseStatus(UNPROCESSABLE_ENTITY)
+    @ResponseBody
+    fun handleEqualPasswordException(ex: DuplicatedIdException): ErrorResponse {
+        log.error("DuplicatedIdException ", ex)
+
+        return ErrorResponse(
+            message = resourceBundle.getMessage(ZapZupErrorCode.DUPLICATED_ID.key, arrayOf(ex.id))
+                ?: ZapZupErrorCode.DUPLICATED_ID.code,
+            code = ZapZupErrorCode.DUPLICATED_ID.code
         )
     }
 }
