@@ -14,7 +14,11 @@ import java.util.zip.Deflater
 class FileService(
     private val fileRepository: FileRepository
 ) : IFileService {
-    override fun saveFile(multipartFile: MultipartFile): FileTO {
+    override fun saveFile(multipartFile: MultipartFile?): FileTO? {
+        if (multipartFile == null) {
+            return null
+        }
+
         val compressedBytes = compressBytes(multipartFile.bytes)
         val file = File(
             name = multipartFile.originalFilename!!,

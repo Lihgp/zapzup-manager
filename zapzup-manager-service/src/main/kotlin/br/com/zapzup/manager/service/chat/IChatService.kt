@@ -9,5 +9,5 @@ interface IChatService {
 
     fun createPrivateChat(createPrivateChatTO: CreatePrivateChatTO): ChatTO
 
-    fun createGroupChat(createGroupChatTO: CreateGroupChatTO, groupIcon: MultipartFile): ChatTO
+    fun createGroupChat(createGroupChatTO: CreateGroupChatTO, groupIcon: MultipartFile?): ChatTO
 }

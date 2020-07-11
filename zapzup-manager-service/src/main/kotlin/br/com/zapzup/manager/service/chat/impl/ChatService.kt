@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
 
 @Service
+@Transactional
 open class ChatService(
     private val chatRepository: ChatRepository,
     private val fileService: IFileService,
@@ -42,8 +43,7 @@ open class ChatService(
         return chat.toTO()
     }
 
-    @Transactional
-    override fun createGroupChat(createGroupChatTO: CreateGroupChatTO, groupIcon: MultipartFile): ChatTO {
+    override fun createGroupChat(createGroupChatTO: CreateGroupChatTO, groupIcon: MultipartFile?): ChatTO {
         val fileTO = fileService.saveFile(groupIcon)
         val members: MutableList<User> = mutableListOf()
         val creatorUserTO = userService.getUserById(createGroupChatTO.creatorUserId)
@@ -51,11 +51,11 @@ open class ChatService(
         members.add(creatorUserTO.toEntity())
 
         createGroupChatTO.members.forEach { member ->
-            val userTO = userService.getUserById(member.id)
-
-            if (members.firstOrNull { it.id == userTO.id } !== null) {
-                throw DuplicatedIdException(userTO.id)
+            if (members.firstOrNull { it.id == member.id } !== null) {
+                throw DuplicatedIdException(member.id)
             }
+
+            val userTO = userService.getUserById(member.id)
 
             members.add(userTO.toEntity())
         }
@@ -66,7 +66,7 @@ open class ChatService(
                 description = createGroupChatTO.chatDescription,
                 createdBy = creatorUserTO.username,
                 status = ChatStatusEnum.ACTIVE,
-                icon = fileTO.toEntity(),
+                icon = fileTO?.toEntity(),
                 users = members
             )
         )

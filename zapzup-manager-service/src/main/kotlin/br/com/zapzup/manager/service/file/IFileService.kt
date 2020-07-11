@@ -5,5 +5,5 @@ import org.springframework.web.multipart.MultipartFile
 
 interface IFileService {
 
-    fun saveFile(multipartFile: MultipartFile): FileTO
+    fun saveFile(multipartFile: MultipartFile?): FileTO?
 }
