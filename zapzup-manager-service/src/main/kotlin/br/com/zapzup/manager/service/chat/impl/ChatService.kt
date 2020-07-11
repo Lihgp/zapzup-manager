@@ -5,7 +5,7 @@ import br.com.zapzup.manager.domain.entity.Chat
 import br.com.zapzup.manager.domain.entity.User
 import br.com.zapzup.manager.domain.enums.ChatStatusEnum
 import br.com.zapzup.manager.domain.to.chat.ChatTO
-import br.com.zapzup.manager.domain.to.chat.CreateChatTO
+import br.com.zapzup.manager.domain.to.chat.CreatePrivateChatTO
 import br.com.zapzup.manager.domain.to.chat.CreateGroupChatTO
 import br.com.zapzup.manager.repository.ChatRepository
 import br.com.zapzup.manager.service.chat.IChatService
@@ -25,8 +25,8 @@ open class ChatService(
     private val userService: IUserService
 ) : IChatService {
 
-    override fun create(createChatTO: CreateChatTO): ChatTO {
-        val userTO = userService.getUserById(createChatTO.userId)
+    override fun createPrivateChat(createPrivateChatTO: CreatePrivateChatTO): ChatTO {
+        val userTO = userService.getUserById(createPrivateChatTO.userId)
 
         val chat = chatRepository.save(
             Chat(createdBy = userTO.name, users = mutableListOf(userTO.toEntity()))

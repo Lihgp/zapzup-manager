@@ -1,16 +1,16 @@
 package br.com.zapzup.manager.application.controller.chat
 
-import br.com.zapzup.manager.api.chat.request.CreateChatRequest
+import br.com.zapzup.manager.api.chat.request.CreatePrivateChatRequest
 import br.com.zapzup.manager.api.chat.request.CreateGroupChatRequest
 import br.com.zapzup.manager.api.chat.response.ChatResponse
 import br.com.zapzup.manager.application.controller.user.toResponseList
 import br.com.zapzup.manager.domain.to.chat.ChatTO
-import br.com.zapzup.manager.domain.to.chat.CreateChatTO
+import br.com.zapzup.manager.domain.to.chat.CreatePrivateChatTO
 import br.com.zapzup.manager.domain.to.chat.CreateGroupChatTO
 
-fun CreateChatRequest.toDomain() = CreateChatTO(
-    userId = this.userId,
-    chatName = this.chatName
+fun CreatePrivateChatRequest.toDomain() = CreatePrivateChatTO(
+    creatorUserId = this.creatorUserId,
+    memberId = this.memberId
 )
 
 fun CreateGroupChatRequest.toDomain() = CreateGroupChatTO(
