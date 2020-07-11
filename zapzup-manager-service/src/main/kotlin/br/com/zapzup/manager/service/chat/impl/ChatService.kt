@@ -2,6 +2,7 @@ package br.com.zapzup.manager.service.chat.impl
 
 import br.com.zapzup.manager.domain.entity.Chat
 import br.com.zapzup.manager.domain.entity.User
+import br.com.zapzup.manager.domain.enums.ChatStatusEnum
 import br.com.zapzup.manager.domain.to.chat.ChatTO
 import br.com.zapzup.manager.domain.to.chat.CreateChatTO
 import br.com.zapzup.manager.domain.to.chat.CreateGroupChatTO
@@ -45,6 +46,7 @@ class ChatService(
                 name = createGroupChatTO.chatName,
                 description = createGroupChatTO.chatDescription,
                 createdBy = creatorUserTO.username,
+                status = ChatStatusEnum.ACTIVE,
                 users = members
             )
         )
