@@ -2,6 +2,9 @@ package br.com.zapzup.manager.domain.entity
 
 import br.com.zapzup.manager.domain.enums.ChatStatusEnum
 import br.com.zapzup.manager.domain.enums.StatusEnum
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
+import org.springframework.context.annotation.Lazy
 import java.time.OffsetDateTime
 import java.util.UUID
 import javax.persistence.Column
@@ -44,9 +47,12 @@ data class Message(
     val content: String = "",
     val createdAt: OffsetDateTime = OffsetDateTime.now(),
     val deletedAt: OffsetDateTime? = null,
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    val user: User = User()
+    val user: User = User(),
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chat_id")
+    val chat: Chat = Chat()
 )
 
 @Entity
@@ -64,20 +70,13 @@ data class Chat(
     val createdAt: OffsetDateTime = OffsetDateTime.now(),
     val updatedAt: OffsetDateTime? = null,
     val deletedAt: OffsetDateTime? = null,
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_chat",
         joinColumns = [JoinColumn(name = "chat_id")],
         inverseJoinColumns = [JoinColumn(name = "user_id")]
     )
-    val users: MutableList<User> = mutableListOf(),
-    @ManyToMany
-    @JoinTable(
-        name = "message_chat",
-        joinColumns = [JoinColumn(name = "message_id")],
-        inverseJoinColumns = [JoinColumn(name = "chat_id")]
-    )
-    val messages: MutableList<Message> = mutableListOf()
+    val users: MutableList<User> = mutableListOf()
 )
 
 @Entity
