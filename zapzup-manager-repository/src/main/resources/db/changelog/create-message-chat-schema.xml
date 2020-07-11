@@ -20,7 +20,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Victor" id="set_message-chat_fk">
+    <changeSet author="Victor" id="set_message_chat_fk">
         <addForeignKeyConstraint baseTableName="message_chat"
                                  baseColumnNames="message_id"
                                  constraintName="fk_message_id"
@@ -30,7 +30,7 @@
                                  referencedTableSchemaName="zapzup"
         />
     </changeSet>
-    <changeSet author="Victor" id="set_chat-message_fk">
+    <changeSet author="Victor" id="set_chat_message_fk">
         <addForeignKeyConstraint baseTableName="message_chat"
                                  baseColumnNames="chat_id"
                                  constraintName="fk_chat_id"

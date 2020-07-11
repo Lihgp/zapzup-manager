@@ -2,9 +2,6 @@ package br.com.zapzup.manager.domain.entity
 
 import br.com.zapzup.manager.domain.enums.ChatStatusEnum
 import br.com.zapzup.manager.domain.enums.StatusEnum
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
-import org.springframework.context.annotation.Lazy
 import java.time.OffsetDateTime
 import java.util.UUID
 import javax.persistence.Column
@@ -19,6 +16,7 @@ import javax.persistence.ManyToMany
 import javax.persistence.ManyToOne
 import javax.persistence.OneToOne
 import javax.persistence.Table
+
 
 @Entity
 @Table(name = "user_entity")
@@ -70,6 +68,9 @@ data class Chat(
     val createdAt: OffsetDateTime = OffsetDateTime.now(),
     val updatedAt: OffsetDateTime? = null,
     val deletedAt: OffsetDateTime? = null,
+    @OneToOne(targetEntity = Image::class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "image_id")
+    val icon: Image = Image(),
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_chat",
@@ -91,3 +92,40 @@ data class Token(
     val user: User = User(),
     val expirationDate: OffsetDateTime? = null
 )
+
+@Entity
+@Table(name = "image_entity")
+data class Image(
+    @Id
+    val id: String = "IMG-${UUID.randomUUID()}",
+    val name: String = "",
+    val type: String = "",
+    @Column(length = 1000)
+    val imageByte: ByteArray? = null,
+    val createdAt: OffsetDateTime = OffsetDateTime.now()
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Image
+
+        if (id != other.id) return false
+        if (name != other.name) return false
+        if (type != other.type) return false
+        if (imageByte != null) {
+            if (other.imageByte == null) return false
+            if (!imageByte.contentEquals(other.imageByte)) return false
+        } else if (other.imageByte != null) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + (imageByte?.contentHashCode() ?: 0)
+        return result
+    }
+}

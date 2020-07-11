@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Victor" id="create_image_entity">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="image_entity"/>
+            </not>
+        </preConditions>
+        <createTable tableName="image_entity" schemaName="zapzup">
+            <column name="id" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="type" type="varchar(255)"/>
+            <column name="image_byte" type="bytea"/>
+            <column name="created_at" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Victor" id="set_image_entity_pk">
+        <addPrimaryKey schemaName="zapzup" columnNames="id" constraintName="image_entity_pkey" tableName="image_entity"/>
+    </changeSet>
+
+</databaseChangeLog>
