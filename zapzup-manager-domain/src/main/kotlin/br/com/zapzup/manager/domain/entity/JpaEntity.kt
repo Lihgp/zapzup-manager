@@ -68,9 +68,9 @@ data class Chat(
     val createdAt: OffsetDateTime = OffsetDateTime.now(),
     val updatedAt: OffsetDateTime? = null,
     val deletedAt: OffsetDateTime? = null,
-    @OneToOne(targetEntity = Image::class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "image_id")
-    val icon: Image = Image(),
+    @OneToOne(targetEntity = File::class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "file_id")
+    val icon: File? = null,
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_chat",
@@ -94,29 +94,29 @@ data class Token(
 )
 
 @Entity
-@Table(name = "image_entity")
-data class Image(
+@Table(name = "file_entity")
+data class File(
     @Id
     val id: String = "IMG-${UUID.randomUUID()}",
     val name: String = "",
     val type: String = "",
     @Column(length = 1000)
-    val imageByte: ByteArray? = null,
+    val fileByte: ByteArray? = null,
     val createdAt: OffsetDateTime = OffsetDateTime.now()
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Image
+        other as File
 
         if (id != other.id) return false
         if (name != other.name) return false
         if (type != other.type) return false
-        if (imageByte != null) {
-            if (other.imageByte == null) return false
-            if (!imageByte.contentEquals(other.imageByte)) return false
-        } else if (other.imageByte != null) return false
+        if (fileByte != null) {
+            if (other.fileByte == null) return false
+            if (!fileByte.contentEquals(other.fileByte)) return false
+        } else if (other.fileByte != null) return false
 
         return true
     }
@@ -125,7 +125,7 @@ data class Image(
         var result = id.hashCode()
         result = 31 * result + name.hashCode()
         result = 31 * result + type.hashCode()
-        result = 31 * result + (imageByte?.contentHashCode() ?: 0)
+        result = 31 * result + (fileByte?.contentHashCode() ?: 0)
         return result
     }
 }

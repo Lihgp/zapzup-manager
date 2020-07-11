@@ -1,6 +1,7 @@
 package br.com.zapzup.manager.repository
 
 import br.com.zapzup.manager.domain.entity.Chat
+import br.com.zapzup.manager.domain.entity.File
 import br.com.zapzup.manager.domain.entity.Token
 import br.com.zapzup.manager.domain.entity.User
 import org.springframework.data.domain.Page
@@ -40,4 +41,7 @@ interface TokenRepository : JpaRepository<Token, String> {
 }
 
 @Repository
-interface ChatRepository : JpaRepository<Chat, String> {}
+interface ChatRepository : JpaRepository<Chat, String>
+
+@Repository
+interface FileRepository : JpaRepository<File, String>
