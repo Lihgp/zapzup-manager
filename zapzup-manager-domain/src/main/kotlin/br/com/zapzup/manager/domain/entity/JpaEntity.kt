@@ -97,7 +97,7 @@ data class Token(
 @Table(name = "file_entity")
 data class File(
     @Id
-    val id: String = "IMG-${UUID.randomUUID()}",
+    val id: String = "FILE-${UUID.randomUUID()}",
     val name: String = "",
     val type: String = "",
     @Column(length = 1000)
