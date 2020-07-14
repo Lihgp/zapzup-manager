@@ -5,10 +5,10 @@ import javax.validation.constraints.NotEmpty
 
 data class CreateGroupChatRequest (
     @field:[NotEmpty]
-    @JsonProperty(value = "chatName")
-    val chatName: String,
-    @JsonProperty(value = "chatDescription")
-    val chatDescription: String,
+    @JsonProperty(value = "name")
+    val name: String,
+    @JsonProperty(value = "description")
+    val description: String,
     @field:[NotEmpty]
     @JsonProperty(value = "creatorUserId")
     val creatorUserId: String,

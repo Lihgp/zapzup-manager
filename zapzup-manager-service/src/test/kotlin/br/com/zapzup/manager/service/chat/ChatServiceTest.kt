@@ -79,8 +79,8 @@ class ChatServiceTest {
         `when`(chatRepository.save(any(Chat::class.java))).thenAnswer {
             Chat(
                 id = "CHAT-ID",
-                name = createGroupChatTO.chatName,
-                description = createGroupChatTO.chatDescription,
+                name = createGroupChatTO.name,
+                description = createGroupChatTO.description,
                 createdBy = creatorTO.username,
                 users = mutableListOf(creatorTO.toEntity(), memberTO.toEntity())
             )
@@ -113,8 +113,8 @@ class ChatServiceTest {
 
     private fun buildCreateGroupChatTO(memberId: String): CreateGroupChatTO =
         CreateGroupChatTO(
-            chatName = "Chat name",
-            chatDescription = "Chat description",
+            name = "Chat name",
+            description = "Chat description",
             creatorUserId = creatorUserId,
             members = listOf(CreateGroupChatTO.UserIdTO(memberId))
         )

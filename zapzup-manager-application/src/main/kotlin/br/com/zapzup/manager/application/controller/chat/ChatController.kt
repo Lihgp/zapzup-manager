@@ -26,7 +26,7 @@ class ChatController(
 
     override fun createGroupChat(
         @RequestParam createGroupChatRequest: String,
-        @RequestParam(value = "groupIcon") icon: MultipartFile
+        @RequestParam(value = "groupIcon", required = false) icon: MultipartFile?
     ): ResponseWrapper<ChatResponse> {
         val createGroupChatRequestObject = createGroupChatRequest.jsonToObject(CreateGroupChatRequest::class.java)
             ?: throw DeserializationException(CreateGroupChatRequest::class.simpleName.toString())

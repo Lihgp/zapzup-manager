@@ -14,8 +14,8 @@ fun CreatePrivateChatRequest.toDomain() = CreatePrivateChatTO(
 )
 
 fun CreateGroupChatRequest.toDomain() = CreateGroupChatTO(
-    chatName = this.chatName,
-    chatDescription = this.chatDescription,
+    name = this.name,
+    description = this.description,
     creatorUserId = this.creatorUserId,
     members = this.members.map { it.toUserIdTO() }
 )

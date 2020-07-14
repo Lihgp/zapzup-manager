@@ -36,7 +36,7 @@ open class ChatService(
 
         val chat = chatRepository.save(
             Chat(
-                createdBy = userTO.name,
+                createdBy = userTO.username,
                 users = mutableListOf(userTO.toEntity(), memberTO.toEntity()))
         )
 
@@ -62,8 +62,8 @@ open class ChatService(
 
         val chat = chatRepository.save(
             Chat(
-                name = createGroupChatTO.chatName,
-                description = createGroupChatTO.chatDescription,
+                name = createGroupChatTO.name,
+                description = createGroupChatTO.description,
                 createdBy = creatorUserTO.username,
                 status = ChatStatusEnum.ACTIVE,
                 icon = fileTO?.toEntity(),

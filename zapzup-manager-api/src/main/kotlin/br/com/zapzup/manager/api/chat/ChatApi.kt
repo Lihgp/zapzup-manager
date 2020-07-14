@@ -42,6 +42,6 @@ interface ChatApi {
     ])
     fun createGroupChat(
         @RequestParam createGroupChatRequest: String,
-        @RequestParam(value = "groupIcon") icon: MultipartFile
+        @RequestParam(value = "groupIcon", required = false) icon: MultipartFile?
     ): ResponseWrapper<ChatResponse>
 }

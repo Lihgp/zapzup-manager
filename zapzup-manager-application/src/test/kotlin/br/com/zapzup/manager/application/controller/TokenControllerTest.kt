@@ -23,7 +23,7 @@ open class TokenControllerTest : BasicIntegrationTest() {
     private lateinit var emailService: IEmailService
 
     @Test
-    @Sql(value = ["/scripts/load-user.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = ["/scripts/load-users.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     fun `should generate token with success`() {
         val generatePasswordRequest = GenerateTokenRequest(
             email = "fulano@gmail.com"
@@ -45,7 +45,7 @@ open class TokenControllerTest : BasicIntegrationTest() {
 
     @Test
     @SqlGroup(
-        Sql(value = ["/scripts/load-user.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+        Sql(value = ["/scripts/load-users.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
         Sql(value = ["/scripts/load-token.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     )
     fun `should validate token with success`() {
