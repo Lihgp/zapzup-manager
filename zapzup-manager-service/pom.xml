@@ -12,7 +12,7 @@
     <artifactId>zapzup-manager-service</artifactId>
 
     <dependencies>
-        <!--   ZapZup Dependencies     -->
+        <!-- ZapZup -->
         <dependency>
             <groupId>br.com.zapzup</groupId>
             <artifactId>zapzup-manager-domain</artifactId>
@@ -26,21 +26,27 @@
             <artifactId>zapzup-manager-commons</artifactId>
         </dependency>
 
-        <!--   Spring Dependencies     -->
+        <!-- Test -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>2.21.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
-        <!--   ZapZup Dependencies     -->
+        <!-- Mail -->
         <dependency>
-            <groupId>br.com.zapzup</groupId>
-            <artifactId>zapzup-manager-domain</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+
+        <!-- Security -->
         <dependency>
-            <groupId>br.com.zapzup</groupId>
-            <artifactId>zapzup-manager-repository</artifactId>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
         </dependency>
     </dependencies>
 

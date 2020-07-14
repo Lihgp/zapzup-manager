@@ -2,11 +2,11 @@ package br.com.zapzup.manager.api.user
 
 import br.com.zapzup.manager.api.ResponseWrapper
 import br.com.zapzup.manager.api.user.request.CreateUserRequest
-import br.com.zapzup.manager.api.user.request.UpdateUserRequest
 import br.com.zapzup.manager.api.user.request.UpdatePasswordRequest
+import br.com.zapzup.manager.api.user.request.UpdateUserRequest
 import br.com.zapzup.manager.api.user.response.CreateUserResponse
-import br.com.zapzup.manager.api.user.response.UpdateUserResponse
 import br.com.zapzup.manager.api.user.response.InvalidPasswordResponse
+import br.com.zapzup.manager.api.user.response.UpdateUserResponse
 import br.com.zapzup.manager.api.user.response.UserAlreadyExistsResponse
 import br.com.zapzup.manager.api.user.response.UserNotFoundResponse
 import br.com.zapzup.manager.api.user.response.UserResponse
@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
-import javax.websocket.server.PathParam
 
 @Api(value = "User", tags = ["User"], description = "User Resources")
 @RequestMapping(value = ["/users"])
