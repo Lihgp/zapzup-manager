@@ -46,5 +46,8 @@ fun userTO(user: User): UserTO =
         deletedAt = user.deletedAt
     )
 
+fun List<UserTO>.listToEntity(): List<User> =
+    this.map { it.toEntity() }
+
 fun List<User>.listToTO(): List<UserTO> =
     this.map { it.toTO() }
