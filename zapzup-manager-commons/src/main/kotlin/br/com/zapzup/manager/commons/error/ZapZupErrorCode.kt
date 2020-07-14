@@ -19,4 +19,5 @@ object ZapZupErrorCode {
     val EQUAL_PASSWORD: ErrorCode = ErrorCode("EQUAL_PASSWORD", "equal.password")
     val INVALID_PAGINATION_LIMIT_OFFSET: ErrorCode =
         ErrorCode("INVALID_PAGINATION_LIMIT_OFFSET", "invalid.pagination.limit.offset")
+    val DUPLICATED_ID: ErrorCode = ErrorCode("DUPLICATED_ID", "duplicated.id")
 }

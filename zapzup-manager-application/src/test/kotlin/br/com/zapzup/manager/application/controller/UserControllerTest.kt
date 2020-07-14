@@ -44,7 +44,7 @@ open class UserControllerTest : BasicIntegrationTest() {
     }
 
     @Test
-    @Sql(value = ["/scripts/load-user.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = ["/scripts/load-users.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     fun `should update user with success`() {
         val updateUserRequest = UpdateUserRequest(
             username = "Fulano2",
@@ -69,7 +69,7 @@ open class UserControllerTest : BasicIntegrationTest() {
     }
 
     @Test
-    @Sql(value = ["/scripts/load-user.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = ["/scripts/load-users.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     fun `should update password with success`() {
         val updatePasswordRequest = UpdatePasswordRequest(
             oldPassword = "123456789",
@@ -91,7 +91,7 @@ open class UserControllerTest : BasicIntegrationTest() {
     }
 
     @Test
-    @Sql(value = ["/scripts/load-user.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = ["/scripts/load-users.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     fun `should delete user with success`() {
         val id = "USER-ID"
 

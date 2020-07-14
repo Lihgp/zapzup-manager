@@ -1,5 +1,6 @@
 package br.com.zapzup.manager.domain.entity
 
+import br.com.zapzup.manager.domain.enums.ChatStatusEnum
 import br.com.zapzup.manager.domain.enums.StatusEnum
 import java.time.OffsetDateTime
 import java.util.UUID
@@ -15,6 +16,7 @@ import javax.persistence.ManyToMany
 import javax.persistence.ManyToOne
 import javax.persistence.OneToOne
 import javax.persistence.Table
+
 
 @Entity
 @Table(name = "user_entity")
@@ -43,9 +45,12 @@ data class Message(
     val content: String = "",
     val createdAt: OffsetDateTime = OffsetDateTime.now(),
     val deletedAt: OffsetDateTime? = null,
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    val user: User = User()
+    val user: User = User(),
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chat_id")
+    val chat: Chat = Chat()
 )
 
 @Entity
@@ -55,26 +60,24 @@ data class Chat(
     val id: String = "CHAT-${UUID.randomUUID()}",
     val name: String = "",
     val description: String = "",
+    @Enumerated(value = EnumType.STRING)
+    val status: ChatStatusEnum = ChatStatusEnum.CREATED,
     val createdBy: String = "",
     val updatedBy: String = "",
     val deletedBy: String = "",
     val createdAt: OffsetDateTime = OffsetDateTime.now(),
     val updatedAt: OffsetDateTime? = null,
     val deletedAt: OffsetDateTime? = null,
-    @ManyToMany
+    @OneToOne(targetEntity = File::class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "file_id")
+    val icon: File? = null,
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_chat",
-        joinColumns = [JoinColumn(name = "user_id")],
-        inverseJoinColumns = [JoinColumn(name = "chat_id")]
+        joinColumns = [JoinColumn(name = "chat_id")],
+        inverseJoinColumns = [JoinColumn(name = "user_id")]
     )
-    val users: List<User> = listOf(),
-    @ManyToMany
-    @JoinTable(
-        name = "message_chat",
-        joinColumns = [JoinColumn(name = "message_id")],
-        inverseJoinColumns = [JoinColumn(name = "chat_id")]
-    )
-    val messages: List<Message> = listOf()
+    val users: MutableList<User> = mutableListOf()
 )
 
 @Entity
@@ -89,3 +92,40 @@ data class Token(
     val user: User = User(),
     val expirationDate: OffsetDateTime? = null
 )
+
+@Entity
+@Table(name = "file_entity")
+data class File(
+    @Id
+    val id: String = "FILE-${UUID.randomUUID()}",
+    val name: String = "",
+    val type: String = "",
+    @Column(length = 1000)
+    val fileByte: ByteArray? = null,
+    val createdAt: OffsetDateTime = OffsetDateTime.now()
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as File
+
+        if (id != other.id) return false
+        if (name != other.name) return false
+        if (type != other.type) return false
+        if (fileByte != null) {
+            if (other.fileByte == null) return false
+            if (!fileByte.contentEquals(other.fileByte)) return false
+        } else if (other.fileByte != null) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + (fileByte?.contentHashCode() ?: 0)
+        return result
+    }
+}

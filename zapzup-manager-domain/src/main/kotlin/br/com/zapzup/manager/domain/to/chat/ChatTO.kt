@@ -1,9 +1,9 @@
-package br.com.zapzup.manager.api.chat.response
+package br.com.zapzup.manager.domain.to.chat
 
-import br.com.zapzup.manager.api.user.response.UserResponse
+import br.com.zapzup.manager.domain.to.user.UserTO
 import java.time.OffsetDateTime
 
-data class ChatResponse(
+data class ChatTO(
     val id: String,
     val name: String,
     val description: String,
@@ -13,5 +13,5 @@ data class ChatResponse(
     val createdAt: OffsetDateTime,
     val updatedAt: OffsetDateTime?,
     val deletedAt: OffsetDateTime?,
-    val users: List<UserResponse>
+    val users: List<UserTO>
 )

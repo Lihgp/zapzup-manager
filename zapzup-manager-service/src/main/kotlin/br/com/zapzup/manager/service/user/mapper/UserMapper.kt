@@ -46,5 +46,5 @@ fun userTO(user: User): UserTO =
         deletedAt = user.deletedAt
     )
 
-fun List<User>.listToTO(list: List<User>): List<UserTO> =
-    list.map { it.toTO() }
+fun List<User>.listToTO(): List<UserTO> =
+    this.map { it.toTO() }
