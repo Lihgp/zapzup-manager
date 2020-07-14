@@ -2,9 +2,26 @@ package br.com.zapzup.manager.service.chat.mapper
 
 import br.com.zapzup.manager.domain.entity.Chat
 import br.com.zapzup.manager.domain.to.chat.ChatTO
+import br.com.zapzup.manager.service.user.mapper.listToEntity
 import br.com.zapzup.manager.service.user.mapper.listToTO
 
 fun Chat.toTO() = chatTO(chat = this)
+
+fun ChatTO.toEntity() = chat(chatTO = this)
+
+fun chat(chatTO: ChatTO): Chat =
+    Chat(
+        id = chatTO.id,
+        name = chatTO.name,
+        description = chatTO.description,
+        createdBy = chatTO.createdBy,
+        updatedBy = chatTO.updatedBy,
+        deletedBy = chatTO.deletedBy,
+        createdAt = chatTO.createdAt,
+        updatedAt = chatTO.updatedAt,
+        deletedAt = chatTO.deletedAt,
+        users = chatTO.users.listToEntity().toMutableList()
+    )
 
 fun chatTO(chat: Chat): ChatTO =
     ChatTO(

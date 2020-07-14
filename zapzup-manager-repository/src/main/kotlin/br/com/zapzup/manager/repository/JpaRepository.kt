@@ -2,6 +2,7 @@ package br.com.zapzup.manager.repository
 
 import br.com.zapzup.manager.domain.entity.Chat
 import br.com.zapzup.manager.domain.entity.File
+import br.com.zapzup.manager.domain.entity.Message
 import br.com.zapzup.manager.domain.entity.Token
 import br.com.zapzup.manager.domain.entity.User
 import org.springframework.data.domain.Page
@@ -45,3 +46,6 @@ interface ChatRepository : JpaRepository<Chat, String>
 
 @Repository
 interface FileRepository : JpaRepository<File, String>
+
+@Repository
+interface MessageRepository : JpaRepository<Message, String>

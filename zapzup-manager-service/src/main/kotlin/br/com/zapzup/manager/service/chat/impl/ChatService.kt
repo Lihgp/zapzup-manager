@@ -1,12 +1,13 @@
 package br.com.zapzup.manager.service.chat.impl
 
+import br.com.zapzup.manager.commons.exceptions.ChatNotFoundException
 import br.com.zapzup.manager.commons.exceptions.DuplicatedIdException
 import br.com.zapzup.manager.domain.entity.Chat
 import br.com.zapzup.manager.domain.entity.User
 import br.com.zapzup.manager.domain.enums.ChatStatusEnum
 import br.com.zapzup.manager.domain.to.chat.ChatTO
-import br.com.zapzup.manager.domain.to.chat.CreatePrivateChatTO
 import br.com.zapzup.manager.domain.to.chat.CreateGroupChatTO
+import br.com.zapzup.manager.domain.to.chat.CreatePrivateChatTO
 import br.com.zapzup.manager.repository.ChatRepository
 import br.com.zapzup.manager.service.chat.IChatService
 import br.com.zapzup.manager.service.chat.mapper.toTO
@@ -73,4 +74,7 @@ open class ChatService(
 
         return chat.toTO()
     }
+
+    override fun findById(id: String): ChatTO =
+        chatRepository.findById(id).orElseThrow { ChatNotFoundException() }.toTO()
 }
