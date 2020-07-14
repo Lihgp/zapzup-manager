@@ -12,6 +12,13 @@
     <artifactId>zapzup-manager-domain</artifactId>
 
     <dependencies>
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- ZapZup -->
         <dependency>
             <groupId>br.com.zapzup</groupId>
             <artifactId>zapzup-manager-commons</artifactId>

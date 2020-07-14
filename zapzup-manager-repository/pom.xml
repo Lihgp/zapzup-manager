@@ -12,6 +12,19 @@
     <artifactId>zapzup-manager-repository</artifactId>
 
     <dependencies>
+        <!-- Liquibase -->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+
+        <!-- Postgres -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <!-- ZapZup -->
         <dependency>
             <groupId>br.com.zapzup</groupId>
             <artifactId>zapzup-manager-domain</artifactId>

@@ -7,21 +7,20 @@ import br.com.zapzup.manager.commons.exceptions.UserNotFoundException
 import br.com.zapzup.manager.domain.entity.User
 import br.com.zapzup.manager.domain.enums.StatusEnum
 import br.com.zapzup.manager.domain.to.user.CreateUserTO
+import br.com.zapzup.manager.domain.to.user.GetUsersFilter
 import br.com.zapzup.manager.domain.to.user.UpdatePasswordTO
 import br.com.zapzup.manager.domain.to.user.UpdateUserTO
-import br.com.zapzup.manager.domain.to.user.GetUsersFilter
 import br.com.zapzup.manager.domain.to.user.UserTO
 import br.com.zapzup.manager.repository.UserRepository
 import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.mapper.toEntity
 import br.com.zapzup.manager.service.user.mapper.toTO
 import org.slf4j.LoggerFactory
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
-import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 
