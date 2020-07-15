@@ -19,6 +19,7 @@
             <column name="deleted_at" type="timestamp"/>
             <column name="user_id" type="varchar(41)"/>
             <column name="chat_id" type="varchar(41)"/>
+            <column name="file_id" type="varchar(41)"/>
         </createTable>
     </changeSet>
 
@@ -43,6 +44,17 @@
                                  baseColumnNames="chat_id"
                                  constraintName="fk_chat_id"
                                  referencedTableName="chat_entity"
+                                 referencedColumnNames="id"
+                                 baseTableSchemaName="zapzup"
+                                 referencedTableSchemaName="zapzup"
+        />
+    </changeSet>
+
+    <changeSet author="Victor" id="set_file_image_fk">
+        <addForeignKeyConstraint baseTableName="message_entity"
+                                 baseColumnNames="file_id"
+                                 constraintName="fk_file_id"
+                                 referencedTableName="file_entity"
                                  referencedColumnNames="id"
                                  baseTableSchemaName="zapzup"
                                  referencedTableSchemaName="zapzup"

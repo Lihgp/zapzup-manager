@@ -4,14 +4,14 @@ document.querySelector('#welcomeForm').addEventListener('submit', connect, true)
 document.querySelector('#dialogueForm').addEventListener('submit', sendMessage, true)
 
 let stompClient = null;
-let name = null;
 let userId = null;
+let chatId = null;
 
 function connect(event) {
-    name = document.querySelector('#name').value.trim();
+    chatId = document.querySelector('#chatId').value.trim();
     userId = document.querySelector('#userId').value.trim();
 
-    if (name) {
+    if (chatId && userId) {
         document.querySelector('#welcome-page').classList.add('hidden');
         document.querySelector('#dialogue-page').classList.remove('hidden');
 
@@ -24,13 +24,7 @@ function connect(event) {
 }
 
 function connectionSuccess() {
-    stompClient.subscribe('/topic/private/CHAT-1e703648-ae8c-4557-a6c7-b0c77045656a', onMessageReceived);
-
-    stompClient.send("/app/chat.newUser", {}, JSON.stringify({
-        sender: name,
-        type: 'newUser'
-    }))
-
+    stompClient.subscribe(`/topic/private/${chatId}`, onMessageReceived);
 }
 
 function sendMessage(event) {
@@ -39,7 +33,7 @@ function sendMessage(event) {
     if (messageContent && stompClient) {
         let chatMessage = {
             userId: userId,
-            chatId: 'CHAT-1e703648-ae8c-4557-a6c7-b0c77045656a',
+            chatId: chatId,
             content: document.querySelector('#chatMessage').value
         };
 
@@ -80,13 +74,23 @@ function onMessageReceived(payload) {
     let textElement = document.createElement('p');
     let spanElement = document.createElement('span');
     let messageText = document.createTextNode(`${message.content} - `);
-    let dateText = document.createTextNode(moment(message.createdAt).format('L'));
+    let dateText = document.createTextNode(moment(message.createdAt).format('LT'));
     textElement.appendChild(messageText);
-    spanElement.appendChild(dateText)
-    spanElement.setAttribute('id', 'messageDate')
-    textElement.appendChild(spanElement)
+    spanElement.appendChild(dateText);
+    spanElement.setAttribute('id', 'messageDate');
+    textElement.appendChild(spanElement);
 
     messageElement.appendChild(textElement);
+
+    if (message.file) {
+        let retrievedImage = `data:${message.file.type};base64, ${message.file.fileByte}`;
+        let imageElement = document.createElement('img');
+        imageElement.setAttribute("src", retrievedImage)
+        imageElement.setAttribute("width", '500')
+        // imageElement.setAttribute("height", '500')
+        messageElement.appendChild(imageElement)
+    }
+
 
     document.querySelector('#messageList').appendChild(messageElement);
     document.querySelector('#messageList').scrollTop = document

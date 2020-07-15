@@ -50,7 +50,10 @@ data class Message(
     val user: User = User(),
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_id")
-    val chat: Chat = Chat()
+    val chat: Chat = Chat(),
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "file_id")
+    val file: File? = null
 )
 
 @Entity
