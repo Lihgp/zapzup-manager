@@ -1,28 +1,18 @@
-<databaseChangeLog
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet author="Victor" id="create_file_entity">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="file_entity"/>
-            </not>
-        </preConditions>
-        <createTable tableName="file_entity" schemaName="zapzup">
-            <column name="id" type="varchar(41)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)"/>
-            <column name="type" type="varchar(255)"/>
-            <column name="file_byte" type="bytea"/>
-            <column name="created_at" type="timestamp"/>
-        </createTable>
-    </changeSet>
-
-    <changeSet author="Victor" id="set_file_entity_pk">
-        <addPrimaryKey schemaName="zapzup" columnNames="id" constraintName="file_entity_pkey" tableName="file_entity"/>
+    <changeSet author="Victor" id="create_chat_entity">
+        <sql>
+            CREATE TABLE IF NOT EXISTS zapzup.file_entity (
+                id         VARCHAR(41) PRIMARY KEY NOT NULL,
+                name       VARCHAR(255),
+                type       VARCHAR(255),
+                file_byte  BYTEA,
+                created_at TIMESTAMP
+            );
+        </sql>
     </changeSet>
 
 </databaseChangeLog>
