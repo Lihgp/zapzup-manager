@@ -37,8 +37,18 @@ function sendMessage(event) {
             content: document.querySelector('#chatMessage').value
         };
 
-        stompClient.send("/app/messages.send", {}, JSON
-            .stringify(chatMessage));
+        let formData = new FormData();
+        formData.append("createMessageRequest", JSON.stringify(chatMessage));
+        const apiHeaders = new Headers();
+        apiHeaders.append('Content-Type', 'multipart/form-data');
+
+        fetch('http://localhost:8080/zapzupapplication/messages/file', {
+            method: 'POST',
+            body: formData
+        }).then((response) => console.log("sent"));
+
+        // stompClient.send("/app/messages.send", {}, JSON
+        //     .stringify(chatMessage));
         document.querySelector('#chatMessage').value = '';
     }
     event.preventDefault();

@@ -17,11 +17,11 @@ import org.springframework.web.multipart.MultipartFile
 interface MessageApi {
 
     //    @PostMapping
-//    @ApiOperation(value = "Sends a message into chat")
-//    @ApiResponses(value = [
-//        ApiResponse(code = 200, message = "Sended")
-//    ])
     @MessageMapping(value = ["messages.send"])
+    @ApiOperation(value = "Sends a message into chat")
+    @ApiResponses(value = [
+        ApiResponse(code = 200, message = "Sended")
+    ])
     fun sendMessage(@Payload createMessageRequest: CreateMessageRequest)
 
     @PostMapping(value = ["/file"])
@@ -31,6 +31,6 @@ interface MessageApi {
     ])
     fun sendFileMessage(
         @RequestParam createMessageRequest: String,
-        @RequestParam file: MultipartFile
+        @RequestParam file: MultipartFile?
     )
 }

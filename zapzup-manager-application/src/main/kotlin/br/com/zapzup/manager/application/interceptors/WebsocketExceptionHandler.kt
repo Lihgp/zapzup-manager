@@ -14,7 +14,7 @@ class WebsocketExceptionHandler(
     private val messagingTemplate: SimpMessageSendingOperations
 ) {
 
-    @MessageExceptionHandler(UserNotFoundInChatException::class)
+    @MessageExceptionHandler(Exception::class)
     fun genericException(ex: Exception) {
         val code = ZapZupErrorCode.GENERAL_ERROR.code
         val originalError = ex.javaClass.name + " - " + ex.message

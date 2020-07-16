@@ -25,7 +25,7 @@ class MessageController(
 
     override fun sendFileMessage(
         @RequestParam(required = false) createMessageRequest: String,
-        @RequestParam file: MultipartFile
+        @RequestParam(required = false) file: MultipartFile?
     ) {
         val createMessageRequestObject = createMessageRequest.jsonToObject(CreateMessageRequest::class.java)
         val messageResponse = messageService.save(createMessageRequestObject!!.toDomain(file)).toResponse()
