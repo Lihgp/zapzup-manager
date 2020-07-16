@@ -5,40 +5,15 @@
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <changeSet author="Victor" id="create_user_chat">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="user_chat"/>
-            </not>
-        </preConditions>
-        <createTable tableName="user_chat" schemaName="zapzup">
-            <column name="user_id" type="varchar(41)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="chat_id" type="varchar(41)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
+        <sql>
+            CREATE TABLE IF NOT EXISTS zapzup.user_chat (
+                user_id VARCHAR(41),
+                chat_id VARCHAR(41),
 
-    <changeSet author="Victor" id="set_user-chat_fk">
-        <addForeignKeyConstraint baseTableName="user_chat"
-                                 baseColumnNames="user_id"
-                                 constraintName="fk_user_id"
-                                 referencedTableName="user_entity"
-                                 referencedColumnNames="id"
-                                 baseTableSchemaName="zapzup"
-                                 referencedTableSchemaName="zapzup"
-        />
-    </changeSet>
-    <changeSet author="Victor" id="set_chat-user_fk">
-        <addForeignKeyConstraint baseTableName="user_chat"
-                                 baseColumnNames="chat_id"
-                                 constraintName="fk_chat_id"
-                                 referencedTableName="chat_entity"
-                                 referencedColumnNames="id"
-                                 baseTableSchemaName="zapzup"
-                                 referencedTableSchemaName="zapzup"
-        />
+                CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES zapzup.user_entity (id),
+                CONSTRAINT fk_chat_id FOREIGN KEY (chat_id) REFERENCES zapzup.chat_entity (id)
+            );
+        </sql>
     </changeSet>
 
 </databaseChangeLog>
