@@ -5,37 +5,17 @@
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <changeSet author="Victor" id="create_token_entity">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="token_entity"/>
-            </not>
-        </preConditions>
-        <createTable tableName="token_entity" schemaName="zapzup">
-            <column name="id" type="varchar(42)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="code" type="varchar(36)">
-                <constraints unique="true"/>
-            </column>
-            <column name="user_id" type="varchar(41)"/>
-            <column name="expiration_date" type="timestamp"/>
-        </createTable>
-    </changeSet>
+        <sql>
+            CREATE TABLE IF NOT EXISTS zapzup.token_entity (
+                id              VARCHAR(42) PRIMARY KEY NOT NULL,
+                code            VARCHAR(36)             NOT NULL,
+                user_id         VARCHAR(41),
+                expiration_date TIMESTAMP,
 
-    <changeSet author="Victor" id="set_token_entity_pk">
-        <addPrimaryKey schemaName="zapzup" columnNames="id" constraintName="token_entity_pkey"
-                       tableName="token_entity"/>
-    </changeSet>
-
-    <changeSet author="Victor" id="set_user_fk_token">
-        <addForeignKeyConstraint baseTableName="token_entity"
-                                 baseColumnNames="user_id"
-                                 constraintName="fk_user_id"
-                                 referencedTableName="user_entity"
-                                 referencedColumnNames="id"
-                                 baseTableSchemaName="zapzup"
-                                 referencedTableSchemaName="zapzup"
-        />
+                CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES zapzup.user_entity (id),
+                UNIQUE (code)
+            );
+        </sql>
     </changeSet>
 
 </databaseChangeLog>
