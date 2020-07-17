@@ -12,4 +12,8 @@ interface IChatService {
     fun createGroupChat(createGroupChatTO: CreateGroupChatTO, groupIcon: MultipartFile?): ChatTO
 
     fun findById(id: String): ChatTO
+
+    fun updateLastMessageSent(id: String)
+
+    fun getChatsOrderedByLastMessageSent(id: String)
 }

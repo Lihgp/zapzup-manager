@@ -3,7 +3,6 @@ package br.com.zapzup.manager.service.message.impl
 import br.com.zapzup.manager.commons.exceptions.UserNotFoundInChatException
 import br.com.zapzup.manager.domain.entity.Message
 import br.com.zapzup.manager.domain.to.chat.ChatTO
-import br.com.zapzup.manager.domain.to.file.FileTO
 import br.com.zapzup.manager.domain.to.message.CreateMessageTO
 import br.com.zapzup.manager.domain.to.message.MessageTO
 import br.com.zapzup.manager.domain.to.user.UserTO
@@ -35,14 +34,18 @@ open class MessageService(
 
         validateUserInChat(userTO, chatTO)
 
-        val message = Message(
-            content = createMessageTO.content,
-            user = userTO.toEntity(),
-            chat = chatTO.toEntity(),
-            file = fileTO?.toEntity()
+        val message = messageRepository.save(
+            Message(
+                content = createMessageTO.content,
+                user = userTO.toEntity(),
+                chat = chatTO.toEntity(),
+                file = fileTO?.toEntity()
+            )
         )
 
-        return messageRepository.save(message).toTO()
+        chatService.updateLastMessageSent(createMessageTO.chatId)
+
+        return message.toTO()
     }
 
     private fun validateUserInChat(userTO: UserTO, chatTO: ChatTO) {

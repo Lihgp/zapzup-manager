@@ -6,7 +6,7 @@
     <changeSet author="Victor" id="create_message_entity">
         <sql>
             CREATE TABLE IF NOT EXISTS zapzup.message_entity(
-                id         VARCHAR(39) PRIMARY KEY NOT NULL,
+                id         VARCHAR(40) PRIMARY KEY NOT NULL,
                 content    TEXT,
                 created_at TIMESTAMP,
                 deleted_at TIMESTAMP,

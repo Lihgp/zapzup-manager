@@ -9,6 +9,8 @@ fun Chat.toTO() = chatTO(chat = this)
 
 fun ChatTO.toEntity() = chat(chatTO = this)
 
+fun List<Chat>.toTOList() = chatsTO(chats = this)
+
 fun chat(chatTO: ChatTO): Chat =
     Chat(
         id = chatTO.id,
@@ -20,8 +22,11 @@ fun chat(chatTO: ChatTO): Chat =
         createdAt = chatTO.createdAt,
         updatedAt = chatTO.updatedAt,
         deletedAt = chatTO.deletedAt,
+        lastMessageSentAt = chatTO.lastMessageSentAt,
         users = chatTO.users.listToEntity().toMutableList()
     )
+
+fun chatsTO(chats: List<Chat>): List<ChatTO> = chats.map { it.toTO() }
 
 fun chatTO(chat: Chat): ChatTO =
     ChatTO(
@@ -34,5 +39,6 @@ fun chatTO(chat: Chat): ChatTO =
         createdAt = chat.createdAt,
         updatedAt = chat.updatedAt,
         deletedAt = chat.deletedAt,
+        lastMessageSentAt = chat.lastMessageSentAt,
         users = chat.users.listToTO()
-)
+    )

@@ -19,12 +19,14 @@ import org.mockito.Mockito.any
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
+import org.springframework.messaging.simp.SimpMessageSendingOperations
 
 class ChatServiceTest {
     private val chatRepository: ChatRepository = mock(ChatRepository::class.java)
     private val fileService: IFileService = mock(IFileService::class.java)
     private val userService: IUserService = mock(IUserService::class.java)
-    private val chatService: IChatService = ChatService(chatRepository, fileService, userService)
+    private val messagingTemplate: SimpMessageSendingOperations = mock(SimpMessageSendingOperations::class.java)
+    private val chatService: IChatService = ChatService(chatRepository, fileService, userService, messagingTemplate)
 
     private val creatorUserId: String = "USER-ID-CREATOR"
 

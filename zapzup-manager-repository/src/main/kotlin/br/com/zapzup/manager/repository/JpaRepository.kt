@@ -37,12 +37,17 @@ interface UserRepository : JpaRepository<User, String> {
 
 @Repository
 interface TokenRepository : JpaRepository<Token, String> {
+    @Query(name = "TokenEntity.findByCode")
     fun findByCode(code: String): Token?
+    @Query(name = "TokenEntity.findByUserEmail")
     fun findByUserEmail(email: String): Token?
 }
 
 @Repository
-interface ChatRepository : JpaRepository<Chat, String>
+interface ChatRepository : JpaRepository<Chat, String> {
+    @Query(name = "ChatEntity.findAllOrdered")
+    fun findAllByUserId(@Param(value = "userId") userId: String): List<Chat>
+}
 
 @Repository
 interface FileRepository : JpaRepository<File, String>

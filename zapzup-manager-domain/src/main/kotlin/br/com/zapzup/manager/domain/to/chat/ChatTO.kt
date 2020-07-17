@@ -13,5 +13,6 @@ data class ChatTO(
     val createdAt: OffsetDateTime,
     val updatedAt: OffsetDateTime?,
     val deletedAt: OffsetDateTime?,
+    val lastMessageSentAt: OffsetDateTime?,
     val users: List<UserTO>
 )

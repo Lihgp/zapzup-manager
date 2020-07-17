@@ -10,21 +10,26 @@ import br.com.zapzup.manager.domain.to.chat.CreateGroupChatTO
 import br.com.zapzup.manager.domain.to.chat.CreatePrivateChatTO
 import br.com.zapzup.manager.repository.ChatRepository
 import br.com.zapzup.manager.service.chat.IChatService
+import br.com.zapzup.manager.service.chat.mapper.toEntity
 import br.com.zapzup.manager.service.chat.mapper.toTO
+import br.com.zapzup.manager.service.chat.mapper.toTOList
 import br.com.zapzup.manager.service.file.IFileService
 import br.com.zapzup.manager.service.file.mapper.toEntity
 import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.mapper.toEntity
+import org.springframework.messaging.simp.SimpMessageSendingOperations
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
+import java.time.OffsetDateTime
 
 @Service
 @Transactional
 open class ChatService(
     private val chatRepository: ChatRepository,
     private val fileService: IFileService,
-    private val userService: IUserService
+    private val userService: IUserService,
+    private val messagingTemplate: SimpMessageSendingOperations
 ) : IChatService {
 
     override fun createPrivateChat(createPrivateChatTO: CreatePrivateChatTO): ChatTO {
@@ -77,4 +82,20 @@ open class ChatService(
 
     override fun findById(id: String): ChatTO =
         chatRepository.findById(id).orElseThrow { ChatNotFoundException() }.toTO()
+
+    override fun updateLastMessageSent(id: String) {
+        val chat = findById(id).toEntity()
+
+        chatRepository.save(chat.copy(lastMessageSentAt = OffsetDateTime.now(), status = ChatStatusEnum.ACTIVE))
+    }
+
+    override fun getChatsOrderedByLastMessageSent(id: String) {
+        val chat = findById(id).toEntity()
+
+        chat.users.forEach { user ->
+            val chats = chatRepository.findAllByUserId(user.id)
+
+            messagingTemplate.convertAndSend("/topic/chats/${user.id}", chats.toTOList())
+        }
+    }
 }

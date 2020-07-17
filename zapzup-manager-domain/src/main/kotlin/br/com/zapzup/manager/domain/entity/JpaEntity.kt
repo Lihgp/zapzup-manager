@@ -71,10 +71,11 @@ data class Chat(
     val createdAt: OffsetDateTime = OffsetDateTime.now(),
     val updatedAt: OffsetDateTime? = null,
     val deletedAt: OffsetDateTime? = null,
+    val lastMessageSentAt: OffsetDateTime? = null,
     @OneToOne(targetEntity = File::class, fetch = FetchType.EAGER)
     @JoinColumn(name = "file_id")
     val icon: File? = null,
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_chat",
         joinColumns = [JoinColumn(name = "chat_id")],

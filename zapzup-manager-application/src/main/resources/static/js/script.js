@@ -25,6 +25,11 @@ function connect(event) {
 
 function connectionSuccess() {
     stompClient.subscribe(`/topic/private/${chatId}`, onMessageReceived);
+    stompClient.subscribe(`/topic/chats/${userId}`, onUpdateChats);
+}
+
+function onUpdateChats(payload) {
+    console.log(JSON.parse(payload.body))
 }
 
 function sendMessage(event) {
@@ -42,13 +47,13 @@ function sendMessage(event) {
         const apiHeaders = new Headers();
         apiHeaders.append('Content-Type', 'multipart/form-data');
 
-        fetch('http://localhost:8080/zapzupapplication/messages/file', {
-            method: 'POST',
-            body: formData
-        }).then((response) => console.log("sent"));
+        // fetch('/zapzupapplication/messages/file', {
+        //     method: 'POST',
+        //     body: formData
+        // }).then((response) => console.log("sent"));
 
-        // stompClient.send("/app/messages.send", {}, JSON
-        //     .stringify(chatMessage));
+        stompClient.send("/app/messages.send", {}, JSON
+            .stringify(chatMessage));
         document.querySelector('#chatMessage').value = '';
     }
     event.preventDefault();
