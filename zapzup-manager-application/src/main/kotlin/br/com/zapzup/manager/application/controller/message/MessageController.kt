@@ -25,7 +25,7 @@ class MessageController(
 
         messagingTemplate.convertAndSend("/topic/private/${chatId}", messageResponse)
 
-        chatService.getChatsOrderedByLastMessageSent(chatId)
+        chatService.sendToUsersChatsOrderedByLastMessageSent(chatId)
     }
 
     override fun sendFileMessage(
@@ -38,6 +38,6 @@ class MessageController(
 
         messagingTemplate.convertAndSend("/topic/private/${chatId}", messageResponse)
 
-        chatService.getChatsOrderedByLastMessageSent(chatId)
+        chatService.sendToUsersChatsOrderedByLastMessageSent(chatId)
     }
 }

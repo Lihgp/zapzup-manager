@@ -89,7 +89,7 @@ open class ChatService(
         chatRepository.save(chat.copy(lastMessageSentAt = OffsetDateTime.now(), status = ChatStatusEnum.ACTIVE))
     }
 
-    override fun getChatsOrderedByLastMessageSent(id: String) {
+    override fun sendToUsersChatsOrderedByLastMessageSent(id: String) {
         val chat = findById(id).toEntity()
 
         chat.users.forEach { user ->

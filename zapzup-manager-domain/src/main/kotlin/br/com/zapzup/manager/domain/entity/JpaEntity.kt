@@ -1,7 +1,7 @@
 package br.com.zapzup.manager.domain.entity
 
 import br.com.zapzup.manager.domain.enums.ChatStatusEnum
-import br.com.zapzup.manager.domain.enums.StatusEnum
+import br.com.zapzup.manager.domain.enums.UserStatusEnum
 import java.time.OffsetDateTime
 import java.util.UUID
 import javax.persistence.Column
@@ -28,7 +28,7 @@ data class User(
     val username: String = "",
     val note: String = "Hello! I'm using ZapZup.",
     @Enumerated(EnumType.STRING)
-    val status: StatusEnum = StatusEnum.ACTIVE,
+    val userStatus: UserStatusEnum = UserStatusEnum.ACTIVE,
     @Column(unique = true)
     val email: String = "",
     val password: String = "",

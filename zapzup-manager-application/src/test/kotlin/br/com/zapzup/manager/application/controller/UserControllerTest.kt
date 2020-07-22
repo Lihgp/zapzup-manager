@@ -105,7 +105,7 @@ open class UserControllerTest : BasicIntegrationTest() {
         val user = userRepository.findById(id)
 
         assertThat(user.isPresent).isTrue()
-        assertThat(user.get().status.name).isEqualTo("INACTIVE")
+        assertThat(user.get().userStatus.name).isEqualTo("INACTIVE")
         assertThat(user.get().deletedAt).isNotNull()
     }
 }

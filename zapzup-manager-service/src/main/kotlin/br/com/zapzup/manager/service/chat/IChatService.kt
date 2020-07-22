@@ -15,5 +15,5 @@ interface IChatService {
 
     fun updateLastMessageSent(id: String)
 
-    fun getChatsOrderedByLastMessageSent(id: String)
+    fun sendToUsersChatsOrderedByLastMessageSent(id: String)
 }
