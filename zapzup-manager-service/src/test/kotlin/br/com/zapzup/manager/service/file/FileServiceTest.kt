@@ -41,4 +41,11 @@ class FileServiceTest {
         assertThat(response?.name).isEqualTo(file.originalFilename)
         assertThat(response?.type).isEqualTo(file.contentType)
     }
+
+    @Test
+    fun `should return null for null multipart`() {
+        val response = fileService.saveFile(null)
+
+        assertThat(response).isNull()
+    }
 }

@@ -8,9 +8,6 @@ import br.com.zapzup.manager.service.file.IFileService
 import br.com.zapzup.manager.service.file.mapper.toTO
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
-import java.io.ByteArrayOutputStream
-import java.util.zip.Deflater
-import java.util.zip.Inflater
 
 
 @Service
