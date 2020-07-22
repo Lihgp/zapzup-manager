@@ -5,6 +5,4 @@ import br.com.zapzup.manager.domain.to.message.MessageTO
 
 interface IMessageService {
     fun save(createMessageTO: CreateMessageTO): MessageTO
-
-//    fun saveWithFile(createMessageTO: CreateMessageTO): MessageTO
 }

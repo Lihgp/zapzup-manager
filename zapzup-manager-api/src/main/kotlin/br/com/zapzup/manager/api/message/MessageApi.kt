@@ -24,7 +24,7 @@ interface MessageApi {
     ])
     fun sendMessage(@Payload createMessageRequest: CreateMessageRequest)
 
-    @PostMapping(value = ["/file"])
+    @PostMapping
     @ApiOperation(value = "Sends a message with or without file in chat")
     @ApiResponses(value = [
         ApiResponse(code = 200, message = "Sended")

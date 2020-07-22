@@ -1,5 +1,7 @@
 package br.com.zapzup.manager.application.config
 
+import br.com.zapzup.manager.repository.ChatRepository
+import br.com.zapzup.manager.repository.MessageRepository
 import br.com.zapzup.manager.repository.TokenRepository
 import br.com.zapzup.manager.repository.UserRepository
 import org.junit.Before
@@ -25,6 +27,12 @@ abstract class BasicIntegrationTest {
 
     @Autowired
     protected lateinit var userRepository: UserRepository
+
+    @Autowired
+    protected lateinit var messageRepository: MessageRepository
+
+    @Autowired
+    protected lateinit var chatRepository: ChatRepository
 
     @Autowired
     protected lateinit var passwordEncoder: BCryptPasswordEncoder
