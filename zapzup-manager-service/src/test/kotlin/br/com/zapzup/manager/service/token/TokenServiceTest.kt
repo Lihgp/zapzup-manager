@@ -3,7 +3,7 @@ package br.com.zapzup.manager.service.token
 import br.com.zapzup.manager.commons.exceptions.InvalidTokenException
 import br.com.zapzup.manager.domain.entity.Token
 import br.com.zapzup.manager.domain.entity.User
-import br.com.zapzup.manager.domain.enums.StatusEnum
+import br.com.zapzup.manager.domain.enums.UserStatusEnum
 import br.com.zapzup.manager.domain.enums.TokenTypeEnum
 import br.com.zapzup.manager.domain.to.token.GenerateTokenTO
 import br.com.zapzup.manager.domain.to.user.UserTO
@@ -133,7 +133,7 @@ class TokenServiceTest {
             name = "Fulano",
             username = "fulaninho",
             note = "Suave",
-            status = StatusEnum.ACTIVE,
+            status = UserStatusEnum.ACTIVE,
             email = "fulano@gmail.com"
         )
 }

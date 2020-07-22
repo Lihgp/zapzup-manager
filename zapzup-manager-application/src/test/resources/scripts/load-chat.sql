@@ -1,0 +1,31 @@
+INSERT INTO zapzup.chat_entity (id,
+                                name,
+                                description,
+                                status,
+                                file_id,
+                                created_by,
+                                updated_by,
+                                deleted_by,
+                                created_at,
+                                updated_at,
+                                deleted_at,
+                                last_message_sent_at)
+VALUES ('CHAT-ID',
+        '',
+        '',
+        'ACTIVE',
+        null,
+        'fulaninho',
+        '',
+        '',
+        current_timestamp,
+        null,
+        null,
+        null);
+
+INSERT INTO zapzup.user_chat (user_id,
+                              chat_id)
+VALUES ('USER-ID',
+        'CHAT-ID'),
+       ('CREATOR-USER-ID',
+        'CHAT-ID');

@@ -1,7 +1,7 @@
 package br.com.zapzup.manager.domain.entity
 
 import br.com.zapzup.manager.domain.enums.ChatStatusEnum
-import br.com.zapzup.manager.domain.enums.StatusEnum
+import br.com.zapzup.manager.domain.enums.UserStatusEnum
 import java.time.OffsetDateTime
 import java.util.UUID
 import javax.persistence.Column
@@ -28,7 +28,7 @@ data class User(
     val username: String = "",
     val note: String = "Hello! I'm using ZapZup.",
     @Enumerated(EnumType.STRING)
-    val status: StatusEnum = StatusEnum.ACTIVE,
+    val status: UserStatusEnum = UserStatusEnum.ACTIVE,
     @Column(unique = true)
     val email: String = "",
     val password: String = "",
@@ -50,7 +50,10 @@ data class Message(
     val user: User = User(),
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_id")
-    val chat: Chat = Chat()
+    val chat: Chat = Chat(),
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "file_id")
+    val file: File? = null
 )
 
 @Entity
@@ -68,10 +71,11 @@ data class Chat(
     val createdAt: OffsetDateTime = OffsetDateTime.now(),
     val updatedAt: OffsetDateTime? = null,
     val deletedAt: OffsetDateTime? = null,
+    val lastMessageSentAt: OffsetDateTime? = null,
     @OneToOne(targetEntity = File::class, fetch = FetchType.EAGER)
     @JoinColumn(name = "file_id")
     val icon: File? = null,
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_chat",
         joinColumns = [JoinColumn(name = "chat_id")],

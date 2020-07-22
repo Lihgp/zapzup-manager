@@ -10,7 +10,6 @@ import br.com.zapzup.manager.commons.exceptions.InvalidTokenException
 import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.commons.exceptions.UserNotFoundException
 import br.com.zapzup.manager.commons.exceptions.ValidationException
-import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.http.HttpStatus.NOT_FOUND
@@ -27,8 +26,6 @@ class ZapZupExceptionHandler(
     private val resourceBundle: ResourceBundle
 ) {
 
-    private val log = LoggerFactory.getLogger(this.javaClass)
-
     @ExceptionHandler(Exception::class)
     @ResponseStatus(INTERNAL_SERVER_ERROR)
     @ResponseBody
@@ -36,8 +33,6 @@ class ZapZupExceptionHandler(
         val code = ZapZupErrorCode.GENERAL_ERROR.code
         val originalError = ex.javaClass.name + " - " + ex.message
         val message = resourceBundle.getMessage(ZapZupErrorCode.GENERAL_ERROR.key)
-
-        log.error("Exception: {}", originalError, ex)
 
         return ErrorResponse(
             code = code, message = message ?: code, originalError = originalError
@@ -49,8 +44,6 @@ class ZapZupExceptionHandler(
     @ResponseBody
     fun handleMethodArgumentNotValidException(ex: MethodArgumentNotValidException): ErrorResponse {
         val fields = LinkedHashMap<String, List<String>>()
-
-        log.error("MethodArgumentNotValidException ", ex)
 
         ex.bindingResult.fieldErrors.forEach { field ->
             fields.computeIfAbsent(field.field) {
@@ -78,91 +71,70 @@ class ZapZupExceptionHandler(
     @ExceptionHandler(UserAlreadyExistsException::class)
     @ResponseStatus(UNPROCESSABLE_ENTITY)
     @ResponseBody
-    fun handleUserAlreadyExistsException(ex: UserAlreadyExistsException): ErrorResponse {
-        log.error("UserAlreadyExistsException ", ex)
-
-        return ErrorResponse(
+    fun handleUserAlreadyExistsException(ex: UserAlreadyExistsException) =
+        ErrorResponse(
             message = resourceBundle.getMessage(ZapZupErrorCode.USER_ALREADY_EXISTS.key, arrayOf(ex.field))
                 ?: ZapZupErrorCode.USER_ALREADY_EXISTS.code,
             code = ZapZupErrorCode.USER_ALREADY_EXISTS.code
         )
-    }
 
     @ExceptionHandler(InvalidTokenException::class)
     @ResponseStatus(UNPROCESSABLE_ENTITY)
     @ResponseBody
-    fun handleInvalidTokenException(ex: InvalidTokenException): ErrorResponse {
-        log.error("InvalidTokenException ", ex)
-
-        return ErrorResponse(
+    fun handleInvalidTokenException(ex: InvalidTokenException) =
+        ErrorResponse(
             message = resourceBundle.getMessage(ZapZupErrorCode.INVALID_TOKEN.key)
                 ?: ZapZupErrorCode.INVALID_TOKEN.code,
             code = ZapZupErrorCode.INVALID_TOKEN.code
         )
-    }
 
     @ExceptionHandler(UserNotFoundException::class)
     @ResponseStatus(NOT_FOUND)
     @ResponseBody
-    fun handleUserNotFoundException(ex: UserNotFoundException): ErrorResponse {
-        log.error("UserNotFoundException ", ex)
-
-        return ErrorResponse(
+    fun handleUserNotFoundException(ex: UserNotFoundException) =
+        ErrorResponse(
             message = resourceBundle.getMessage(ZapZupErrorCode.USER_NOT_FOUND.key)
                 ?: ZapZupErrorCode.USER_NOT_FOUND.code,
             code = ZapZupErrorCode.USER_NOT_FOUND.code
         )
-    }
 
     @ExceptionHandler(ValidationException::class)
     @ResponseStatus(BAD_REQUEST)
     @ResponseBody
-    fun handleValidationException(ex: ValidationException): ErrorResponse {
-        log.error("ValidationException ", ex)
-
-        return ErrorResponse(
+    fun handleValidationException(ex: ValidationException) =
+        ErrorResponse(
             message = resourceBundle.getMessage(ZapZupErrorCode.INVALID_PAGINATION_LIMIT_OFFSET.key)
                 ?: ZapZupErrorCode.INVALID_PAGINATION_LIMIT_OFFSET.code,
             code = ZapZupErrorCode.INVALID_PAGINATION_LIMIT_OFFSET.code
         )
-    }
 
     @ExceptionHandler(InvalidOldPasswordException::class)
     @ResponseStatus(UNPROCESSABLE_ENTITY)
     @ResponseBody
-    fun handleInvalidOldPasswordException(ex: InvalidOldPasswordException): ErrorResponse {
-        log.error("InvalidOldPasswordException ", ex)
-
-        return ErrorResponse(
+    fun handleInvalidOldPasswordException(ex: InvalidOldPasswordException) =
+        ErrorResponse(
             message = resourceBundle.getMessage(ZapZupErrorCode.INVALID_OLD_PASSWORD.key)
                 ?: ZapZupErrorCode.INVALID_OLD_PASSWORD.code,
             code = ZapZupErrorCode.INVALID_OLD_PASSWORD.code
         )
-    }
 
     @ExceptionHandler(EqualPasswordException::class)
     @ResponseStatus(UNPROCESSABLE_ENTITY)
     @ResponseBody
-    fun handleEqualPasswordException(ex: EqualPasswordException): ErrorResponse {
-        log.error("EqualPasswordException ", ex)
-
-        return ErrorResponse(
+    fun handleEqualPasswordException(ex: EqualPasswordException) =
+        ErrorResponse(
             message = resourceBundle.getMessage(ZapZupErrorCode.EQUAL_PASSWORD.key)
                 ?: ZapZupErrorCode.EQUAL_PASSWORD.code,
             code = ZapZupErrorCode.EQUAL_PASSWORD.code
         )
-    }
 
     @ExceptionHandler(DuplicatedIdException::class)
     @ResponseStatus(UNPROCESSABLE_ENTITY)
     @ResponseBody
-    fun handleEqualPasswordException(ex: DuplicatedIdException): ErrorResponse {
-        log.error("DuplicatedIdException ", ex)
-
-        return ErrorResponse(
+    fun handleEqualPasswordException(ex: DuplicatedIdException) =
+        ErrorResponse(
             message = resourceBundle.getMessage(ZapZupErrorCode.DUPLICATED_ID.key, arrayOf(ex.id))
                 ?: ZapZupErrorCode.DUPLICATED_ID.code,
             code = ZapZupErrorCode.DUPLICATED_ID.code
         )
-    }
 }

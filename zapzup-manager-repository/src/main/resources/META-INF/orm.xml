@@ -32,4 +32,30 @@
             AND user.status = 'ACTIVE'
         </query>
     </named-query>
+
+    <named-query name="TokenEntity.findByCode">
+        <query>
+            SELECT token
+            FROM Token token
+            WHERE token.code = :code
+        </query>
+    </named-query>
+
+    <named-query name="TokenEntity.findByUserEmail">
+        <query>
+            SELECT token
+            FROM Token token
+            WHERE token.user.email = :email
+        </query>
+    </named-query>
+
+    <named-query name="ChatEntity.findAllOrdered">
+        <query>
+            SELECT chat
+            FROM Chat chat
+            JOIN chat.users user
+            WHERE user.id = :userId
+            ORDER BY chat.lastMessageSentAt DESC
+        </query>
+    </named-query>
 </entity-mappings>

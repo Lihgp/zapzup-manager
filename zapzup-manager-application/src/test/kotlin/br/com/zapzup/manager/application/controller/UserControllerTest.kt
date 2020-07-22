@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional
 open class UserControllerTest : BasicIntegrationTest() {
 
     private val id: String = "USER-ID"
+
     @Test
     fun `should create user with success`() {
         val createUserRequest = CreateUserRequest(

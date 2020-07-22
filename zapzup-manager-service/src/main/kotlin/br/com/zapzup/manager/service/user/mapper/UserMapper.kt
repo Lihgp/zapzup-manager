@@ -1,9 +1,8 @@
 package br.com.zapzup.manager.service.user.mapper
 
 import br.com.zapzup.manager.domain.entity.User
-import br.com.zapzup.manager.domain.enums.StatusEnum
+import br.com.zapzup.manager.domain.enums.UserStatusEnum
 import br.com.zapzup.manager.domain.to.user.CreateUserTO
-import br.com.zapzup.manager.domain.to.user.UpdateUserTO
 import br.com.zapzup.manager.domain.to.user.UserTO
 
 fun User.toTO() = userTO(user = this)
@@ -26,7 +25,7 @@ fun user(userTO: UserTO): User =
         name = userTO.name,
         username = userTO.username,
         note = userTO.note,
-        status = StatusEnum.valueOf(userTO.status),
+        status = UserStatusEnum.valueOf(userTO.status),
         email = userTO.email,
         createdAt = userTO.createdAt,
         updatedAt = userTO.updatedAt,
@@ -45,6 +44,9 @@ fun userTO(user: User): UserTO =
         updatedAt = user.updatedAt,
         deletedAt = user.deletedAt
     )
+
+fun List<UserTO>.listToEntity(): List<User> =
+    this.map { it.toEntity() }
 
 fun List<User>.listToTO(): List<UserTO> =
     this.map { it.toTO() }

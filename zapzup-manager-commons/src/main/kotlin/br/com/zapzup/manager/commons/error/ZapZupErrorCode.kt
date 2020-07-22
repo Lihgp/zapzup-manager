@@ -20,4 +20,7 @@ object ZapZupErrorCode {
     val INVALID_PAGINATION_LIMIT_OFFSET: ErrorCode =
         ErrorCode("INVALID_PAGINATION_LIMIT_OFFSET", "invalid.pagination.limit.offset")
     val DUPLICATED_ID: ErrorCode = ErrorCode("DUPLICATED_ID", "duplicated.id")
+    val USER_NOT_FOUND_IN_CHAT: ErrorCode = ErrorCode("USER_NOT_FOUND_IN_CHAT", "user.not.found.in.chat")
+    val SUBJECT_CODE_PASSWORD: ErrorCode = ErrorCode("SUBJECT_CODE_PASSWORD", "subject.code.password")
+    val SUBJECT_CODE_EMAIL: ErrorCode = ErrorCode("SUBJECT_CODE_EMAIL", "subject.code.email")
 }
