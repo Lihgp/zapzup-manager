@@ -133,7 +133,7 @@ class TokenServiceTest {
             name = "Fulano",
             username = "fulaninho",
             note = "Suave",
-            userStatus = UserStatusEnum.ACTIVE,
+            status = UserStatusEnum.ACTIVE,
             email = "fulano@gmail.com"
         )
 }

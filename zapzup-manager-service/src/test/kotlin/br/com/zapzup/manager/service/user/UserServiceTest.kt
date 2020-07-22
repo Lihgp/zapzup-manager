@@ -209,7 +209,7 @@ class UserServiceTest {
 
         verify(userRepository, times(1)).save(argumentCaptor.capture())
 
-        assertThat(argumentCaptor.value.userStatus).isEqualTo(UserStatusEnum.INACTIVE)
+        assertThat(argumentCaptor.value.status).isEqualTo(UserStatusEnum.INACTIVE)
         assertThat(argumentCaptor.value.deletedAt).isNotNull()
     }
 
@@ -349,7 +349,7 @@ class UserServiceTest {
             name = name,
             username = username,
             note = note,
-            userStatus = UserStatusEnum.ACTIVE,
+            status = UserStatusEnum.ACTIVE,
             email = email,
             password = password
         )

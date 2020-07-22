@@ -206,7 +206,7 @@ class ChatServiceTest {
             name = "Fulano",
             username = username,
             email = email,
-            userStatus = UserStatusEnum.ACTIVE
+            status = UserStatusEnum.ACTIVE
         )
 
     private fun buildUserTO(id: String, username: String, email: String): UserTO =

@@ -10,7 +10,7 @@
             THEN TRUE ELSE FALSE END
             FROM User user
             WHERE LOWER(user.username) LIKE LOWER(:username)
-            AND user.userStatus = 'ACTIVE'
+            AND user.status = 'ACTIVE'
         </query>
     </named-query>
 
@@ -20,7 +20,7 @@
             THEN TRUE ELSE FALSE END
             FROM User user
             WHERE LOWER(user.email) LIKE LOWER(:email)
-            AND user.userStatus = 'ACTIVE'
+            AND user.status = 'ACTIVE'
         </query>
     </named-query>
 
@@ -29,7 +29,7 @@
             SELECT user
             FROM User user
             WHERE user.id = :id
-            AND user.userStatus = 'ACTIVE'
+            AND user.status = 'ACTIVE'
         </query>
     </named-query>
 

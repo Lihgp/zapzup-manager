@@ -28,7 +28,7 @@ data class User(
     val username: String = "",
     val note: String = "Hello! I'm using ZapZup.",
     @Enumerated(EnumType.STRING)
-    val userStatus: UserStatusEnum = UserStatusEnum.ACTIVE,
+    val status: UserStatusEnum = UserStatusEnum.ACTIVE,
     @Column(unique = true)
     val email: String = "",
     val password: String = "",

@@ -82,7 +82,7 @@ class UserService(
 
         log.info("User found by email: ${user.copy(password = "")}")
 
-        if (user.userStatus == UserStatusEnum.INACTIVE) throw UserNotFoundException()
+        if (user.status == UserStatusEnum.INACTIVE) throw UserNotFoundException()
 
         return user.toTO()
     }
@@ -136,7 +136,7 @@ class UserService(
         log.info("User deleted: ${userFound.copy(password = "")} for id: $id")
 
         userRepository.save(
-            userFound.copy(userStatus = UserStatusEnum.INACTIVE, deletedAt = OffsetDateTime.now())
+            userFound.copy(status = UserStatusEnum.INACTIVE, deletedAt = OffsetDateTime.now())
         )
     }
 
