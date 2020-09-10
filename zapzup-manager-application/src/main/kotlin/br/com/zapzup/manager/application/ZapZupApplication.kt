@@ -1,14 +1,14 @@
 package br.com.zapzup.manager.application
 
 import br.com.zapzup.manager.application.config.ZapZupApplicationConfig
-import org.slf4j.LoggerFactory
+import org.apache.logging.log4j.LogManager
 import org.springframework.boot.SpringApplication
 import java.net.InetAddress
 import java.time.LocalDateTime
 
 object ZapZupApplication {
 
-    private val LOG = LoggerFactory.getLogger(ZapZupApplication::class.java)
+    private val LOG = LogManager.getLogger(ZapZupApplication::class.java)
 
     @JvmStatic
     fun main(args: Array<String>) {

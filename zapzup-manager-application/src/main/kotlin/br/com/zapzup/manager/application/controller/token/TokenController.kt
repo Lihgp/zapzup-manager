@@ -3,7 +3,7 @@ package br.com.zapzup.manager.application.controller.token
 import br.com.zapzup.manager.api.token.TokenApi
 import br.com.zapzup.manager.api.token.request.GenerateTokenRequest
 import br.com.zapzup.manager.service.token.ITokenService
-import org.slf4j.LoggerFactory
+import org.apache.logging.log4j.LogManager
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
@@ -14,7 +14,7 @@ class TokenController(
     private val tokenService: ITokenService
 ) : TokenApi {
 
-    private val log = LoggerFactory.getLogger(this.javaClass)
+    private val log = LogManager.getLogger(this.javaClass)
 
     override fun generateResetToken(@RequestBody @Validated generateTokenRequest: GenerateTokenRequest) {
         log.info("GenerateTokenRequest: $generateTokenRequest")

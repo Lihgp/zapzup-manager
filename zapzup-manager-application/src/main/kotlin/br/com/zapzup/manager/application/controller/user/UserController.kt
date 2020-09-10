@@ -10,7 +10,7 @@ import br.com.zapzup.manager.api.user.response.UpdateUserResponse
 import br.com.zapzup.manager.api.user.response.UserResponse
 import br.com.zapzup.manager.domain.to.user.GetUsersFilter
 import br.com.zapzup.manager.service.user.IUserService
-import org.slf4j.LoggerFactory
+import org.apache.logging.log4j.LogManager
 import org.springframework.data.domain.Page
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
@@ -24,7 +24,7 @@ class UserController(
     private val userService: IUserService
 ) : UserApi {
 
-    private val log = LoggerFactory.getLogger(this.javaClass)
+    private val log = LogManager.getLogger(this.javaClass)
 
     override fun create(
         @RequestBody @Validated createUserRequest: CreateUserRequest

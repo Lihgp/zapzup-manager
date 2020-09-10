@@ -12,7 +12,7 @@ import br.com.zapzup.manager.service.token.mapper.toTO
 import br.com.zapzup.manager.service.token.mapper.toTokenTOList
 import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.mapper.toEntity
-import org.slf4j.LoggerFactory
+import org.apache.logging.log4j.LogManager
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 
@@ -23,7 +23,7 @@ class TokenService(
     private val emailService: IEmailService
 ) : ITokenService {
 
-    private val log = LoggerFactory.getLogger(this.javaClass)
+    private val log = LogManager.getLogger(this.javaClass)
 
     override fun generateToken(generateTokenTO: GenerateTokenTO, tokenType: String) {
         log.info("GenerateTokenTO: $generateTokenTO and tokenType: $tokenType")
