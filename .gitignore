@@ -58,6 +58,7 @@ derby.log
 .venv/
 *.success
 *.fail
+*.log
 
 # Folder data
 /data/

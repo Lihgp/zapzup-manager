@@ -1,0 +1,11 @@
+filebeat:
+  inputs:
+    - type: log
+      enabled: true
+      paths:
+        - "/usr/share/filebeat/logs/*.log"
+      scan_frequency: 1s
+
+output.logstash:
+  hosts: ["logstash:5044"]
+  index: "${APPLICATION_NAME}"
