@@ -10,7 +10,9 @@ import br.com.zapzup.manager.commons.exceptions.InvalidTokenException
 import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.commons.exceptions.UserNotFoundException
 import br.com.zapzup.manager.commons.exceptions.ValidationException
-import org.slf4j.LoggerFactory
+import br.com.zapzup.manager.commons.objectToJson
+import org.apache.logging.log4j.Level
+import org.apache.logging.log4j.LogManager
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.http.HttpStatus.NOT_FOUND
@@ -27,7 +29,7 @@ class ZapZupExceptionHandler(
     private val resourceBundle: ResourceBundle
 ) {
 
-    private val log = LoggerFactory.getLogger(this.javaClass)
+    private val log = LogManager.getLogger(this.javaClass)
 
     @ExceptionHandler(Exception::class)
     @ResponseStatus(INTERNAL_SERVER_ERROR)
@@ -67,12 +69,16 @@ class ZapZupExceptionHandler(
             }
         }
 
-        return ErrorResponse(
+        val errorResponse = ErrorResponse(
             fields = fields,
             message = resourceBundle.getMessage(ZapZupErrorCode.METHOD_ARGUMENT_INVALID.key)
                 ?: ZapZupErrorCode.METHOD_ARGUMENT_INVALID.code,
             code = ZapZupErrorCode.METHOD_ARGUMENT_INVALID.code
         )
+
+        log.error("ErrorFormatted: ${errorResponse.objectToJson()}")
+
+        return errorResponse
     }
 
     @ExceptionHandler(UserAlreadyExistsException::class)

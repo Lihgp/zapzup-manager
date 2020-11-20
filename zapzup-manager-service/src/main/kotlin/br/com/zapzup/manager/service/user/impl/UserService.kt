@@ -15,7 +15,7 @@ import br.com.zapzup.manager.repository.UserRepository
 import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.mapper.toEntity
 import br.com.zapzup.manager.service.user.mapper.toTO
-import org.slf4j.LoggerFactory
+import org.apache.logging.log4j.LogManager
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -30,7 +30,7 @@ class UserService(
     private val passwordEncoder: BCryptPasswordEncoder
 ) : IUserService {
 
-    private val log = LoggerFactory.getLogger(this.javaClass)
+    private val log = LogManager.getLogger(this.javaClass)
 
     override fun create(createUserTO: CreateUserTO): UserTO {
         log.info("CreateUserTO: ${createUserTO.copy(password = "")}")
