@@ -3,9 +3,9 @@ filebeat:
     - type: log
       enabled: true
       paths:
-        - "/usr/share/filebeat/logs/*.log"
+        - "/app/logs.log"
       scan_frequency: 1s
 
 output.logstash:
-  hosts: ["logstash:5044"]
-  index: "${APPLICATION_NAME}"
+  hosts: ["fluentd:5044"]
+  index: "ZapZupManager"
