@@ -16,7 +16,7 @@ services:
 
   zapzup:
     container_name: zapzup
-    image: victorsantoss/zapzup_manager:2.0
+    image: victorsantoss/zapzup_manager:latest
     ports:
     - "8080:8080"
     command: java -Dspring.profiles.active=prod -jar zapzup-manager.jar -Xms512M -Xmx512M -XX:PermSize=256m -XX:MaxPermSize=512m

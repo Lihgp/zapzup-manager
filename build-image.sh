@@ -1,11 +1,9 @@
 #!/bin/bash
 
-DOCKER_USERNAME=$1
-
 docker-compose -f resource/docker-compose.yml up -d
-mvn clean install
+mvn clean install -T10 -U
 docker-compose -f resource/docker-compose.yml down
 cd zapzup-manager-application
-docker build -t zapzup_manager/zapzup_manager:1.0 .
-cd ../
-docker push zapzup_manager/zapzup_manager:1.0
+docker build -t zapzup_manager/zapzup_manager:latest .
+docker push zapzup_manager/zapzup_manager:latest
+docker rmi zapzup_manager:latest

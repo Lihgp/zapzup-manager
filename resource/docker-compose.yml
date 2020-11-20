@@ -2,7 +2,7 @@ version: "3.5"
 services:
   postgres:
     container_name: zapzup_postgres
-    image: postgres:9.6
+    image: postgres:11.9
     ports:
       - "5432:5432"
     environment:
