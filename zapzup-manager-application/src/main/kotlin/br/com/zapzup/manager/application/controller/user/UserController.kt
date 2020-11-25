@@ -46,6 +46,8 @@ class UserController(
         @RequestParam(name = "limit", defaultValue = "10", required = false) limit: Int
     ): ResponseWrapper<Page<UserResponse>> {
 
+        log.info("GETTING USERS")
+
         val filter = GetUsersFilter(
             email = email,
             username = username,

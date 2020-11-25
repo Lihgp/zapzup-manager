@@ -14,6 +14,14 @@ services:
     networks:
       - zapzup
 
+  zipkin:
+    container_name: zapzup_zipkin
+    image: openzipkin/zipkin:latest
+    ports:
+    - "9411:9411"
+    networks:
+      - zapzup
+
 networks:
   zapzup:
     driver: bridge
