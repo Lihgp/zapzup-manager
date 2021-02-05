@@ -6,12 +6,14 @@ import br.com.zapzup.manager.commons.exceptions.UserAlreadyExistsException
 import br.com.zapzup.manager.commons.exceptions.UserNotFoundException
 import br.com.zapzup.manager.domain.entity.User
 import br.com.zapzup.manager.domain.enums.StatusEnum
+import br.com.zapzup.manager.domain.to.auth.AuthTokenTO
 import br.com.zapzup.manager.domain.to.user.CreateUserTO
 import br.com.zapzup.manager.domain.to.user.GetUsersFilter
 import br.com.zapzup.manager.domain.to.user.UpdatePasswordTO
 import br.com.zapzup.manager.domain.to.user.UpdateUserTO
 import br.com.zapzup.manager.domain.to.user.UserTO
 import br.com.zapzup.manager.repository.UserRepository
+import br.com.zapzup.manager.service.auth.impl.AuthService
 import br.com.zapzup.manager.service.user.IUserService
 import br.com.zapzup.manager.service.user.mapper.toEntity
 import br.com.zapzup.manager.service.user.mapper.toTO
@@ -27,7 +29,8 @@ import java.time.OffsetDateTime
 @Service
 class UserService(
     private val userRepository: UserRepository,
-    private val passwordEncoder: BCryptPasswordEncoder
+    private val passwordEncoder: BCryptPasswordEncoder,
+    private val authService: AuthService
 ) : IUserService {
 
     private val log = LogManager.getLogger(this.javaClass)
@@ -56,11 +59,14 @@ class UserService(
 
         val user = createUserTO.toEntity().copy(password = encryptedPassword)
 
-        return userRepository.save(user).toTO()
+        val userSaved = userRepository.save(user).toTO()
+
+        authService.generateToken(AuthTokenTO(email = createUserTO.email, password = createUserTO.password))
+
+        return userSaved
     }
 
     override fun getUsers(filter: GetUsersFilter): Page<UserTO> {
-
         filter.validateFilter()
         val pageagle: Pageable = PageRequest.of(filter.page, filter.limit, Sort.by("name"))
 

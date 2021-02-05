@@ -11,6 +11,7 @@ import br.com.zapzup.manager.domain.to.user.GetUsersFilter
 import br.com.zapzup.manager.domain.to.user.UpdatePasswordTO
 import br.com.zapzup.manager.domain.to.user.UpdateUserTO
 import br.com.zapzup.manager.repository.UserRepository
+import br.com.zapzup.manager.service.auth.impl.AuthService
 import br.com.zapzup.manager.service.user.impl.UserService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Assert
@@ -34,7 +35,9 @@ class UserServiceTest {
 
     private val userRepository: UserRepository = mock(UserRepository::class.java)
     private val passwordEncoder: BCryptPasswordEncoder = mock(BCryptPasswordEncoder::class.java)
-    private val userService: IUserService = UserService(userRepository, passwordEncoder)
+    private val authService: AuthService = mock(AuthService::class.java)
+
+    private val userService: IUserService = UserService(userRepository, passwordEncoder, authService)
 
     private val id: String = "USER-ID"
     private val username: String = "fulaninho"
@@ -287,7 +290,7 @@ class UserServiceTest {
         name: String = "",
         page: Int = 0,
         limit: Int = 10
-    ) : GetUsersFilter {
+    ): GetUsersFilter {
         return GetUsersFilter(
             email = email,
             username = username,
